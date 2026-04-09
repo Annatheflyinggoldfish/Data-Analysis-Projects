@@ -21,7 +21,7 @@ ORDER BY month;
 ```sql
 SELECT 
 pcnt.product_category_name_english AS product_catagory,
-COUNT(ooid.product_id) AS sales_qty,
+COUNT(*) AS sales_qty,
 ROUND(SUM(ooid.price),2) AS product_gmv
 FROM olist_order_items_dataset ooid 
 INNER JOIN olist_products_dataset opd
