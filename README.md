@@ -93,7 +93,8 @@ SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment),2),'%') AS
 
 
 ## 客户行为类
-- 复购率（Olist复购率极低，这本身就是一个有趣的发现）
+- 复购率： 购买次数 ≥ 2 的用户数 ÷ 总用户数
+- 复购客户的购买平均间隔时间
 - 客单价分布
 - 用户地域分布及消费习惯差异
 - 购买到评论的时间间隔
