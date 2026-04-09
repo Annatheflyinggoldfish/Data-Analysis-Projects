@@ -8,9 +8,9 @@
 ```sql
 create or replace view monthly_gmv as
 SELECT
-    DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m') AS month,
-    COUNT(o.order_id) AS order_count,
-    ROUND(SUM(p.payment_value),2) AS gmv
+DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m') AS month,
+COUNT(o.order_id) AS order_count,
+ROUND(SUM(p.payment_value),2) AS gmv
 FROM olist_orders_dataset o
 JOIN olist_order_payments_dataset p ON o.order_id = p.order_id
 WHERE o.order_purchase_timestamp >= '2017-01-01'
