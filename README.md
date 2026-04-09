@@ -5,7 +5,7 @@
 
 ## 业务表现类
 - 销量/GMV趋势（按月）
-  
+``` 
 create or replace view monthly_gmv as
 SELECT
     DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m') AS month,
@@ -17,7 +17,7 @@ WHERE o.order_purchase_timestamp >= '2017-01-01'
 AND o.order_purchase_timestamp < '2018-09-01'
 GROUP BY DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
-
+```
 - 销量前十产品、品类
 - 各州销售额分布
 - 卖家集中度（头部卖家占比）
