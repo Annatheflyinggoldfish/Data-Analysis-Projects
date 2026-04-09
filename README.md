@@ -65,40 +65,31 @@ GROUP BY ootd.seller_id
 ORDER BY gmv DESC LIMIT 10)
 SELECT seller, ROUND(gmv,2) AS seller_gmv FROM top10_sellers;
 ```
-seller                          |seller_gmv|
---------------------------------+----------+
-7c67e1448b00f6e969d365cea6b010ab| 507166.91|
-1025f0e2d44d7041d6cf58b6550e0bfa| 308222.04|
-4a3ca9315b744ce9f8e9374361493884| 301245.27|
-1f50f920176fa81dab994f9023523100| 290253.42|
-53243585a1d6dc2643021fd1853d8905| 284903.08|
-da8622b14eb17ae2831f4ac5b9dab84a| 272219.32|
-4869f7a5dfa277a7dca6462dcf3b52b2| 264166.12|
-955fee9216a65b617aa5c0531780ce60|  236322.3|
-fa1c13f2614d7b5c4749cbc52fecda94| 206513.23|
-7e93a43ef30c4f03f38b393420bc753a| 185134.21|
+<img width="480" height="290" alt="image" src="https://github.com/user-attachments/assets/90424168-17e7-44a7-abbe-9b546165e79e" />
 
-Top 10 Seller GVM
+
+- Top 10 Seller GVM
 ```sql
-SELECT ROUND(SUM(gmv),2) AS seller_gmv FROM top10_sellers；
+SELECT ROUND(SUM(gmv),2) AS seller_gmv FROM top10_sellers;
 ```
-<img width="210" height="61" alt="image" src="https://github.com/user-attachments/assets/56d5d620-c482-4ad1-a32c-4582fe83e92b" />
+<img width="210" height="60" alt="image" src="https://github.com/user-attachments/assets/0d20af53-4fd2-4dbe-838f-40938c4fb274" />
 
 
-Total GVM: 16008872.12
+
+- Total GVM: 16008872.12
 ```sql
 SELECT ROUND(SUM(order_payment),2) AS total_gmv FROM payment;
 ```
-<img width="205" height="55" alt="image" src="https://github.com/user-attachments/assets/f882e8ed-d549-42c2-8bf5-5397b12cd0c9" />
+<img width="206" height="61" alt="image" src="https://github.com/user-attachments/assets/bbc050d2-7ac7-4081-8fb0-6d7ea1cd4238" />
 
 
-Top 10 Sellers' Contribution to Total GMV
+
+- Top 10 Sellers' Contribution to Total GMV
 ```sql
-SELECT CONCAT(ROUND(SUM(seller_gmv)/(SELECT SUM(order_payment) FROM payment),2),'%') FROM top10_sellers;
+SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment),2),'%') AS CR10 FROM top10_sellers;
 ```
-CR10 |
------+
-0.18%|
+<img width="174" height="61" alt="image" src="https://github.com/user-attachments/assets/e88c7ecc-893b-4ced-80bf-b009fefa51fe" />
+
 
 
 ## 客户行为类
