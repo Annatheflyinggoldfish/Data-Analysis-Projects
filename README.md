@@ -20,14 +20,16 @@ ORDER BY month;
 ```
 - 销量前十产品、品类
 ```sql
-SELECT opd.product_category_name,pcnt.product_category_name_english,COUNT(ooid.product_id)
+SELECT 
+pcnt.product_category_name_english AS product_name,
+COUNT(ooid.product_id) AS sales_qty,
+ROUND(SUM(ooid.price),2) AS product_gmv
 FROM olist_order_items_dataset ooid 
 INNER JOIN olist_products_dataset opd
 ON ooid.product_id = opd.product_id
 INNER JOIN product_category_name_translation pcnt
 ON opd.product_category_name  = pcnt.product_category_name 
-GROUP BY opd.product_category_name,pcnt.product_category_name_english
-ORDER BY COUNT(ooid.product_id) DESC LIMIT 10;
+GROUP BY product_name ORDER BY product_gmv DESC LIMIT 10;
 ```
 - 各州销售额分布
 - 卖家集中度（头部卖家占比）
