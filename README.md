@@ -4,7 +4,7 @@
 一段话描述项目
 
 ## 业务表现类
-- 销量/GMV趋势（按月）
+- Monthly GMV
 ```sql
 SELECT
 DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m') AS month,
@@ -17,7 +17,7 @@ AND o.order_purchase_timestamp < '2018-09-01'
 GROUP BY DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
-- 销量前十产品、品类
+- TOP 10 best-selling product categories and GMV
 ```sql
 SELECT 
 pcnt.product_category_name_english AS product_catagory,
@@ -28,7 +28,7 @@ INNER JOIN olist_products_dataset opd
 ON ooid.product_id = opd.product_id
 INNER JOIN product_category_name_translation pcnt
 ON opd.product_category_name  = pcnt.product_category_name 
-GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
+GROUP BY product_catagory ORDER BY sales_qty DESC LIMIT 10;
 ```
 - 各州销售额分布
 - 卖家集中度（头部卖家占比）
