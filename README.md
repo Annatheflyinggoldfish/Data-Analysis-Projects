@@ -5,17 +5,6 @@
 
 ## 业务表现类
 - 销量/GMV趋势（按月）
-  create or replace view monthly_gmv as
-SELECT
-    DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m') AS month,
-    COUNT(o.order_id) AS order_count,
-    ROUND(SUM(p.payment_value),2) AS gmv
-FROM olist_orders_dataset o
-JOIN olist_order_payments_dataset p ON o.order_id = p.order_id
-WHERE o.order_purchase_timestamp >= '2017-01-01'
-AND o.order_purchase_timestamp < '2018-09-01'
-GROUP BY DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m')
-ORDER BY month;
 
 - 销量前十产品、品类
 - 各州销售额分布
