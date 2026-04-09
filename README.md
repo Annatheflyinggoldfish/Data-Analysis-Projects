@@ -65,12 +65,22 @@ GROUP BY ootd.seller_id
 ORDER BY gmv DESC LIMIT 10)
 SELECT seller, ROUND(gmv,2) AS seller_gmv FROM top10_sellers;
 ```
-<img width="480" height="281" alt="image" src="https://github.com/user-attachments/assets/3ef855b3-c973-4b68-9ca8-f64ef9308dc4" />
+seller                          |seller_gmv|
+--------------------------------+----------+
+7c67e1448b00f6e969d365cea6b010ab| 507166.91|
+1025f0e2d44d7041d6cf58b6550e0bfa| 308222.04|
+4a3ca9315b744ce9f8e9374361493884| 301245.27|
+1f50f920176fa81dab994f9023523100| 290253.42|
+53243585a1d6dc2643021fd1853d8905| 284903.08|
+da8622b14eb17ae2831f4ac5b9dab84a| 272219.32|
+4869f7a5dfa277a7dca6462dcf3b52b2| 264166.12|
+955fee9216a65b617aa5c0531780ce60|  236322.3|
+fa1c13f2614d7b5c4749cbc52fecda94| 206513.23|
+7e93a43ef30c4f03f38b393420bc753a| 185134.21|
 
-
-Top 10 Seller GVM: 20308134.70
+Top 10 Seller GVM
 ```sql
-SELECT ROUND(gmv,2) AS seller_gmv FROM top10_sellers；
+SELECT ROUND(SUM(gmv),2) AS seller_gmv FROM top10_sellers；
 ```
 <img width="210" height="61" alt="image" src="https://github.com/user-attachments/assets/56d5d620-c482-4ad1-a32c-4582fe83e92b" />
 
@@ -86,7 +96,9 @@ Top 10 Sellers' Contribution to Total GMV
 ```sql
 SELECT CONCAT(ROUND(SUM(seller_gmv)/(SELECT SUM(order_payment) FROM payment),2),'%') FROM top10_sellers;
 ```
-<img width="174" height="59" alt="image" src="https://github.com/user-attachments/assets/2054a691-6043-49a6-bef3-8e60673d5dae" />
+CR10 |
+-----+
+0.18%|
 
 
 ## 客户行为类
