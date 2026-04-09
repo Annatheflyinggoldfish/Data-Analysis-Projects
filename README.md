@@ -30,7 +30,21 @@ INNER JOIN product_category_name_translation pcnt
 ON opd.product_category_name  = pcnt.product_category_name 
 GROUP BY product_catagory ORDER BY sales_qty DESC LIMIT 10;
 ```
-- 各州销售额分布
+- GMV by state
+```sql
+SELECT 
+DISTINCT ocd.customer_state AS state,
+COUNT(oopd.order_id) AS Qty,
+ROUND(SUM(oopd.payment_value),2) AS city_gmv
+FROM olist_customers_dataset ocd
+JOIN olist_orders_dataset ood
+ON ocd.customer_id = ood.customer_id
+JOIN olist_order_payments_dataset oopd 
+ON ood.order_id = oopd.order_id
+GROUP BY state
+ORDER BY city_gmv DESC;
+```
+
 - 卖家集中度（头部卖家占比）
 
 ## 客户行为类
