@@ -5,7 +5,7 @@
 
 ## 业务表现类
 - 销量/GMV趋势（按月）
-``` 
+```sql
 create or replace view monthly_gmv as
 SELECT
     DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m') AS month,
