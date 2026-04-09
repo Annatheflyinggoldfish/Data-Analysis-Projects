@@ -67,11 +67,13 @@ SELECT seller, ROUND(gmv,2) AS seller_gmv FROM top10_sellers;
 ```
 <img width="480" height="281" alt="image" src="https://github.com/user-attachments/assets/3ef855b3-c973-4b68-9ca8-f64ef9308dc4" />
 
+
 Top 10 Seller GVM: 20308134.70
 ```sql
 SELECT ROUND(gmv,2) AS seller_gmv FROM top10_sellers；
 ```
 <img width="210" height="61" alt="image" src="https://github.com/user-attachments/assets/56d5d620-c482-4ad1-a32c-4582fe83e92b" />
+
 
 Total GVM: 16008872.12
 ```sql
@@ -79,11 +81,13 @@ SELECT ROUND(SUM(order_payment),2) AS total_gmv FROM payment;
 ```
 <img width="205" height="55" alt="image" src="https://github.com/user-attachments/assets/f882e8ed-d549-42c2-8bf5-5397b12cd0c9" />
 
+
 Top 10 Sellers' Contribution to Total GMV
 ```sql
 SELECT CONCAT(ROUND(SUM(seller_gmv)/(SELECT SUM(order_payment) FROM payment),2),'%') FROM top10_sellers;
 ```
 <img width="174" height="59" alt="image" src="https://github.com/user-attachments/assets/2054a691-6043-49a6-bef3-8e60673d5dae" />
+
 
 ## 客户行为类
 - 复购率（Olist复购率极低，这本身就是一个有趣的发现）
