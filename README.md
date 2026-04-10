@@ -116,10 +116,16 @@ SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM I;
 ```
 <img width="300" height="60" alt="image" src="https://github.com/user-attachments/assets/0cc776fe-2100-408a-ae21-c04bf3935ab1" />
 
-- Average Order Value Distribution 客单价分布
+### Average Order Value Distribution
+```sql
+SELECT order_id,SUM(payment_value) AS order_value
+FROM olist_order_payments_dataset oopd
+GROUP BY order_id
+ORDER BY order_value;
+```
   
-- Regional Analysis 用户地域分布及消费习惯差异
-- Time Latency for Customer Feedback 购买到评论的时间间隔
+### Regional Analysis 用户地域分布及消费习惯差异
+### Time Latency for Customer Feedback 购买到评论的时间间隔
 
 ## 物流类
 - 实际送达 vs 预估送达的准时率
