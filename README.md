@@ -94,6 +94,17 @@ SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment),2),'%') AS
 
 ## 客户行为类
 - Repeat Purchase Rate
+```sql
+WITH T AS
+(SELECT customer_unique_id,COUNT(customer_unique_id) AS order_count
+FROM olist_customers_dataset ocd
+GROUP BY customer_unique_id 
+ORDER BY order_count DESC)
+SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(DISTINCT customer_unique_id) FROM olist_customers_dataset ocd)*100,2),'%') AS repeat_purchase_rate 
+FROM T WHERE order_count >= 2;
+```
+<img width="280" height="60" alt="image" src="https://github.com/user-attachments/assets/326c3591-58c1-4b12-9f11-c57bdfe8bc60" />
+ 
 - Average Inter-purchase Time
 - Average Order Value Distribution 客单价分布
 - Regional Analysis 用户地域分布及消费习惯差异
