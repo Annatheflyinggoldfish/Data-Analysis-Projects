@@ -100,7 +100,8 @@ WITH T AS
 FROM olist_customers_dataset ocd
 GROUP BY customer_unique_id 
 ORDER BY order_count DESC)
-SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(DISTINCT customer_unique_id) FROM olist_customers_dataset ocd)*100,2),'%') AS repeat_purchase_rate 
+SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(DISTINCT customer_unique_id) FROM olist_customers_dataset ocd)*100,2),'%')
+AS repeat_purchase_rate 
 FROM T WHERE order_count >= 2;
 ```
 <img width="280" height="60" alt="image" src="https://github.com/user-attachments/assets/326c3591-58c1-4b12-9f11-c57bdfe8bc60" />
