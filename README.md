@@ -86,9 +86,10 @@ SELECT ROUND(SUM(order_payment),2) AS total_gmv FROM payment;
 
 - Top 10 Sellers' Contribution to Total GMV
 ```sql
-SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment),2),'%') AS CR10 FROM top10_sellers;
+SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment)*100,2),'%') AS CR10 FROM top10_sellers;
 ```
-<img width="174" height="61" alt="image" src="https://github.com/user-attachments/assets/e88c7ecc-893b-4ced-80bf-b009fefa51fe" />
+<img width="170" height="59" alt="image" src="https://github.com/user-attachments/assets/a2f8d179-49c8-4c8f-abe5-f65e2670c22d" />
+
 
 
 
@@ -98,8 +99,7 @@ SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment),2),'%') AS
 WITH T AS
 (SELECT customer_unique_id,COUNT(customer_unique_id) AS order_count
 FROM olist_customers_dataset ocd
-GROUP BY customer_unique_id 
-ORDER BY order_count DESC)
+GROUP BY customer_unique_id )
 SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(DISTINCT customer_unique_id) FROM olist_customers_dataset ocd)*100,2),'%')
 AS repeat_purchase_rate 
 FROM T WHERE order_count >= 2;
