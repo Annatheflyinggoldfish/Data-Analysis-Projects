@@ -107,6 +107,23 @@ FROM T WHERE order_count >= 2;
 <img width="280" height="60" alt="image" src="https://github.com/user-attachments/assets/326c3591-58c1-4b12-9f11-c57bdfe8bc60" />
  
 - Average Inter-purchase Time
+```sql
+WITH T AS
+(SELECT ocd.customer_id,ocd.customer_unique_id,ood.order_purchase_timestamp
+FROM olist_customers_dataset ocd
+INNER JOIN olist_orders_dataset ood
+ON ocd.customer_id = ood.customer_id
+ORDER BY ood.order_purchase_timestamp),
+I AS 
+(SELECT order_purchase_timestamp,
+DATEDIFF(
+order_purchase_timestamp,
+LAG(order_purchase_timestamp,1) OVER (PARTITION BY customer_unique_id ORDER BY order_purchase_timestamp)) AS prev_order
+FROM T)
+SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM I;
+```
+<img width="300" height="60" alt="image" src="https://github.com/user-attachments/assets/0cc776fe-2100-408a-ae21-c04bf3935ab1" />
+
 - Average Order Value Distribution 客单价分布
 - Regional Analysis 用户地域分布及消费习惯差异
 - Time Latency for Customer Feedback 购买到评论的时间间隔
