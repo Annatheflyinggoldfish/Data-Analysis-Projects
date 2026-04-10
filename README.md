@@ -4,7 +4,7 @@
 一段话描述项目
 
 ## 业务表现类
-- Monthly GMV
+### Monthly GMV
 ```sql
 SELECT
 DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m') AS month,
@@ -17,7 +17,7 @@ AND o.order_purchase_timestamp < '2018-09-01'
 GROUP BY DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
-- TOP 10 best-selling product categories and GMV
+### TOP 10 best-selling product categories and GMV
 ```sql
 SELECT 
 pcnt.product_category_name_english AS product_catagory,
@@ -30,7 +30,7 @@ INNER JOIN product_category_name_translation pcnt
 ON opd.product_category_name  = pcnt.product_category_name 
 GROUP BY product_catagory ORDER BY sales_qty DESC LIMIT 10;
 ```
-- GMV by state
+### GMV by state
 ```sql
 WITH payment AS
 (SELECT order_id,SUM(oopd.payment_value) AS order_payment
@@ -49,7 +49,7 @@ GROUP BY state
 ORDER BY state_gmv DESC;
 ```
 
-- TOP 10 seller
+### TOP 10 seller
 ```aql
 WITH payment AS
 (SELECT order_id,SUM(payment_value) AS order_payment
@@ -67,34 +67,26 @@ SELECT seller, ROUND(gmv,2) AS seller_gmv FROM top10_sellers;
 ```
 <img width="480" height="290" alt="image" src="https://github.com/user-attachments/assets/90424168-17e7-44a7-abbe-9b546165e79e" />
 
-
-- Top 10 Seller GVM
+### Top 10 Seller GVM
 ```sql
 SELECT ROUND(SUM(gmv),2) AS seller_gmv FROM top10_sellers;
 ```
 <img width="210" height="60" alt="image" src="https://github.com/user-attachments/assets/0d20af53-4fd2-4dbe-838f-40938c4fb274" />
 
-
-
-- Total GVM: 16008872.12
+### Total GVM: 16008872.12
 ```sql
 SELECT ROUND(SUM(order_payment),2) AS total_gmv FROM payment;
 ```
 <img width="206" height="61" alt="image" src="https://github.com/user-attachments/assets/bbc050d2-7ac7-4081-8fb0-6d7ea1cd4238" />
 
-
-
-- Top 10 Sellers' Contribution to Total GMV
+### Top 10 Sellers' Contribution to Total GMV
 ```sql
 SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment)*100,2),'%') AS CR10 FROM top10_sellers;
 ```
 <img width="170" height="59" alt="image" src="https://github.com/user-attachments/assets/a2f8d179-49c8-4c8f-abe5-f65e2670c22d" />
 
-
-
-
 ## 客户行为类
-- Repeat Purchase Rate
+### Repeat Purchase Rate
 ```sql
 WITH T AS
 (SELECT customer_unique_id,COUNT(customer_unique_id) AS order_count
@@ -106,7 +98,7 @@ FROM T WHERE order_count >= 2;
 ```
 <img width="280" height="60" alt="image" src="https://github.com/user-attachments/assets/326c3591-58c1-4b12-9f11-c57bdfe8bc60" />
  
-- Average Inter-purchase Time
+### Average Inter-purchase Time
 ```sql
 WITH T AS
 (SELECT ocd.customer_id,ocd.customer_unique_id,ood.order_purchase_timestamp
@@ -125,6 +117,7 @@ SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM I;
 <img width="300" height="60" alt="image" src="https://github.com/user-attachments/assets/0cc776fe-2100-408a-ae21-c04bf3935ab1" />
 
 - Average Order Value Distribution 客单价分布
+  
 - Regional Analysis 用户地域分布及消费习惯差异
 - Time Latency for Customer Feedback 购买到评论的时间间隔
 
