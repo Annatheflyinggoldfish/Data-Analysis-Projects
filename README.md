@@ -174,7 +174,7 @@ SELECT ROUND(AVG(timediff),2) AS latency FROM T3 WHERE timediff >=0;
 
 
 ## 物流类
-### 实际送达 vs 预估送达的准时率
+### Average Delivery Time
 ```sql
 WITH T AS
 (SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
@@ -192,8 +192,29 @@ T3 AS
 DATEDIFF(deliver_time,purchase_time) AS purchase_deliver_diff,
 DATEDIFF(estimated_delivery,deliver_time) AS estimated_diff
 FROM T2)
-SELECT * FROM T3;
+SELECT AVG(purchase_deliver_diff) AS avg_delivery_time FROM T3;
 ```
+### On Time Delivery Rate
+```sql
+WITH T AS
+(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
+FROM olist_orders_dataset
+WHERE order_delivered_customer_date IS NOT NULL
+AND order_delivered_customer_date != ''),
+T2 AS
+(SELECT order_id,
+STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time,
+STR_TO_DATE(order_estimated_delivery_date,'%Y-%m-%d %H:%i:%s') AS estimated_delivery
+FROM T),
+T3 AS 
+(SELECT order_id,deliver_time,purchase_time,estimated_delivery,
+DATEDIFF(deliver_time,purchase_time) AS purchase_deliver_diff,
+DATEDIFF(estimated_delivery,deliver_time) AS estimated_diff
+FROM T2)
+SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*)FROM T3)*100,2),'%') AS OTD_rate FROM T3 WHERE estimated_diff >= purchase_deliver_diff;
+```
+<img width="200" height="60" alt="image" src="https://github.com/user-attachments/assets/7a3294c4-aa64-4ee9-9354-b8479931b721" />
 
 - 各州物流时效差异
 - 物流延误和差评的相关性
