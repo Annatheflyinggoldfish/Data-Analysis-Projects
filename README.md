@@ -69,7 +69,7 @@ SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment)*100,2),'%'
 ```
 <img width="170" height="59" alt="image" src="https://github.com/user-attachments/assets/a2f8d179-49c8-4c8f-abe5-f65e2670c22d" />
 
-### TOP 3 Best Selling Categories by Month
+### TOP 3 Best Selling Product Categories by Month
 ```sql
 WITH T AS
 (SELECT order_id,product_id,SUM(price) AS price FROM olist_order_items_dataset ooid GROUP BY order_id,product_id),
@@ -151,7 +151,7 @@ ON ood.order_id = p.order_id
 GROUP BY state
 ORDER BY state_gmv DESC;
 ```
-- 各州排名前三的产品
+### TOP 3 Best Selling Product Categories by State
 ```sql
 WITH T AS
 (SELECT ooid.order_id,ooid.product_id,ood.customer_id,ocd.customer_state,pcnt.product_category_name_english AS product_name
