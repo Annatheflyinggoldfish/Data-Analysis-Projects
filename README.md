@@ -339,9 +339,23 @@ ORDER BY ooid.price)
 SELECT * FROM T;
 ```
 
-### 节假日前后购买行为和评分变化- 只看黑五 Black Friday
-
 ### 卖家评分和销量的关系 avg_review_score 和 total_sales 的对比（注意：先有鸡还是先有蛋？）
+```sql
+WITH review_table AS 
+(SELECT order_id,review_score, review_answer_timestamp,
+ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
+FROM olist_order_reviews_dataset),
+T AS
+(SELECT ooid.order_id,
+SUM(ooid.price) AS total_price,
+rt.review_score
+FROM olist_order_items_dataset ooid 
+INNER JOIN review_table rt
+ON ooid.order_id = rt.order_id
+WHERE rn = 1
+GROUP BY ooid.order_id,rt.review_score)
+SELECT * FROM T ORDER BY total_price;
+```
 
 ## 结论
 - 发现1
