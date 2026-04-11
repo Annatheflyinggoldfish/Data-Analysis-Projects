@@ -87,13 +87,13 @@ FROM olist_customers_dataset ocd
 INNER JOIN olist_orders_dataset ood
 ON ocd.customer_id = ood.customer_id
 ORDER BY ood.order_purchase_timestamp),
-I AS 
+T2 AS 
 (SELECT order_purchase_timestamp,
 DATEDIFF(
 order_purchase_timestamp,
 LAG(order_purchase_timestamp,1) OVER (PARTITION BY customer_unique_id ORDER BY order_purchase_timestamp)) AS prev_order
 FROM T)
-SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM I;
+SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM T2;
 ```
 <img width="300" height="60" alt="image" src="https://github.com/user-attachments/assets/0cc776fe-2100-408a-ae21-c04bf3935ab1" />
 
@@ -105,13 +105,12 @@ GROUP BY order_id
 ORDER BY order_value;
 ```
   
-### Regional Analysis
-- 各州的总销售额&客户总数
+## Regional Analysis
+- 各州的订单数量，总销售额&客户总数
 ```sql
 WITH payment AS
 (SELECT order_id,SUM(oopd.payment_value) AS order_payment
-FROM olist_order_payments_dataset oopd GROUP BY oopd.order_id
-)
+FROM olist_order_payments_dataset oopd GROUP BY oopd.order_id)
 SELECT 
 ocd.customer_state AS state,
 COUNT(ood.order_id) AS order_Qty,
@@ -144,7 +143,8 @@ FROM T
 GROUP BY customer_state,product_name),
 T3 AS
 (SELECT customer_state,product_name,qty,
-DENSE_RANK() OVER (PARTITION BY customer_state ORDER BY qty DESC)AS rnk FROM T2)
+DENSE_RANK() OVER (PARTITION BY customer_state ORDER BY qty DESC)AS rnk
+FROM T2)
 SELECT * FROM T3 WHERE rnk <= 3;
 ```
 
