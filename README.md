@@ -156,8 +156,7 @@ FROM olist_order_reviews_dataset oord
 INNER JOIN olist_orders_dataset ood
 ON oord.order_id = ood.order_id
 WHERE ood.order_delivered_customer_date IS NOT NULL
-AND ood.order_delivered_customer_date != ''
-AND oord.review_answer_timestamp != ''),
+AND ood.order_delivered_customer_date != ''),
 T2 AS
 (SELECT 
 order_id,
