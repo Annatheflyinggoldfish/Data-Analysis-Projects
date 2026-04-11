@@ -324,6 +324,18 @@ SELECT COUNT(*) FROM T2;
 
 ## 交叉分析类
 ### 高价产品是否评分更高（做评分和order价格的对比）
+WITH review_table AS 
+(SELECT order_id,review_score, review_answer_timestamp,
+ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
+FROM olist_order_reviews_dataset),
+T AS
+(SELECT ooid.order_id,ooid.price,rt.review_score
+FROM olist_order_items_dataset ooid 
+INNER JOIN review_table rt
+ON ooid.order_id = rt.order_id
+WHERE rn = 1
+ORDER BY ooid.price)
+SELECT * FROM T;
 
 ### 节假日前后购买行为和评分变化- 只看黑五 Black Friday
 
