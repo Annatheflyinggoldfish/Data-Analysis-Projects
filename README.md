@@ -287,8 +287,16 @@ SELECT * FROM T4;
 ```
 
 ### 评论回复率
+```sql
+SELECT CONCAT(ROUND(COUNT(review_comment_message)/(SELECT COUNT(*) FROM olist_order_reviews_dataset oord)*100,2),'%')
+AS review_rate
+FROM olist_order_reviews_dataset
+WHERE review_comment_message IS NOT NULL
+AND review_comment_message != '';
+```
+<img width="213" height="61" alt="image" src="https://github.com/user-attachments/assets/ce1cfdbc-960d-4afb-af23-a604a9d897fb" />
 
-### 回复时间对评分的影响
+### 回复时间对评分的影响(收货和评论间隔时长，以及评分)
 
 ## 交叉分析类
 ### 高价产品是否评分更高（做评分和order价格的对比）
