@@ -298,23 +298,28 @@ AND review_comment_message != '';
 
 ### 回复时间对评分的影响(收货和评论间隔时长，以及评分)
 ```sql
-WITH T AS
+WITH review_table AS 
+(SELECT order_id,review_score, review_answer_timestamp,
+ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
+FROM olist_order_reviews_dataset),
+T AS
 (SELECT ood.order_id,
 STR_TO_DATE(ood.order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS delivery_date,
-STR_TO_DATE(oord.review_answer_timestamp,'%Y/%m/%d %H:%i') AS review_date,
-oord.review_score
+STR_TO_DATE(rt.review_answer_timestamp,'%Y/%m/%d %H:%i') AS review_date,
+rt.review_score
 FROM olist_orders_dataset ood 
-INNER JOIN olist_order_reviews_dataset oord 
-ON ood.order_id = oord.order_id
+INNER JOIN review_table rt 
+ON ood.order_id = rt.order_id
 WHERE ood.order_delivered_customer_date IS NOT NULL 
-AND ood.order_delivered_customer_date != ''),
+AND ood.order_delivered_customer_date != ''
+AND rn = 1),
 T2 AS 
 (SELECT order_id,
-DATEDIFF(review_date,delivery_date) AS time_to_review,
+ROUND(TIMESTAMPDIFF(HOUR,delivery_date,review_date)/24,2) AS time_to_review,
 review_score 
 FROM T 
 WHERE DATEDIFF(review_date,delivery_date) >= 0)
-SELECT * FROM T2;
+SELECT COUNT(*) FROM T2;
 ```
 
 ## 交叉分析类
