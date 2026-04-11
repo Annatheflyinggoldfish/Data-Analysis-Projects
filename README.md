@@ -202,17 +202,16 @@ AND order_delivered_customer_date != ''),
 T2 AS
 (SELECT order_id,
 STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
-STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time,
-STR_TO_DATE(order_estimated_delivery_date,'%Y-%m-%d %H:%i:%s') AS estimated_delivery
+STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time
 FROM T),
 T3 AS 
-(SELECT order_id,deliver_time,purchase_time,estimated_delivery,
-DATEDIFF(deliver_time,purchase_time) AS purchase_deliver_diff,
-DATEDIFF(estimated_delivery,deliver_time) AS estimated_diff
+(SELECT order_id,deliver_time,purchase_time,
+DATEDIFF(deliver_time,purchase_time) AS lead_ime
 FROM T2)
-SELECT ROUND(AVG(purchase_deliver_diff),2) AS avg_delivery_time FROM T3;
+SELECT ROUND(AVG(lead_ime),2) AS avg_lead_ime FROM T3;
 ```
-<img width="250" height="56" alt="image" src="https://github.com/user-attachments/assets/98ec70f1-9ad8-45f6-89a5-a18b9a6829d6" />
+<img width="230" height="63" alt="image" src="https://github.com/user-attachments/assets/04cc9c25-dc1c-49b6-8c08-a5d058ee4a94" />
+
 
 - 各州物流时效差异
 - 物流延误和差评的相关性
