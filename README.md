@@ -148,7 +148,30 @@ FROM T2)
 SELECT * FROM T3 WHERE rnk <= 3;
 ```
 
-### Time Latency for Customer Feedback 购买到评论的时间间隔
+### Time Latency for Customer Feedback
+```sql
+WITH T AS
+(SELECT oord.order_id,ood.order_delivered_customer_date ,oord.review_answer_timestamp
+FROM olist_order_reviews_dataset oord
+INNER JOIN olist_orders_dataset ood
+ON oord.order_id = ood.order_id
+WHERE ood.order_delivered_customer_date IS NOT NULL
+AND ood.order_delivered_customer_date != ''
+AND oord.review_answer_timestamp != ''),
+T2 AS
+(SELECT 
+order_id,
+STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_date,
+STR_TO_DATE(review_answer_timestamp,'%Y/%m/%d %H:%i:%s') AS review_date
+FROM T),
+T3 AS
+(SELECT order_id,
+DATEDIFF(review_date, deliver_date) AS timediff
+FROM T2)
+SELECT ROUND(AVG(timediff),2) AS interval_days FROM T3 WHERE timediff >=0;
+```
+<img width="230" height="60" alt="image" src="https://github.com/user-attachments/assets/74cd3a1f-0d0d-484d-88c0-b3b57d926cd8" />
+
 
 ## 物流类
 - 实际送达 vs 预估送达的准时率
