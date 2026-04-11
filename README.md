@@ -174,6 +174,24 @@ SELECT ROUND(AVG(timediff),2) AS latency FROM T3 WHERE timediff >=0;
 
 
 ## 物流类
+### On Time Delivery Rate
+```sql
+WITH T AS
+(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
+FROM olist_orders_dataset
+WHERE order_delivered_customer_date IS NOT NULL
+AND order_delivered_customer_date != ''),
+T2 AS
+(SELECT order_id,
+STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time,
+STR_TO_DATE(order_estimated_delivery_date,'%Y-%m-%d %H:%i:%s') AS estimated_delivery
+FROM T)
+SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*)FROM T2)*100,2),'%') AS OTD_rate 
+FROM T2 WHERE deliver_time <= estimated_delivery;
+```
+<img width="205" height="65" alt="44a51a43-3324-41d7-b2b4-6deb7410db68" src="https://github.com/user-attachments/assets/9904b799-066b-4790-a308-1f940b2a9f3a" />
+
 ### Average Delivery Time
 ```sql
 WITH T AS
@@ -192,31 +210,9 @@ T3 AS
 DATEDIFF(deliver_time,purchase_time) AS purchase_deliver_diff,
 DATEDIFF(estimated_delivery,deliver_time) AS estimated_diff
 FROM T2)
-SELECT AVG(purchase_deliver_diff) AS avg_delivery_time FROM T3;
+SELECT ROUND(AVG(purchase_deliver_diff),2) AS avg_delivery_time FROM T3;
 ```
-### On Time Delivery Rate
-```sql
-WITH T AS
-(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
-FROM olist_orders_dataset
-WHERE order_delivered_customer_date IS NOT NULL
-AND order_delivered_customer_date != ''),
-T2 AS
-(SELECT order_id,
-STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
-STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time,
-STR_TO_DATE(order_estimated_delivery_date,'%Y-%m-%d %H:%i:%s') AS estimated_delivery
-FROM T),
-T3 AS 
-(SELECT order_id,deliver_time,purchase_time,estimated_delivery,
-DATEDIFF(deliver_time,purchase_time) AS purchase_deliver_diff,
-DATEDIFF(estimated_delivery,deliver_time) AS estimated_diff
-FROM T2)
-SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*)FROM T3)*100,2),'%') AS OTD_rate 
-FROM T3 WHERE deliver_time <= estimated_delivery;
-```
-<img width="205" height="65" alt="44a51a43-3324-41d7-b2b4-6deb7410db68" src="https://github.com/user-attachments/assets/9904b799-066b-4790-a308-1f940b2a9f3a" />
-
+<img width="250" height="56" alt="image" src="https://github.com/user-attachments/assets/98ec70f1-9ad8-45f6-89a5-a18b9a6829d6" />
 
 - 各州物流时效差异
 - 物流延误和差评的相关性
