@@ -382,6 +382,23 @@ SELECT * FROM T ORDER BY total_price;
 ```
 
 ### 差评的时间规律 — 差评集中在一周的哪几天、哪个时段提交？情绪是否有周期性？
+```sql
+WITH T AS 
+(SELECT review_id,
+STR_TO_DATE(review_answer_timestamp,'%Y/%m/%d %H:%i') AS review_time,
+review_score
+FROM olist_order_reviews_dataset
+WHERE review_answer_timestamp IS NOT NULL
+AND review_answer_timestamp != ''),
+T2 AS
+(SELECT review_id,review_time,
+DAYOFWEEK(review_time) AS review_day_of_week,
+HOUR(review_time) AS review_hour,
+review_score
+FROM T)
+SELECT review_day_of_week,COUNT(*),ROUND(AVG(review_score),2) AS avg_score FROM T2 GROUP BY review_day_of_week ORDER BY review_day_of_week;
+SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_score FROM T2 GROUP BY review_hour ORDER BY review_hour;
+```
 
 ### 沉默的买家 — 哪些订单从未留下评价？和品类、价格、配送时长有没有关系？
 
