@@ -213,7 +213,31 @@ SELECT ROUND(AVG(lead_ime),2) AS avg_lead_ime FROM T3;
 <img width="230" height="63" alt="image" src="https://github.com/user-attachments/assets/04cc9c25-dc1c-49b6-8c08-a5d058ee4a94" />
 
 
-- 各州物流时效差异
+### 各州物流时效差异
+```sql
+WITH T AS
+(SELECT customer_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
+FROM olist_orders_dataset
+WHERE order_delivered_customer_date IS NOT NULL
+AND order_delivered_customer_date != ''),
+T2 AS
+(SELECT customer_id,
+STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time
+FROM T),
+T3 AS 
+(SELECT customer_id,deliver_time,purchase_time,
+DATEDIFF(deliver_time,purchase_time) AS lead_time
+FROM T2),
+T4 AS
+(SELECT T3.customer_id,T3.lead_time ,ocd.customer_state
+FROM T3 INNER JOIN olist_customers_dataset ocd
+ON T3.customer_id = ocd.customer_id)
+SELECT customer_state,ROUND(AVG(lead_time),2) AS avg_state_lead_time 
+FROM T4 
+GROUP BY customer_state 
+ORDER BY avg_state_lead_time DESC;
+```
 - 物流延误和差评的相关性
 
 ## 评论/满意度类
