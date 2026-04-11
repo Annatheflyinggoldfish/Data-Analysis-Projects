@@ -168,9 +168,10 @@ T3 AS
 (SELECT order_id,
 DATEDIFF(review_date, deliver_date) AS timediff
 FROM T2)
-SELECT ROUND(AVG(timediff),2) AS interval_days FROM T3 WHERE timediff >=0;
+SELECT ROUND(AVG(timediff),2) AS latency FROM T3 WHERE timediff >=0;
 ```
-<img width="230" height="60" alt="image" src="https://github.com/user-attachments/assets/74cd3a1f-0d0d-484d-88c0-b3b57d926cd8" />
+<img width="185" height="59" alt="image" src="https://github.com/user-attachments/assets/522078f5-58d6-4455-8ca0-45b55f717c71" />
+
 
 
 ## 物流类
