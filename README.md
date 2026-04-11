@@ -30,25 +30,6 @@ INNER JOIN product_category_name_translation pcnt
 ON opd.product_category_name  = pcnt.product_category_name 
 GROUP BY product_catagory ORDER BY sales_qty DESC LIMIT 10;
 ```
-### GMV by state
-```sql
-WITH payment AS
-(SELECT order_id,SUM(oopd.payment_value) AS order_payment
-FROM olist_order_payments_dataset oopd GROUP BY oopd.order_id
-)
-SELECT 
-ocd.customer_state AS state,
-COUNT(*) AS Qty,
-ROUND(SUM(p.order_payment),2) AS state_gmv
-FROM olist_customers_dataset ocd
-JOIN olist_orders_dataset ood
-ON ocd.customer_id = ood.customer_id
-JOIN payment p
-ON ood.order_id = p.order_id
-GROUP BY state
-ORDER BY state_gmv DESC;
-```
-
 ### TOP 10 seller
 ```aql
 WITH payment AS
@@ -124,7 +105,26 @@ GROUP BY order_id
 ORDER BY order_value;
 ```
   
-### Regional Analysis 用户地域分布及消费习惯差异
+### Regional Analysis
+```sql
+WITH payment AS
+(SELECT order_id,SUM(oopd.payment_value) AS order_payment
+FROM olist_order_payments_dataset oopd GROUP BY oopd.order_id
+)
+SELECT 
+ocd.customer_state AS state,
+COUNT(ood.order_id) AS order_Qty,
+COUNT(DISTINCT ocd.customer_unique_id) AS cutomer_count,
+ROUND(SUM(p.order_payment),2) AS state_gmv
+FROM olist_customers_dataset ocd
+JOIN olist_orders_dataset ood
+ON ocd.customer_id = ood.customer_id
+JOIN payment p
+ON ood.order_id = p.order_id
+GROUP BY state
+ORDER BY state_gmv DESC;
+```
+
 ### Time Latency for Customer Feedback 购买到评论的时间间隔
 
 ## 物流类
