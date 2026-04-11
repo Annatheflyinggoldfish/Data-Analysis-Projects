@@ -243,10 +243,45 @@ FROM T4
 GROUP BY customer_state 
 ORDER BY avg_state_lead_time;
 ```
-- 物流延误和差评的相关性
+- 物流延误和差评的相关性（图表导出来拖进tableau）
+```sql
+WITH T AS
+(SELECT order_id,customer_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
+FROM olist_orders_dataset
+WHERE order_delivered_customer_date IS NOT NULL
+AND order_delivered_customer_date != ''),
+T2 AS
+(SELECT order_id,customer_id,
+STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time,
+STR_TO_DATE(order_estimated_delivery_date,'%Y-%m-%d %H:%i:%s') AS estimated_delivery
+FROM T),
+T3 AS 
+(SELECT order_id,customer_id,deliver_time,purchase_time,
+DATEDIFF(deliver_time,purchase_time) AS lead_time,
+DATEDIFF(estimated_delivery,deliver_time) AS delivery_gap
+FROM T2),
+T4 AS
+(SELECT T3.order_id,T3.customer_id,T3.lead_time,T3.delivery_gap,oord.review_score
+FROM T3 INNER JOIN olist_customers_dataset ocd
+ON T3.customer_id = ocd.customer_id
+INNER JOIN olist_order_reviews_dataset oord
+ON T3.order_id = oord.order_id)
+SELECT * FROM T4;
+```
 
 ## 评论/满意度类
-- 评分分布（Olist的评分呈现两极化还是集中化）
+- Rating Distrabution Ratio 比较两级分化
+```sql
+SELECT 
+review_score,
+COUNT(review_score) AS Rating_distribution,
+CONCAT(ROUND(COUNT(review_score)/(SELECT COUNT(*) FROM olist_order_reviews_dataset oord)*100,2),'%') AS ration
+FROM olist_order_reviews_dataset 
+GROUP BY review_score ORDER BY review_score;
+```
+<img width="565" height="165" alt="image" src="https://github.com/user-attachments/assets/c62a5c81-0108-4147-9e92-aa9c05fafc8e" />
+
 - 评分和物流延误的关系
 - 评论回复率及回复时间对评分的影响
 
