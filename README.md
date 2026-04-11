@@ -297,6 +297,25 @@ AND review_comment_message != '';
 <img width="213" height="61" alt="image" src="https://github.com/user-attachments/assets/ce1cfdbc-960d-4afb-af23-a604a9d897fb" />
 
 ### 回复时间对评分的影响(收货和评论间隔时长，以及评分)
+```sql
+WITH T AS
+(SELECT ood.order_id,
+STR_TO_DATE(ood.order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS delivery_date,
+STR_TO_DATE(oord.review_answer_timestamp,'%Y/%m/%d %H:%i') AS review_date,
+oord.review_score
+FROM olist_orders_dataset ood 
+INNER JOIN olist_order_reviews_dataset oord 
+ON ood.order_id = oord.order_id
+WHERE ood.order_delivered_customer_date IS NOT NULL 
+AND ood.order_delivered_customer_date != ''),
+T2 AS 
+(SELECT order_id,
+DATEDIFF(review_date,delivery_date) AS time_to_review,
+review_score 
+FROM T 
+WHERE DATEDIFF(review_date,delivery_date) >= 0)
+SELECT * FROM T2;
+```
 
 ## 交叉分析类
 ### 高价产品是否评分更高（做评分和order价格的对比）
