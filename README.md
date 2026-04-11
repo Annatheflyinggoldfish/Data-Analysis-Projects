@@ -1,9 +1,12 @@
 # 项目标题
 
-## 背景
-一段话描述项目
+## Tools
+### MySQL, Tableau Public
 
-## 业务表现类
+## Introduction
+### Olist E-Commerce Analytics: 
+
+## General Performance
 ### Monthly GMV
 ```sql
 SELECT
@@ -243,7 +246,20 @@ FROM T4
 GROUP BY customer_state 
 ORDER BY avg_state_lead_time;
 ```
-- 物流延误和差评的相关性（图表导出来拖进tableau）
+
+## 评论/满意度类
+- Rating Distrabution Ratio 比较两级分化
+```sql
+SELECT 
+review_score,
+COUNT(review_score) AS Rating_distribution,
+CONCAT(ROUND(COUNT(review_score)/(SELECT COUNT(*) FROM olist_order_reviews_dataset oord)*100,2),'%') AS ration
+FROM olist_order_reviews_dataset 
+GROUP BY review_score ORDER BY review_score;
+```
+<img width="565" height="165" alt="image" src="https://github.com/user-attachments/assets/c62a5c81-0108-4147-9e92-aa9c05fafc8e" />
+
+### 物流延误和差评的相关性（图表导出来拖进tableau）
 ```sql
 WITH T AS
 (SELECT order_id,customer_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
@@ -270,28 +286,16 @@ ON T3.order_id = oord.order_id)
 SELECT * FROM T4;
 ```
 
-## 评论/满意度类
-- Rating Distrabution Ratio 比较两级分化
-```sql
-SELECT 
-review_score,
-COUNT(review_score) AS Rating_distribution,
-CONCAT(ROUND(COUNT(review_score)/(SELECT COUNT(*) FROM olist_order_reviews_dataset oord)*100,2),'%') AS ration
-FROM olist_order_reviews_dataset 
-GROUP BY review_score ORDER BY review_score;
-```
-<img width="565" height="165" alt="image" src="https://github.com/user-attachments/assets/c62a5c81-0108-4147-9e92-aa9c05fafc8e" />
+### 评论回复率
 
-- 评分和物流延误的关系
-- 评论回复率及回复时间对评分的影响
+### 回复时间对评分的影响
 
 ## 交叉分析类
-- 高价产品是否评分更高
-- 节假日前后购买行为和评分变化
-- 卖家评分和销量的关系
+### 高价产品是否评分更高（做评分和order价格的对比）
 
-## 工具
-MySQL, Tableau Public
+### 节假日前后购买行为和评分变化- 只看黑五 Black Friday
+
+### 卖家评分和销量的关系 avg_review_score 和 total_sales 的对比（注意：先有鸡还是先有蛋？）
 
 ## 结论
 - 发现1
