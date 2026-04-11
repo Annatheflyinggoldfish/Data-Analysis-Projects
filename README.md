@@ -212,11 +212,11 @@ T3 AS
 DATEDIFF(deliver_time,purchase_time) AS purchase_deliver_diff,
 DATEDIFF(estimated_delivery,deliver_time) AS estimated_diff
 FROM T2)
-SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*)FROM T3)*100,2),'%') AS OTD_rate
-FROM T3
-WHERE estimated_diff >= purchase_deliver_diff;
+SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*)FROM T3)*100,2),'%') AS OTD_rate 
+FROM T3 WHERE deliver_time <= estimated_delivery;
 ```
-<img width="200" height="60" alt="image" src="https://github.com/user-attachments/assets/7a3294c4-aa64-4ee9-9354-b8479931b721" />
+<img width="205" height="65" alt="44a51a43-3324-41d7-b2b4-6deb7410db68" src="https://github.com/user-attachments/assets/9904b799-066b-4790-a308-1f940b2a9f3a" />
+
 
 - 各州物流时效差异
 - 物流延误和差评的相关性
