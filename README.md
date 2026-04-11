@@ -10,14 +10,14 @@
 ### Monthly GMV
 ```sql
 SELECT
-DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m') AS month,
-COUNT(o.order_id) AS order_count,
-ROUND(SUM(p.payment_value),2) AS gmv
-FROM olist_orders_dataset o
-JOIN olist_order_payments_dataset p ON o.order_id = p.order_id
-WHERE o.order_purchase_timestamp >= '2017-01-01'
-AND o.order_purchase_timestamp < '2018-09-01'
-GROUP BY DATE_FORMAT(o.order_purchase_timestamp, '%Y-%m')
+DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS month,
+COUNT(ood.order_id) AS order_count,
+ROUND(SUM(oopd.payment_value),2) AS gmv
+FROM olist_orders_dataset ood
+JOIN olist_order_payments_dataset oopd ON ood.order_id = oopd.order_id
+WHERE ood.order_purchase_timestamp >= '2017-01-01'
+AND ood.order_purchase_timestamp < '2018-09-01'
+GROUP BY DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
 ### TOP 10 best-selling product categories and GMV
@@ -68,6 +68,30 @@ SELECT ROUND(SUM(order_payment),2) AS total_gmv FROM payment;
 SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment)*100,2),'%') AS CR10 FROM top10_sellers;
 ```
 <img width="170" height="59" alt="image" src="https://github.com/user-attachments/assets/a2f8d179-49c8-4c8f-abe5-f65e2670c22d" />
+
+### TOP 3 Best Selling Categories by Month
+```sql
+WITH T AS
+(SELECT order_id,product_id,SUM(price) AS price FROM olist_order_items_dataset ooid GROUP BY order_id,product_id),
+T2 AS
+(SELECT T.order_id,T.product_id,ood.customer_id,T.price,
+DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS months,
+pcnt.product_category_name_english AS product_name
+FROM T
+INNER JOIN olist_products_dataset opd
+ON T.product_id = opd.product_id
+INNER JOIN product_category_name_translation pcnt
+ON opd.product_category_name = pcnt.product_category_name
+INNER JOIN olist_orders_dataset ood 
+ON T.order_id = ood.order_id),
+T3 AS
+(SELECT months,product_name,SUM(price) AS total_price FROM T2 GROUP BY months,product_name),
+T4 AS
+(SELECT months,product_name,total_price,
+DENSE_RANK() OVER (PARTITION BY months ORDER BY total_price DESC) AS rn
+FROM T3)
+SELECT * FROM T4 WHERE rn <= 3;
+```
 
 ## 客户行为类
 ### Repeat Purchase Rate
@@ -356,6 +380,10 @@ WHERE rn = 1
 GROUP BY ooid.order_id,rt.review_score)
 SELECT * FROM T ORDER BY total_price;
 ```
+
+### 差评的时间规律 — 差评集中在一周的哪几天、哪个时段提交？情绪是否有周期性？
+
+### 沉默的买家 — 哪些订单从未留下评价？和品类、价格、配送时长有没有关系？
 
 ## 结论
 - 发现1
