@@ -444,6 +444,48 @@ SELECT order_id,product_name,price,lead_time,review_score FROM T6
 WHERE (review_comment_title IS NULL OR review_comment_title = '')
 AND (review_comment_message IS NULL OR review_comment_message = ''); 
 ```
+### Customers who never left a score or review
+```sql
+WITH T AS
+(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date
+FROM olist_orders_dataset
+WHERE order_delivered_customer_date IS NOT NULL
+AND order_delivered_customer_date != ''),
+T2 AS
+(SELECT order_id,
+STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time
+FROM T),
+T3 AS 
+(SELECT order_id,deliver_time,purchase_time,
+DATEDIFF(deliver_time,purchase_time) AS lead_time
+FROM T2),
+T4 AS
+(SELECT order_id,product_id,SUM(price) AS price 
+FROM olist_order_items_dataset ooid 
+GROUP BY order_id,product_id),
+T5 AS
+(SELECT T4.order_id,T4.product_id,ood.customer_id,T4.price,
+DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS months,
+pcnt.product_category_name_english AS product_name
+FROM T4
+INNER JOIN olist_products_dataset opd
+ON T4.product_id = opd.product_id
+INNER JOIN product_category_name_translation pcnt
+ON opd.product_category_name = pcnt.product_category_name
+INNER JOIN olist_orders_dataset ood 
+ON T4.order_id = ood.order_id),
+never_reviewed AS 
+(SELECT ood.customer_id, ood.order_id
+FROM olist_orders_dataset ood
+LEFT JOIN olist_order_reviews_dataset rt ON ood.order_id = rt.order_id
+WHERE rt.order_id IS NULL)
+SELECT nr.order_id,nr.customer_id,T5.product_name,T5.price,T3.lead_time 
+FROM never_reviewed nr
+INNER JOIN T3 ON nr.order_id = T3.order_id
+INNER JOIN T5 ON nr.order_id = T5.order_id
+ORDER BY nr.customer_id;
+```
 
 ## 结论
 - 发现1
