@@ -174,7 +174,27 @@ SELECT ROUND(AVG(timediff),2) AS latency FROM T3 WHERE timediff >=0;
 
 
 ## 物流类
-- 实际送达 vs 预估送达的准时率
+### 实际送达 vs 预估送达的准时率
+```sql
+WITH T AS
+(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
+FROM olist_orders_dataset
+WHERE order_delivered_customer_date IS NOT NULL
+AND order_delivered_customer_date != ''),
+T2 AS
+(SELECT order_id,
+STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time,
+STR_TO_DATE(order_estimated_delivery_date,'%Y-%m-%d %H:%i:%s') AS estimated_delivery
+FROM T),
+T3 AS 
+(SELECT order_id,deliver_time,purchase_time,estimated_delivery,
+DATEDIFF(deliver_time,purchase_time) AS purchase_deliver_diff,
+DATEDIFF(estimated_delivery,deliver_time) AS estimated_diff
+FROM T2)
+SELECT * FROM T3;
+```
+
 - 各州物流时效差异
 - 物流延误和差评的相关性
 
