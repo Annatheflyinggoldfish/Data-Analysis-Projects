@@ -106,6 +106,7 @@ ORDER BY order_value;
 ```
   
 ### Regional Analysis
+- 各州的总销售额&客户总数
 ```sql
 WITH payment AS
 (SELECT order_id,SUM(oopd.payment_value) AS order_payment
@@ -123,6 +124,28 @@ JOIN payment p
 ON ood.order_id = p.order_id
 GROUP BY state
 ORDER BY state_gmv DESC;
+```
+- 各州排名前三的产品
+```sql
+WITH T AS
+(SELECT ooid.order_id,ooid.product_id,ood.customer_id,ocd.customer_state,pcnt.product_category_name_english AS product_name
+FROM olist_order_items_dataset ooid
+INNER JOIN olist_products_dataset opd
+ON ooid.product_id = opd.product_id
+INNER JOIN product_category_name_translation pcnt
+ON opd.product_category_name = pcnt.product_category_name
+INNER JOIN olist_orders_dataset ood 
+ON ooid.order_id = ood.order_id
+INNER JOIN olist_customers_dataset ocd
+ON ood.customer_id = ocd.customer_id),
+T2 AS
+(SELECT customer_state,product_name,COUNT(*) AS qty
+FROM T 
+GROUP BY customer_state,product_name),
+T3 AS
+(SELECT customer_state,product_name,qty,
+DENSE_RANK() OVER (PARTITION BY customer_state ORDER BY qty DESC)AS rnk FROM T2)
+SELECT * FROM T3 WHERE rnk <= 3;
 ```
 
 ### Time Latency for Customer Feedback 购买到评论的时间间隔
