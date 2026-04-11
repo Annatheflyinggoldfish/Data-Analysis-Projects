@@ -400,7 +400,50 @@ SELECT review_day_of_week,COUNT(*),ROUND(AVG(review_score),2) AS avg_score FROM 
 SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_score FROM T2 GROUP BY review_hour ORDER BY review_hour;
 ```
 
-### 沉默的买家 — 哪些订单从未留下评价？和品类、价格、配送时长有没有关系？
+### Customers who left a score but no reviews
+```sql
+WITH review_table AS 
+(SELECT order_id, review_score, review_comment_title, review_comment_message,
+ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
+FROM olist_order_reviews_dataset), 
+T AS
+(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
+FROM olist_orders_dataset
+WHERE order_delivered_customer_date IS NOT NULL
+AND order_delivered_customer_date != ''),
+T2 AS
+(SELECT order_id,
+STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time
+FROM T),
+T3 AS 
+(SELECT order_id,deliver_time,purchase_time,
+DATEDIFF(deliver_time,purchase_time) AS lead_time
+FROM T2),
+T4 AS
+(SELECT order_id,product_id,SUM(price) AS price FROM olist_order_items_dataset ooid GROUP BY order_id,product_id),
+T5 AS
+(SELECT T4.order_id,T4.product_id,ood.customer_id,T4.price,
+DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS months,
+pcnt.product_category_name_english AS product_name
+FROM T4
+INNER JOIN olist_products_dataset opd
+ON T4.product_id = opd.product_id
+INNER JOIN product_category_name_translation pcnt
+ON opd.product_category_name = pcnt.product_category_name
+INNER JOIN olist_orders_dataset ood 
+ON T4.order_id = ood.order_id),
+T6 AS
+(SELECT T3.order_id,T5.product_name,T5.price,T3.lead_time,rt.review_score,rt.review_comment_title,rt.review_comment_message 
+FROM T3 INNER JOIN T5 
+ON T3.order_id = T5.order_id
+INNER JOIN review_table rt
+ON T5.order_id = rt.order_id
+WHERE rn = 1)
+SELECT order_id,product_name,price,lead_time,review_score FROM T6 
+WHERE (review_comment_title IS NULL OR review_comment_title = '')
+AND (review_comment_message IS NULL OR review_comment_message = ''); 
+```
 
 ## 结论
 - 发现1
