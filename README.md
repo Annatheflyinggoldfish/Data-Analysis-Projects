@@ -31,7 +31,7 @@ INNER JOIN olist_products_dataset opd
 ON ooid.product_id = opd.product_id
 INNER JOIN product_category_name_translation pcnt
 ON opd.product_category_name  = pcnt.product_category_name 
-GROUP BY product_catagory ORDER BY sales_qty DESC LIMIT 10;
+GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
 ```
 ### TOP 10 seller
 ```aql
