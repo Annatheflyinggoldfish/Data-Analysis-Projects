@@ -478,8 +478,7 @@ ON T4.order_id = ood.order_id),
 never_reviewed AS 
 (SELECT ood.customer_id, ood.order_id
 FROM olist_orders_dataset ood
-LEFT JOIN olist_order_reviews_dataset rt ON ood.order_id = rt.order_id
-WHERE rt.order_id IS NULL)
+WHERE NOT EXISTS (SELECT 1 FROM olist_order_reviews_dataset rt WHERE ood.order_id = rt.order_id))
 SELECT nr.order_id,nr.customer_id,T5.product_name,T5.price,T3.lead_time 
 FROM never_reviewed nr
 INNER JOIN T3 ON nr.order_id = T3.order_id
