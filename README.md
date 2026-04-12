@@ -7,12 +7,13 @@
 ### Olist E-Commerce Analytics: 
 
 ## General Performance
-### Monthly GMV
+### Monthly Order Count, GMV, and Average Order Value(需要重写，考虑一个order_id多个payment——value的情况)
 ```sql
 SELECT
 DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS month,
 COUNT(ood.order_id) AS order_count,
-ROUND(SUM(oopd.payment_value),2) AS gmv
+ROUND(SUM(oopd.payment_value),2) AS gmv,
+ROUND(SUM(oopd.payment_value)/COUNT(ood.order_id),2) AS avg_order_value
 FROM olist_orders_dataset ood
 JOIN olist_order_payments_dataset oopd ON ood.order_id = oopd.order_id
 WHERE ood.order_purchase_timestamp >= '2017-01-01'
@@ -20,6 +21,24 @@ AND ood.order_purchase_timestamp < '2018-09-01'
 GROUP BY DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
+### Monthly Distribution by Order Value Tier(需要重写，考虑一个order_id多个payment——value的情况)
+```sql
+SELECT
+DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS month,
+CASE 
+WHEN oopd.payment_value < 100 THEN 'low (<100)'
+WHEN oopd.payment_value < 500 THEN 'mid (100-500)'
+ELSE 'high (500+)'
+END AS value_tier,
+COUNT(ood.order_id) AS order_count
+FROM olist_orders_dataset ood
+JOIN olist_order_payments_dataset oopd ON ood.order_id = oopd.order_id
+WHERE ood.order_purchase_timestamp >= '2017-01-01'
+AND ood.order_purchase_timestamp < '2018-09-01'
+GROUP BY month, value_tier
+ORDER BY month, value_tier;
+```
+
 ### TOP 10 best-selling product categories and GMV
 ```sql
 SELECT 
