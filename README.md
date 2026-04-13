@@ -402,7 +402,7 @@ ORDER BY avg_state_lead_time DESC;
 
 
 ## 评论/满意度类
-- Rating Distrabution Ratio
+### Rating Distrabution Ratio
 <details>
 <summary>View SQL</summary>
  
@@ -414,9 +414,8 @@ CONCAT(ROUND(COUNT(review_score)/(SELECT COUNT(*) FROM olist_order_reviews_datas
 FROM olist_order_reviews_dataset 
 GROUP BY review_score ORDER BY review_score;
 ```
-<img width="565" height="165" alt="image" src="https://github.com/user-attachments/assets/c62a5c81-0108-4147-9e92-aa9c05fafc8e" />
-</details>
-
+<img width="100" height="43" alt="image" src="https://github.com/user-attachments/assets/16c817e5-2bae-4491-bed7-2a598b81a435" />
+<img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/7a5f973f-93bc-45ff-b9b2-d18142c142bf" />
 
 ### 物流延误和差评的相关性（图表导出来拖进tableau）
 <details>
