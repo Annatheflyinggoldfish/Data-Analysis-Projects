@@ -134,11 +134,14 @@ UNION ALL
 SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 ```
 </details>
-<img width="105" height="85" alt="image" src="https://github.com/user-attachments/assets/c13b0ee9-20e7-43b3-b7d7-b4052a5edf43" />
-<img width="349" height="306" alt="image" src="https://github.com/user-attachments/assets/63667e41-a7ff-4745-884f-ab70f6ea773a" />
+<img width="65" height="45" alt="image" src="https://github.com/user-attachments/assets/c13b0ee9-20e7-43b3-b7d7-b4052a5edf43" />
+<img width="300" height="275" alt="image" src="https://github.com/user-attachments/assets/63667e41-a7ff-4745-884f-ab70f6ea773a" />
 
 
 ### TOP 3 Best Selling Product Categories by Month
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH T AS
 (SELECT order_id,product_id,SUM(price) AS price FROM olist_order_items_dataset ooid GROUP BY order_id,product_id),
@@ -159,8 +162,11 @@ T4 AS
 (SELECT months,product_name,total_price,
 DENSE_RANK() OVER (PARTITION BY months ORDER BY total_price DESC) AS rn
 FROM T3)
-SELECT * FROM T4 WHERE rn <= 3;
+SELECT * FROM T4 WHERE rn <= 10;
 ```
+</details>
+<img width="1181" height="863" alt="76ea9daa-bf0f-48d0-92ce-205f6ffa8998" src="https://github.com/user-attachments/assets/5ccb4014-fa23-47f0-8f9c-44af6ec8067f" />
+<img width="159" height="89" alt="8b4cfc17-a0b7-4767-97e1-66bccf0eeb46" src="https://github.com/user-attachments/assets/846d2bc5-ac61-4692-8a72-103aee458677" />
 
 ## 客户行为类
 ### Repeat Purchase Rate
