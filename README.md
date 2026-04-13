@@ -231,7 +231,7 @@ GROUP BY price_tier;
 <img width="1225" height="631" alt="image" src="https://github.com/user-attachments/assets/ae476547-8670-4f2e-90e6-4067639a3880" />
 
 ## Regional Analysis
-- 各州的订单数量，总销售额&客户总数
+### Order Volume, GMV, and Customer Distribution By State
 <details>
 <summary>View SQL</summary>
  
@@ -253,6 +253,7 @@ GROUP BY state
 ORDER BY state_gmv DESC;
 ```
 </details>
+<img width="1364" height="780" alt="image" src="https://github.com/user-attachments/assets/356dcd66-8887-432f-bcf1-0bebb30da127" />
 
 
 ### TOP 3 Best Selling Product Categories by State
