@@ -32,7 +32,7 @@ GROUP BY DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
 </details>
-<img width="1265" height="761" alt="image" src="https://github.com/user-attachments/assets/859f4f0f-6bc0-4d8d-a294-b2b284110a14" />
+<img width="1485" height="775" alt="14558d11-5c43-43e0-8deb-2889082015e2" src="https://github.com/user-attachments/assets/f485718c-b27e-4c0a-bcd8-37eb39c91d21" />
 
 
 ### Monthly Distribution by Order Value Tier
@@ -59,6 +59,9 @@ ORDER BY month, value_tier;
 ```
 
 </details>
+<img width="1461" height="775" alt="62e040dc-e0e5-41e2-a133-d116a5274a9f" src="https://github.com/user-attachments/assets/1d941d86-d073-4eb0-9a54-b3417899126a" />
+
+
  
 ### TOP 10 best-selling products
 <details>
