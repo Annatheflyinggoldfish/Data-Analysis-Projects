@@ -169,7 +169,7 @@ SELECT * FROM T4 WHERE rn <= 10;
 <img width="159" height="89" alt="8b4cfc17-a0b7-4767-97e1-66bccf0eeb46" src="https://github.com/user-attachments/assets/846d2bc5-ac61-4692-8a72-103aee458677" />
 
 ## 客户行为类
-### Repeat Purchase Rate 
+### Repeat Purchase Rate: 3.12%
 <details>
 <summary>View SQL</summary>
  
@@ -186,7 +186,7 @@ FROM T WHERE order_count >= 2;
 <img width="280" height="60" alt="image" src="https://github.com/user-attachments/assets/326c3591-58c1-4b12-9f11-c57bdfe8bc60" />
  </details>
  
-### Average Inter-purchase Time
+### Average Inter-purchase Time: 78 Days
 <details>
 <summary>View SQL</summary>
  
@@ -276,7 +276,7 @@ SELECT * FROM T3 WHERE rnk <= 3;
 </details>
 
 
-### Time Latency for Customer Feedback
+### Time Latency for Customer Feedback: 3.6 Days
 <details>
 <summary>View SQL</summary>
  
@@ -296,19 +296,16 @@ STR_TO_DATE(review_answer_timestamp,'%Y/%m/%d %H:%i:%s') AS review_date
 FROM T),
 T3 AS
 (SELECT order_id,
-DATEDIFF(review_date, deliver_date) AS timediff
+TIMESTAMPDIFF(HOUR, deliver_date, review_date) / 24 AS timediff
 FROM T2)
-SELECT ROUND(AVG(timediff),2) AS latency FROM T3 WHERE timediff >=0;
+SELECT ROUND(AVG(timediff),1) AS latency FROM T3 WHERE timediff >=0;
 ```
+<img width="186" height="65" alt="image" src="https://github.com/user-attachments/assets/1abe10b1-56da-4db6-8ede-60e5ed039d84" />
+
 </details>
 
-
-<img width="185" height="59" alt="image" src="https://github.com/user-attachments/assets/522078f5-58d6-4455-8ca0-45b55f717c71" />
-
-
-
 ## 物流类
-### On Time Delivery Rate
+### On Time Delivery Rate: 91.89%
 <details>
 <summary>View SQL</summary>
  
@@ -327,12 +324,13 @@ FROM T)
 SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*)FROM T2)*100,2),'%') AS OTD_rate 
 FROM T2 WHERE deliver_time <= estimated_delivery;
 ```
-</details>
-
 
 <img width="205" height="65" alt="44a51a43-3324-41d7-b2b4-6deb7410db68" src="https://github.com/user-attachments/assets/9904b799-066b-4790-a308-1f940b2a9f3a" />
 
-### Average Delivery Time
+</details>
+
+
+### Average Lead(Delivery) Time: 12.5 Days
 <details>
 <summary>View SQL</summary>
  
@@ -349,15 +347,12 @@ STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time
 FROM T),
 T3 AS 
 (SELECT order_id,deliver_time,purchase_time,
-DATEDIFF(deliver_time,purchase_time) AS lead_ime
+TIMESTAMPDIFF(HOUR,purchase_time,deliver_time)/24 AS lead_ime
 FROM T2)
-SELECT ROUND(AVG(lead_ime),2) AS avg_lead_ime FROM T3;
+SELECT ROUND(AVG(lead_ime),1) AS avg_lead_ime FROM T3;
 ```
+<img width="225" height="61" alt="image" src="https://github.com/user-attachments/assets/af8b295f-dd72-4092-bde8-020577f8c7b6" />
 </details>
-
-
-<img width="230" height="63" alt="image" src="https://github.com/user-attachments/assets/04cc9c25-dc1c-49b6-8c08-a5d058ee4a94" />
-
 
 ### Average Lead Time & Delivery Gap By State
 <details>
@@ -444,7 +439,7 @@ SELECT * FROM T4;
 </details>
 
 
-### 评论回复率
+### Review Rate: 41.30%
 <details>
 <summary>View SQL</summary>
  
@@ -455,10 +450,10 @@ FROM olist_order_reviews_dataset
 WHERE review_comment_message IS NOT NULL
 AND review_comment_message != '';
 ```
+
+<img width="215" height="61" alt="image" src="https://github.com/user-attachments/assets/1f0768d0-8b14-44bd-9907-e1fa6a94c2ef" />
 </details>
 
-
-<img width="213" height="61" alt="image" src="https://github.com/user-attachments/assets/ce1cfdbc-960d-4afb-af23-a604a9d897fb" />
 
 ### 回复时间对评分的影响(收货和评论间隔时长，以及评分)
 <details>
