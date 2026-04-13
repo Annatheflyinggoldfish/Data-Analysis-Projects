@@ -30,8 +30,6 @@ AND ood.order_purchase_timestamp < '2018-09-01'
 GROUP BY DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
-<details>
- 
 <img width="1435" height="740" alt="image" src="https://github.com/user-attachments/assets/97dfda30-ea54-466b-ab6b-ced9610c4069" />
 
 ### Monthly Distribution by Order Value Tier
