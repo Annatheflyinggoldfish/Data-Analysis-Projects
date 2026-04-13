@@ -213,15 +213,23 @@ SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM T2;
 <summary>View SQL</summary>
  
 ```sql
-SELECT order_id,SUM(payment_value) AS order_value
+WITH T AS 
+(SELECT order_id,SUM(payment_value) AS order_value
 FROM olist_order_payments_dataset oopd
 GROUP BY order_id
-ORDER BY order_value;
+ORDER BY order_value)
+SELECT 
+CASE
+WHEN order_value >= 500 THEN '500+'
+ELSE CONCAT(FLOOR(order_value/50)*50, '-', FLOOR(order_value/50)*50+50)
+END AS price_tier,
+COUNT(*) AS order_count 
+FROM T
+GROUP BY price_tier;
 ```
 </details>
+<img width="1225" height="631" alt="image" src="https://github.com/user-attachments/assets/ae476547-8670-4f2e-90e6-4067639a3880" />
 
-
-  
 ## Regional Analysis
 - 各州的订单数量，总销售额&客户总数
 <details>
