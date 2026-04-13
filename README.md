@@ -170,6 +170,8 @@ SELECT * FROM T4 WHERE rn <= 10;
 
 ## 客户行为类
 ### Repeat Purchase Rate 
+<details>
+<summary>View SQL</summary>
 ```sql
 WITH T AS
 (SELECT customer_unique_id,COUNT(customer_unique_id) AS order_count
