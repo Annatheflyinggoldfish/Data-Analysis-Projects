@@ -1,13 +1,13 @@
-# 项目标题
+# Olist Brazilian E-Commerce Business Performance Analysis
 
 ## Tools
-### MySQL, Tableau Public
+- MySQL, Tableau Public
 
 ## Introduction
-### Olist E-Commerce Analytics: 
+- Olist E-Commerce Analytics: 
 
 ## General Performance
-### Monthly Order Count, GMV, and Average Order Value(需要重写，考虑一个order_id多个payment——value的情况)
+### Monthly Order Count, GMV, and Average Order Value
 ```sql
 WITH payments AS
 (SELECT order_id,SUM(payment_value) AS payment FROM olist_order_payments_dataset GROUP BY order_id)
@@ -23,7 +23,7 @@ AND ood.order_purchase_timestamp < '2018-09-01'
 GROUP BY DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
-### Monthly Distribution by Order Value Tier(需要重写，考虑一个order_id多个payment——value的情况)
+### Monthly Distribution by Order Value Tier
 ```sql
 WITH payments AS
 (SELECT order_id,SUM(payment_value) AS payment FROM olist_order_payments_dataset GROUP BY order_id)
@@ -43,7 +43,7 @@ GROUP BY month, value_tier
 ORDER BY month, value_tier;
 ```
 
-### TOP 10 best-selling product categories and GMV
+### TOP 10 best-selling products
 ```sql
 SELECT 
 pcnt.product_category_name_english AS product_catagory,
@@ -74,20 +74,21 @@ SELECT seller, ROUND(gmv,2) AS seller_gmv FROM top10_sellers;
 ```
 <img width="480" height="290" alt="image" src="https://github.com/user-attachments/assets/90424168-17e7-44a7-abbe-9b546165e79e" />
 
-### Top 10 Seller GVM
-```sql
-SELECT ROUND(SUM(gmv),2) AS seller_gmv FROM top10_sellers;
-```
-<img width="210" height="60" alt="image" src="https://github.com/user-attachments/assets/0d20af53-4fd2-4dbe-838f-40938c4fb274" />
-
-### Total GVM: 16008872.12
-```sql
-SELECT ROUND(SUM(order_payment),2) AS total_gmv FROM payment;
-```
-<img width="206" height="61" alt="image" src="https://github.com/user-attachments/assets/bbc050d2-7ac7-4081-8fb0-6d7ea1cd4238" />
 
 ### Top 10 Sellers' Contribution to Total GMV
 ```sql
+WITH payment AS
+(SELECT order_id,SUM(payment_value) AS order_payment
+FROM olist_order_payments_dataset GROUP BY order_id),
+top10_sellers AS
+(SELECT
+ootd.seller_id AS seller,
+SUM(p.order_payment) AS gmv
+FROM olist_order_items_dataset ootd
+JOIN payment p
+ON ootd.order_id = p.order_id
+GROUP BY ootd.seller_id
+ORDER BY gmv DESC LIMIT 10)
 SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment)*100,2),'%') AS CR10 FROM top10_sellers;
 ```
 <img width="170" height="59" alt="image" src="https://github.com/user-attachments/assets/a2f8d179-49c8-4c8f-abe5-f65e2670c22d" />
