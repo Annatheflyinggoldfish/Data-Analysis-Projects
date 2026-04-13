@@ -14,7 +14,7 @@
 ## General Performance
 ### Monthly Order Count, GMV, and Average Order Value
 <details>
-<summary>View SQL: Monthly GMV Calculation</summary>
+<summary>View SQL</summary>
 
 ```sql
 WITH payments AS
@@ -31,7 +31,9 @@ AND ood.order_purchase_timestamp < '2018-09-01'
 GROUP BY DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
-<img width="1435" height="740" alt="image" src="https://github.com/user-attachments/assets/97dfda30-ea54-466b-ab6b-ced9610c4069" />
+</details>
+<img width="1265" height="761" alt="image" src="https://github.com/user-attachments/assets/859f4f0f-6bc0-4d8d-a294-b2b284110a14" />
+
 
 ### Monthly Distribution by Order Value Tier
 ```sql
