@@ -451,8 +451,6 @@ SELECT * FROM T4;
 <img width="685" height="552" alt="image" src="https://github.com/user-attachments/assets/f33d1b08-b0c0-4eff-9381-c98ae5fe53e7" />
 
 
-
-
 ### Review Rate: 41.30%
 <details>
 <summary>View SQL</summary>
@@ -499,7 +497,6 @@ SELECT * FROM T2;
 ```
 </details>
 <img width="480" height="320" alt="image" src="https://github.com/user-attachments/assets/0a0940e4-180d-4507-acc5-3e31b9662635" />
-
 
 
 ## 交叉分析类
@@ -578,7 +575,8 @@ SELECT review_day_of_week,COUNT(*),ROUND(AVG(review_score),2) AS avg_score FROM 
 SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_score FROM T2 GROUP BY review_hour ORDER BY review_hour;
 ```
 </details>
-
+<img width="704" height="324" alt="image" src="https://github.com/user-attachments/assets/8573f5b1-4178-4b0f-aeb2-34a298bad694" />
+<img width="796" height="412" alt="image" src="https://github.com/user-attachments/assets/3a81ed18-a7c5-4160-b2d0-ee7f4524a373" />
 
 ### Customers who left a score but no reviews
 <details>
