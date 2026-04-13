@@ -123,11 +123,19 @@ FROM olist_order_items_dataset ootd
 JOIN payment p
 ON ootd.order_id = p.order_id
 GROUP BY ootd.seller_id
-ORDER BY gmv DESC LIMIT 10)
-SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment)*100,2),'%') AS CR10 FROM top10_sellers;
+ORDER BY gmv DESC LIMIT 10),
+T AS
+(SELECT 
+SUM(gmv) AS top10_seller_gmv,
+(SELECT SUM(order_payment) FROM payment)  AS total_gmv 
+FROM top10_sellers)
+SELECT 'top10 seller' AS catagory,top10_seller_gmv AS gmv FROM T
+UNION ALL
+SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 ```
 </details>
-<img width="170" height="59" alt="image" src="https://github.com/user-attachments/assets/a2f8d179-49c8-4c8f-abe5-f65e2670c22d" />
+<img width="409" height="368" alt="ee42941b-b8d5-41c1-81b6-449bb41f4c05" src="https://github.com/user-attachments/assets/a9cbea0e-9ff4-4cec-a118-18ff4187f3e7" />
+<img width="131" height="89" alt="dbd90b8d-f630-4059-90d6-d9a9786475d6" src="https://github.com/user-attachments/assets/d665e1a9-f11e-44c1-938b-89981a55d62f" />
 
 ### TOP 3 Best Selling Product Categories by Month
 ```sql
