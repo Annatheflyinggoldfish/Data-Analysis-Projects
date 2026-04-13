@@ -107,7 +107,7 @@ SELECT seller, ROUND(gmv,2) AS seller_gmv FROM top10_sellers;
 <img width="480" height="290" alt="image" src="https://github.com/user-attachments/assets/90424168-17e7-44a7-abbe-9b546165e79e" />
 
 
-### Top 10 Sellers' Contribution to Total GMV
+### Top 10 Sellers' Contribution to Total GMV 
 <details>
 <summary>View SQL</summary>
  
@@ -138,7 +138,7 @@ SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 <img width="300" height="275" alt="image" src="https://github.com/user-attachments/assets/63667e41-a7ff-4745-884f-ab70f6ea773a" />
 
 
-### TOP 3 Best Selling Product Categories by Month
+### TOP 10 Best Selling Product Categories Rankings by Month
 <details>
 <summary>View SQL</summary>
  
