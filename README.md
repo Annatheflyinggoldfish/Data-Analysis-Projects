@@ -13,6 +13,8 @@
 
 ## General Performance
 ### Monthly Order Count, GMV, and Average Order Value
+<details>
+<summary>
 ```sql
 WITH payments AS
 (SELECT order_id,SUM(payment_value) AS payment FROM olist_order_payments_dataset GROUP BY order_id)
