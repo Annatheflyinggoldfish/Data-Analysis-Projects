@@ -395,9 +395,11 @@ ROUND(AVG(lead_time),2) AS avg_state_lead_time,
 ROUND(AVG(delivery_gap),2) AS avg_delivery_gap
 FROM T4 
 GROUP BY customer_state 
-ORDER BY avg_state_lead_time;
+ORDER BY avg_state_lead_time DESC;
 ```
 </details>
+<img width="800" height="440" alt="d97590119f88231bf30335feca05716a" src="https://github.com/user-attachments/assets/a20e5a7a-1270-493a-9803-5321baa64baa" />
+
 
 
 ## 评论/满意度类
