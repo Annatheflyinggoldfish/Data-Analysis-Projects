@@ -9,13 +9,15 @@
 ## General Performance
 ### Monthly Order Count, GMV, and Average Order Value(需要重写，考虑一个order_id多个payment——value的情况)
 ```sql
+WITH payments AS
+(SELECT order_id,SUM(payment_value) AS payment FROM olist_order_payments_dataset GROUP BY order_id)
 SELECT
 DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS month,
 COUNT(ood.order_id) AS order_count,
-ROUND(SUM(oopd.payment_value),2) AS gmv,
-ROUND(SUM(oopd.payment_value)/COUNT(ood.order_id),2) AS avg_order_value
+ROUND(SUM(p.payment),2) AS gmv,
+ROUND(SUM(p.payment)/COUNT(ood.order_id),2) AS avg_order_value
 FROM olist_orders_dataset ood
-JOIN olist_order_payments_dataset oopd ON ood.order_id = oopd.order_id
+JOIN payments p ON ood.order_id = p.order_id
 WHERE ood.order_purchase_timestamp >= '2017-01-01'
 AND ood.order_purchase_timestamp < '2018-09-01'
 GROUP BY DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m')
