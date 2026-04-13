@@ -38,6 +38,7 @@ ORDER BY month;
 ### Monthly Distribution by Order Value Tier
 <details>
 <summary>View SQL</summary>
+ 
 ```sql
 WITH payments AS
 (SELECT order_id,SUM(payment_value) AS payment FROM olist_order_payments_dataset GROUP BY order_id)
@@ -56,11 +57,13 @@ AND ood.order_purchase_timestamp < '2018-09-01'
 GROUP BY month, value_tier
 ORDER BY month, value_tier;
 ```
+
 </details>
  
 ### TOP 10 best-selling products
 <details>
 <summary>View SQL</summary>
+ 
 ```sql
 SELECT 
 pcnt.product_category_name_english AS product_catagory,
@@ -72,13 +75,15 @@ ON ooid.product_id = opd.product_id
 INNER JOIN product_category_name_translation pcnt
 ON opd.product_category_name  = pcnt.product_category_name 
 GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
-``` 
+```
+
 </details>
 
 
 ### TOP 10 seller
 <details>
 <summary>View SQL</summary>
+ 
 ```aql
 WITH payment AS
 (SELECT order_id,SUM(payment_value) AS order_payment
@@ -94,6 +99,7 @@ GROUP BY ootd.seller_id
 ORDER BY gmv DESC LIMIT 10)
 SELECT seller, ROUND(gmv,2) AS seller_gmv FROM top10_sellers;
 ```
+
 </details>
 <img width="480" height="290" alt="image" src="https://github.com/user-attachments/assets/90424168-17e7-44a7-abbe-9b546165e79e" />
 
@@ -101,6 +107,7 @@ SELECT seller, ROUND(gmv,2) AS seller_gmv FROM top10_sellers;
 ### Top 10 Sellers' Contribution to Total GMV
 <details>
 <summary>View SQL</summary>
+ 
 ```sql
 WITH payment AS
 (SELECT order_id,SUM(payment_value) AS order_payment
