@@ -7,7 +7,8 @@
 - Olist E-Commerce Analytics:
 
 ## About the dataset
-- Sourse: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+- Data Source: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+- Data Structure
 <img width="1380" height="745" alt="image" src="https://github.com/user-attachments/assets/d2d4c373-ca4c-48b8-bde6-4b813145ada2" />
 
 ## General Performance
