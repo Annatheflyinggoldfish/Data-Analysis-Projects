@@ -25,16 +25,18 @@ ORDER BY month;
 ```
 ### Monthly Distribution by Order Value Tier(需要重写，考虑一个order_id多个payment——value的情况)
 ```sql
+WITH payments AS
+(SELECT order_id,SUM(payment_value) AS payment FROM olist_order_payments_dataset GROUP BY order_id)
 SELECT
 DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS month,
 CASE 
-WHEN oopd.payment_value < 100 THEN 'low (<100)'
-WHEN oopd.payment_value < 500 THEN 'mid (100-500)'
+WHEN p.payment < 100 THEN 'low (<100)'
+WHEN p.payment < 500 THEN 'mid (100-500)'
 ELSE 'high (500+)'
 END AS value_tier,
 COUNT(ood.order_id) AS order_count
 FROM olist_orders_dataset ood
-JOIN olist_order_payments_dataset oopd ON ood.order_id = oopd.order_id
+JOIN payments p ON ood.order_id = p.order_id
 WHERE ood.order_purchase_timestamp >= '2017-01-01'
 AND ood.order_purchase_timestamp < '2018-09-01'
 GROUP BY month, value_tier
