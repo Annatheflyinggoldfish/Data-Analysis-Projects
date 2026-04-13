@@ -134,8 +134,9 @@ UNION ALL
 SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 ```
 </details>
-<img width="165" height="105" alt="image" src="https://github.com/user-attachments/assets/c13b0ee9-20e7-43b3-b7d7-b4052a5edf43" />
-<img width="409" height="368" alt="ee42941b-b8d5-41c1-81b6-449bb41f4c05" src="https://github.com/user-attachments/assets/a9cbea0e-9ff4-4cec-a118-18ff4187f3e7" />
+<img width="105" height="85" alt="image" src="https://github.com/user-attachments/assets/c13b0ee9-20e7-43b3-b7d7-b4052a5edf43" />
+<img width="349" height="306" alt="image" src="https://github.com/user-attachments/assets/63667e41-a7ff-4745-884f-ab70f6ea773a" />
+
 
 ### TOP 3 Best Selling Product Categories by Month
 ```sql
