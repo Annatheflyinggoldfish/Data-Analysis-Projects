@@ -77,6 +77,8 @@ GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
 
 
 ### TOP 10 seller
+<details>
+<summary>View SQL</summary>
 ```aql
 WITH payment AS
 (SELECT order_id,SUM(payment_value) AS order_payment
@@ -92,6 +94,7 @@ GROUP BY ootd.seller_id
 ORDER BY gmv DESC LIMIT 10)
 SELECT seller, ROUND(gmv,2) AS seller_gmv FROM top10_sellers;
 ```
+<details>
 <img width="480" height="290" alt="image" src="https://github.com/user-attachments/assets/90424168-17e7-44a7-abbe-9b546165e79e" />
 
 
@@ -113,7 +116,7 @@ GROUP BY ootd.seller_id
 ORDER BY gmv DESC LIMIT 10)
 SELECT CONCAT(ROUND(SUM(gmv)/(SELECT SUM(order_payment) FROM payment)*100,2),'%') AS CR10 FROM top10_sellers;
 ```
- <details>
+<details>
 <img width="170" height="59" alt="image" src="https://github.com/user-attachments/assets/a2f8d179-49c8-4c8f-abe5-f65e2670c22d" />
 
 ### TOP 3 Best Selling Product Categories by Month
