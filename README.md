@@ -169,7 +169,7 @@ SELECT * FROM T4 WHERE rn <= 10;
 <img width="159" height="89" alt="8b4cfc17-a0b7-4767-97e1-66bccf0eeb46" src="https://github.com/user-attachments/assets/846d2bc5-ac61-4692-8a72-103aee458677" />
 
 ## 客户行为类
-### Repeat Purchase Rate
+### Repeat Purchase Rate 
 ```sql
 WITH T AS
 (SELECT customer_unique_id,COUNT(customer_unique_id) AS order_count
@@ -179,9 +179,14 @@ SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(DISTINCT customer_unique_id) FROM oli
 AS repeat_purchase_rate 
 FROM T WHERE order_count >= 2;
 ```
+
 <img width="280" height="60" alt="image" src="https://github.com/user-attachments/assets/326c3591-58c1-4b12-9f11-c57bdfe8bc60" />
+ </details>
  
 ### Average Inter-purchase Time
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH T AS
 (SELECT ocd.customer_id,ocd.customer_unique_id,ood.order_purchase_timestamp
@@ -198,17 +203,27 @@ FROM T)
 SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM T2;
 ```
 <img width="300" height="60" alt="image" src="https://github.com/user-attachments/assets/0cc776fe-2100-408a-ae21-c04bf3935ab1" />
+</details>
 
 ### Average Order Value Distribution
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 SELECT order_id,SUM(payment_value) AS order_value
 FROM olist_order_payments_dataset oopd
 GROUP BY order_id
 ORDER BY order_value;
 ```
+</details>
+
+
   
 ## Regional Analysis
 - 各州的订单数量，总销售额&客户总数
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH payment AS
 (SELECT order_id,SUM(oopd.payment_value) AS order_payment
@@ -226,7 +241,13 @@ ON ood.order_id = p.order_id
 GROUP BY state
 ORDER BY state_gmv DESC;
 ```
+</details>
+
+
 ### TOP 3 Best Selling Product Categories by State
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH T AS
 (SELECT ooid.order_id,ooid.product_id,ood.customer_id,ocd.customer_state,pcnt.product_category_name_english AS product_name
@@ -249,8 +270,13 @@ DENSE_RANK() OVER (PARTITION BY customer_state ORDER BY qty DESC)AS rnk
 FROM T2)
 SELECT * FROM T3 WHERE rnk <= 3;
 ```
+</details>
+
 
 ### Time Latency for Customer Feedback
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH T AS
 (SELECT oord.order_id,ood.order_delivered_customer_date ,oord.review_answer_timestamp
@@ -271,12 +297,18 @@ DATEDIFF(review_date, deliver_date) AS timediff
 FROM T2)
 SELECT ROUND(AVG(timediff),2) AS latency FROM T3 WHERE timediff >=0;
 ```
+</details>
+
+
 <img width="185" height="59" alt="image" src="https://github.com/user-attachments/assets/522078f5-58d6-4455-8ca0-45b55f717c71" />
 
 
 
 ## 物流类
 ### On Time Delivery Rate
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH T AS
 (SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
@@ -292,9 +324,15 @@ FROM T)
 SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*)FROM T2)*100,2),'%') AS OTD_rate 
 FROM T2 WHERE deliver_time <= estimated_delivery;
 ```
+</details>
+
+
 <img width="205" height="65" alt="44a51a43-3324-41d7-b2b4-6deb7410db68" src="https://github.com/user-attachments/assets/9904b799-066b-4790-a308-1f940b2a9f3a" />
 
 ### Average Delivery Time
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH T AS
 (SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
@@ -312,10 +350,16 @@ DATEDIFF(deliver_time,purchase_time) AS lead_ime
 FROM T2)
 SELECT ROUND(AVG(lead_ime),2) AS avg_lead_ime FROM T3;
 ```
+</details>
+
+
 <img width="230" height="63" alt="image" src="https://github.com/user-attachments/assets/04cc9c25-dc1c-49b6-8c08-a5d058ee4a94" />
 
 
 ### Average Lead Time & Delivery Gap By State
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH T AS
 (SELECT customer_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
@@ -345,9 +389,14 @@ FROM T4
 GROUP BY customer_state 
 ORDER BY avg_state_lead_time;
 ```
+</details>
+
 
 ## 评论/满意度类
-- Rating Distrabution Ratio 比较两级分化
+- Rating Distrabution Ratio
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 SELECT 
 review_score,
@@ -357,8 +406,13 @@ FROM olist_order_reviews_dataset
 GROUP BY review_score ORDER BY review_score;
 ```
 <img width="565" height="165" alt="image" src="https://github.com/user-attachments/assets/c62a5c81-0108-4147-9e92-aa9c05fafc8e" />
+</details>
+
 
 ### 物流延误和差评的相关性（图表导出来拖进tableau）
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH T AS
 (SELECT order_id,customer_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
@@ -384,8 +438,13 @@ INNER JOIN olist_order_reviews_dataset oord
 ON T3.order_id = oord.order_id)
 SELECT * FROM T4;
 ```
+</details>
+
 
 ### 评论回复率
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 SELECT CONCAT(ROUND(COUNT(review_comment_message)/(SELECT COUNT(*) FROM olist_order_reviews_dataset oord)*100,2),'%')
 AS review_rate
@@ -393,9 +452,15 @@ FROM olist_order_reviews_dataset
 WHERE review_comment_message IS NOT NULL
 AND review_comment_message != '';
 ```
+</details>
+
+
 <img width="213" height="61" alt="image" src="https://github.com/user-attachments/assets/ce1cfdbc-960d-4afb-af23-a604a9d897fb" />
 
 ### 回复时间对评分的影响(收货和评论间隔时长，以及评分)
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH review_table AS 
 (SELECT order_id,review_score, review_answer_timestamp,
@@ -420,9 +485,14 @@ FROM T
 WHERE DATEDIFF(review_date,delivery_date) >= 0)
 SELECT COUNT(*) FROM T2;
 ```
+</details>
+
 
 ## 交叉分析类
 ### 高价产品是否评分更高（做评分和order价格的对比）
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH review_table AS 
 (SELECT order_id,review_score, review_answer_timestamp,
@@ -455,8 +525,13 @@ WHERE rn = 1
 GROUP BY ooid.order_id,rt.review_score)
 SELECT * FROM T ORDER BY total_price;
 ```
+</details>
+
 
 ### 差评的时间规律 — 差评集中在一周的哪几天、哪个时段提交？情绪是否有周期性？
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH T AS 
 (SELECT review_id,
@@ -474,8 +549,13 @@ FROM T)
 SELECT review_day_of_week,COUNT(*),ROUND(AVG(review_score),2) AS avg_score FROM T2 GROUP BY review_day_of_week ORDER BY review_day_of_week;
 SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_score FROM T2 GROUP BY review_hour ORDER BY review_hour;
 ```
+</details>
+
 
 ### Customers who left a score but no reviews
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH review_table AS 
 (SELECT order_id, review_score, review_comment_title, review_comment_message,
@@ -519,7 +599,13 @@ SELECT order_id,product_name,price,lead_time,review_score FROM T6
 WHERE (review_comment_title IS NULL OR review_comment_title = '')
 AND (review_comment_message IS NULL OR review_comment_message = ''); 
 ```
+</details>
+
+
 ### Customers who never left a score or review
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH T AS
 (SELECT order_id,order_purchase_timestamp,order_delivered_customer_date
@@ -560,7 +646,8 @@ INNER JOIN T3 ON nr.order_id = T3.order_id
 INNER JOIN T5 ON nr.order_id = T5.order_id
 ORDER BY nr.customer_id;
 ```
-
+</details>
+ 
 ## 结论
 - 发现1
 - 发现2
