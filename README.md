@@ -448,6 +448,7 @@ ON T3.order_id = oord.order_id)
 SELECT * FROM T4;
 ```
 </details>
+<img width="859" height="704" alt="image" src="https://github.com/user-attachments/assets/3c5c2f93-f3d8-400b-b8e3-d7e8c5d1a47e" />
 
 
 ### Review Rate: 41.30%
@@ -492,9 +493,10 @@ ROUND(TIMESTAMPDIFF(HOUR,delivery_date,review_date)/24,2) AS time_to_review,
 review_score 
 FROM T 
 WHERE DATEDIFF(review_date,delivery_date) >= 0)
-SELECT COUNT(*) FROM T2;
+SELECT * FROM T2;
 ```
 </details>
+<img width="604" height="385" alt="image" src="https://github.com/user-attachments/assets/209258a4-bac2-4c62-9080-e7051c6aa7d3" />
 
 
 ## 交叉分析类
@@ -513,9 +515,18 @@ FROM olist_order_items_dataset ooid
 INNER JOIN review_table rt
 ON ooid.order_id = rt.order_id
 WHERE rn = 1
-ORDER BY ooid.price)
-SELECT * FROM T;
+ORDER BY ooid.price),
+T2 AS
+(SELECT order_id,
+CASE
+WHEN price >= 500 THEN '500+'
+ELSE CONCAT(FLOOR(price/50)*50, '-', FLOOR(price/50)*50+50)
+END AS price_tier,
+review_score
+FROM T)
+SELECT * FROM T2;
 ```
+<img width="954" height="411" alt="image" src="https://github.com/user-attachments/assets/2e829294-b29f-405c-aca1-440ff6aab0fa" />
 
 ### 卖家评分和销量的关系 avg_review_score 和 total_sales 的对比（注意：先有鸡还是先有蛋？）
 ```sql
