@@ -100,12 +100,13 @@ JOIN payment p
 ON ootd.order_id = p.order_id
 GROUP BY ootd.seller_id
 ORDER BY gmv DESC LIMIT 10)
-SELECT seller, ROUND(gmv,2) AS seller_gmv FROM top10_sellers;
+SELECT seller, ROUND(gmv,2) AS seller_gmv 
+FROM top10_sellers
+ORDER BY seller_gmv DESC;
 ```
 
 </details>
-<img width="480" height="290" alt="image" src="https://github.com/user-attachments/assets/90424168-17e7-44a7-abbe-9b546165e79e" />
-
+<img width="600" height="290" alt="image" src="https://github.com/user-attachments/assets/e7a705fe-d520-4519-81e8-d7b9a1026554" />
 
 ### Top 10 Sellers' Contribution to Total GMV 
 <details>
@@ -134,8 +135,8 @@ UNION ALL
 SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 ```
 </details>
-<img width="65" height="45" alt="image" src="https://github.com/user-attachments/assets/c13b0ee9-20e7-43b3-b7d7-b4052a5edf43" />
-<img width="300" height="275" alt="image" src="https://github.com/user-attachments/assets/63667e41-a7ff-4745-884f-ab70f6ea773a" />
+<img width="100" height="70" alt="image" src="https://github.com/user-attachments/assets/c13b0ee9-20e7-43b3-b7d7-b4052a5edf43" />
+<img width="250" height="225" alt="image" src="https://github.com/user-attachments/assets/63667e41-a7ff-4745-884f-ab70f6ea773a" />
 
 
 ### TOP 10 Best Selling Product Categories Rankings by Month
@@ -228,7 +229,7 @@ FROM T
 GROUP BY price_tier;
 ```
 </details>
-<img width="1225" height="631" alt="image" src="https://github.com/user-attachments/assets/ae476547-8670-4f2e-90e6-4067639a3880" />
+<img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/ae476547-8670-4f2e-90e6-4067639a3880" />
 
 ## Regional Analysis
 ### Order Volume, GMV, and Customer Distribution By State
