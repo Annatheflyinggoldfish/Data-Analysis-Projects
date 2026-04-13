@@ -448,7 +448,9 @@ ON T3.order_id = oord.order_id)
 SELECT * FROM T4;
 ```
 </details>
-<img width="859" height="704" alt="image" src="https://github.com/user-attachments/assets/3c5c2f93-f3d8-400b-b8e3-d7e8c5d1a47e" />
+<img width="685" height="552" alt="image" src="https://github.com/user-attachments/assets/f33d1b08-b0c0-4eff-9381-c98ae5fe53e7" />
+
+
 
 
 ### Review Rate: 41.30%
@@ -496,7 +498,8 @@ WHERE DATEDIFF(review_date,delivery_date) >= 0)
 SELECT * FROM T2;
 ```
 </details>
-<img width="604" height="385" alt="image" src="https://github.com/user-attachments/assets/209258a4-bac2-4c62-9080-e7051c6aa7d3" />
+<img width="480" height="320" alt="image" src="https://github.com/user-attachments/assets/0a0940e4-180d-4507-acc5-3e31b9662635" />
+
 
 
 ## 交叉分析类
@@ -526,9 +529,14 @@ review_score
 FROM T)
 SELECT * FROM T2;
 ```
-<img width="954" height="411" alt="image" src="https://github.com/user-attachments/assets/2e829294-b29f-405c-aca1-440ff6aab0fa" />
+</details>
+<img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/a55046d5-9bcd-43d5-8922-f51fcc9b7966" />
+
 
 ### 卖家评分和销量的关系 avg_review_score 和 total_sales 的对比（注意：先有鸡还是先有蛋？）
+<details>
+<summary>View SQL</summary>
+ 
 ```sql
 WITH review_table AS 
 (SELECT order_id,review_score, review_answer_timestamp,
