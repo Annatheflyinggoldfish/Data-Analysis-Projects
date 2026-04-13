@@ -398,8 +398,7 @@ GROUP BY customer_state
 ORDER BY avg_state_lead_time DESC;
 ```
 </details>
-<img width="800" height="440" alt="d97590119f88231bf30335feca05716a" src="https://github.com/user-attachments/assets/a20e5a7a-1270-493a-9803-5321baa64baa" />
-
+<img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/3284c916-b6a5-4410-b210-1e891186f51a" />
 
 
 ## 评论/满意度类
