@@ -9,7 +9,7 @@
 ## About the dataset
 - Data Source: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
 - Data Structure:
-<img width="1380" height="745" alt="image" src="https://github.com/user-attachments/assets/d2d4c373-ca4c-48b8-bde6-4b813145ada2" />
+<img width="1242" height="670" alt="image" src="https://github.com/user-attachments/assets/d2d4c373-ca4c-48b8-bde6-4b813145ada2" />
 
 ## General Performance
 ### Monthly Order Count, GMV, and Average Order Value
@@ -262,26 +262,23 @@ ORDER BY state_gmv DESC;
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS
-(SELECT ooid.order_id,ooid.product_id,ood.customer_id,ocd.customer_state,pcnt.product_category_name_english AS product_name
+WITH T AS 
+(SELECT ocd.customer_state,ooid.product_id,COUNT(*) AS qty
 FROM olist_order_items_dataset ooid
-INNER JOIN olist_products_dataset opd
-ON ooid.product_id = opd.product_id
-INNER JOIN product_category_name_translation pcnt
-ON opd.product_category_name = pcnt.product_category_name
-INNER JOIN olist_orders_dataset ood 
-ON ooid.order_id = ood.order_id
-INNER JOIN olist_customers_dataset ocd
-ON ood.customer_id = ocd.customer_id),
-T2 AS
-(SELECT customer_state,product_name,COUNT(*) AS qty
-FROM T 
-GROUP BY customer_state,product_name),
-T3 AS
-(SELECT customer_state,product_name,qty,
-DENSE_RANK() OVER (PARTITION BY customer_state ORDER BY qty DESC)AS rnk
-FROM T2)
-SELECT * FROM T3 WHERE rnk <= 3;
+JOIN olist_orders_dataset ood ON ooid.order_id = ood.order_id
+JOIN olist_customers_dataset ocd ON ood.customer_id = ocd.customer_id
+GROUP BY ocd.customer_state, ooid.product_id),
+T2 AS 
+(SELECT  customer_state,product_id,qty,
+DENSE_RANK() OVER (PARTITION BY customer_state ORDER BY qty DESC) AS rn
+FROM T)
+SELECT 
+T2.customer_state,pcnt.product_category_name_english AS product_name,T2.qty,T2.rn
+FROM T2
+JOIN olist_products_dataset opd ON T2.product_id = opd.product_id
+JOIN product_category_name_translation pcnt ON opd.product_category_name = pcnt.product_category_name
+WHERE T2.rn <= 3
+ORDER BY T2.customer_state, T2.rn;
 ```
 </details>
 
