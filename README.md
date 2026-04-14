@@ -526,30 +526,6 @@ SELECT * FROM T2;
 </details>
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/a55046d5-9bcd-43d5-8922-f51fcc9b7966" />
 
-
-### 卖家评分和销量的关系 avg_review_score 和 total_sales 的对比（注意：先有鸡还是先有蛋？）
-<details>
-<summary>View SQL</summary>
- 
-```sql
-WITH review_table AS 
-(SELECT order_id,review_score, review_answer_timestamp,
-ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
-FROM olist_order_reviews_dataset),
-T AS
-(SELECT ooid.order_id,
-SUM(ooid.price) AS total_price,
-rt.review_score
-FROM olist_order_items_dataset ooid 
-INNER JOIN review_table rt
-ON ooid.order_id = rt.order_id
-WHERE rn = 1
-GROUP BY ooid.order_id,rt.review_score)
-SELECT * FROM T ORDER BY total_price;
-```
-</details>
-
-
 ### 差评的时间规律 — 差评集中在一周的哪几天、哪个时段提交？情绪是否有周期性？
 <details>
 <summary>View SQL</summary>
