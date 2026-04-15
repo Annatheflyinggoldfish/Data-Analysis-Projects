@@ -286,7 +286,9 @@ JOIN T2 ON T.customer_state  = T2.geolocation_state
 ORDER BY T.customer_state,T.total_revenue;
 ```
 </details>
-- Data Source: [Product Category Revenue by State]([https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce](https://public.tableau.com/views/Olist_17762903105860/ProductCategoryRevenuebyState))
+
+- Interactive map: [Product Category Revenue by State](https://public.tableau.com/views/Olist_17762903105860/ProductCategoryRevenuebyState)
+<img width="1090" height="585" alt="image" src="https://github.com/user-attachments/assets/abd53b17-74c8-4e68-a24a-5b296014f78b" />
 
 
 ### Time Latency for Customer Feedback: 3.6 Days
