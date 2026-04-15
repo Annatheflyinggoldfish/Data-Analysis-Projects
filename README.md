@@ -608,6 +608,7 @@ WHERE (review_comment_title IS NULL OR review_comment_title = '')
 AND (review_comment_message IS NULL OR review_comment_message = ''); 
 ```
 </details>
+<img width="834" height="481" alt="image" src="https://github.com/user-attachments/assets/5f4f2034-a9d6-44c3-a094-04d6ae96492d" />
 
 
 ### Customers who never left a score or review
