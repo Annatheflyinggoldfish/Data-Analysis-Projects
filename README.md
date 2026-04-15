@@ -257,31 +257,33 @@ ORDER BY state_gmv DESC;
 <img width="1364" height="780" alt="image" src="https://github.com/user-attachments/assets/356dcd66-8887-432f-bcf1-0bebb30da127" />
 
 
-### TOP 10 Best Selling Product Categories by State
+### Product Category Revenue by State
 <details>
 <summary>View SQL</summary>
  
 ```sql
 WITH T AS 
 (SELECT ocd.customer_state,ooid.product_id,
-COUNT(*) AS qty,
 SUM(ooid.price) AS total_revenue
 FROM olist_order_items_dataset ooid
 JOIN olist_orders_dataset ood ON ooid.order_id = ood.order_id
 JOIN olist_customers_dataset ocd ON ood.customer_id = ocd.customer_id
 GROUP BY ocd.customer_state, ooid.product_id),
-T2 AS 
-(SELECT  customer_state,product_id,qty,total_revenue,
-DENSE_RANK() OVER (PARTITION BY customer_state ORDER BY qty DESC) AS rn
-FROM T)
+T2 AS
+(SELECT geolocation_state,
+AVG(ogd.geolocation_lat) AS lat,
+AVG(ogd.geolocation_lng) AS lng
+FROM olist_geolocation_dataset ogd
+GROUP BY geolocation_state)
 SELECT 
-T2.customer_state,ogd.geolocation_lat,ogd.geolocation_lng,pcnt.product_category_name_english AS product_name,T2.qty,T2.total_revenue,T2.rn
-FROM T2
-JOIN olist_products_dataset opd ON T2.product_id = opd.product_id
+T.customer_state,T2.lat,T2.lng,
+pcnt.product_category_name_english AS product_name,
+T.total_revenue
+FROM T
+JOIN olist_products_dataset opd ON T.product_id = opd.product_id
 JOIN product_category_name_translation pcnt ON opd.product_category_name = pcnt.product_category_name
-JOIN olist_geolocation_dataset ogd ON T2.customer_state  = ogd.geolocation_state
-WHERE T2.rn <= 10
-ORDER BY T2.customer_state, T2.rn;
+JOIN T2 ON T.customer_state  = T2.geolocation_state
+ORDER BY T.customer_state,T.total_revenue;
 ```
 </details>
 
