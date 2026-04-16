@@ -9,7 +9,7 @@
 ## About the dataset
 - Data Source: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
 - Data Structure:
-<img width="1242" height="670" alt="image" src="https://github.com/user-attachments/assets/d2d4c373-ca4c-48b8-bde6-4b813145ada2" />
+<img width="987" height="588" alt="image" src="https://github.com/user-attachments/assets/dd4caf8d-03d1-4c37-9730-75e24dd66979" />
 
 ## General Performance
 ### Monthly Order Count, GMV, and Average Order Value
