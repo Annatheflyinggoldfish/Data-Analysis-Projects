@@ -38,8 +38,6 @@ ORDER BY month;
 <img width="117" height="49" alt="image" src="https://github.com/user-attachments/assets/92db767d-70ab-481e-8791-5edcb50ab672" />
 <img width="837" height="517" alt="image" src="https://github.com/user-attachments/assets/07f6572f-0e67-419a-83ba-a62fb98b9820" />
 
-
-
 ### Monthly Distribution by Order Value Tier
 <details>
 <summary>View SQL</summary>
@@ -87,6 +85,7 @@ GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
 <img width="579" height="156" alt="image" src="https://github.com/user-attachments/assets/22f8e7a3-d705-4102-8aa1-90b2b7b3fac3" />
 
 </details>
+<img width="885" height="700" alt="image" src="https://github.com/user-attachments/assets/f69df1f6-9ed6-41bd-b184-49dc9494354e" />
 
 
 ### TOP 10 seller
@@ -110,6 +109,8 @@ SELECT seller, ROUND(gmv,2) AS seller_gmv
 FROM top10_sellers
 ORDER BY seller_gmv DESC;
 ```
+
+<img width="480" height="156" alt="image" src="https://github.com/user-attachments/assets/5812e081-c072-4d46-ba27-4cdd456c96b8" />
 
 </details>
 <img width="600" height="290" alt="image" src="https://github.com/user-attachments/assets/e7a705fe-d520-4519-81e8-d7b9a1026554" />
@@ -140,6 +141,9 @@ SELECT 'top10 seller' AS catagory,top10_seller_gmv AS gmv FROM T
 UNION ALL
 SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 ```
+
+<img width="356" height="85" alt="image" src="https://github.com/user-attachments/assets/2850ec26-64a4-4201-8a11-082325614b16" />
+
 </details>
 <img width="100" height="70" alt="image" src="https://github.com/user-attachments/assets/c13b0ee9-20e7-43b3-b7d7-b4052a5edf43" />
 <img width="250" height="225" alt="image" src="https://github.com/user-attachments/assets/63667e41-a7ff-4745-884f-ab70f6ea773a" />
