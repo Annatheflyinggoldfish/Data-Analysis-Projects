@@ -36,6 +36,7 @@ ORDER BY month;
 
 </details>
 <img width="117" height="49" alt="image" src="https://github.com/user-attachments/assets/92db767d-70ab-481e-8791-5edcb50ab672" />
+
 <img width="837" height="517" alt="image" src="https://github.com/user-attachments/assets/07f6572f-0e67-419a-83ba-a62fb98b9820" />
 
 ### Monthly Distribution by Order Value Tier
@@ -85,7 +86,7 @@ GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
 <img width="579" height="156" alt="image" src="https://github.com/user-attachments/assets/22f8e7a3-d705-4102-8aa1-90b2b7b3fac3" />
 
 </details>
-<img width="885" height="700" alt="image" src="https://github.com/user-attachments/assets/f69df1f6-9ed6-41bd-b184-49dc9494354e" />
+<img width="619" height="490" alt="image" src="https://github.com/user-attachments/assets/f69df1f6-9ed6-41bd-b184-49dc9494354e" />
 
 
 ### TOP 10 seller
@@ -113,7 +114,7 @@ ORDER BY seller_gmv DESC;
 <img width="480" height="156" alt="image" src="https://github.com/user-attachments/assets/5812e081-c072-4d46-ba27-4cdd456c96b8" />
 
 </details>
-<img width="600" height="290" alt="image" src="https://github.com/user-attachments/assets/e7a705fe-d520-4519-81e8-d7b9a1026554" />
+<img width="588" height="283" alt="image" src="https://github.com/user-attachments/assets/8bdf35f4-d9e0-41c9-aa68-57c34ef534fd" />
 
 ### Top 10 Sellers' Contribution to Total GMV 
 <details>
@@ -145,9 +146,8 @@ SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 <img width="356" height="85" alt="image" src="https://github.com/user-attachments/assets/2850ec26-64a4-4201-8a11-082325614b16" />
 
 </details>
-<img width="100" height="70" alt="image" src="https://github.com/user-attachments/assets/c13b0ee9-20e7-43b3-b7d7-b4052a5edf43" />
-<img width="250" height="225" alt="image" src="https://github.com/user-attachments/assets/63667e41-a7ff-4745-884f-ab70f6ea773a" />
-
+<img width="90" height="23" alt="image" src="https://github.com/user-attachments/assets/8e4704e6-a65c-4566-8e83-0163142bf973" />
+<img width="364" height="361" alt="image" src="https://github.com/user-attachments/assets/7832e289-2fc8-44f4-a29e-482cc7c02ca5" />
 
 ### TOP 10 Best Selling Product Categories Rankings by Month
 <details>
@@ -175,9 +175,15 @@ DENSE_RANK() OVER (PARTITION BY months ORDER BY total_price DESC) AS rn
 FROM T3)
 SELECT * FROM T4 WHERE rn <= 10;
 ```
+<img width="635" height="165" alt="image" src="https://github.com/user-attachments/assets/bf26c377-b7a1-48d1-80b1-0138b0685fdc" />
+
 </details>
-<img width="1181" height="863" alt="76ea9daa-bf0f-48d0-92ce-205f6ffa8998" src="https://github.com/user-attachments/assets/5ccb4014-fa23-47f0-8f9c-44af6ec8067f" />
-<img width="159" height="89" alt="8b4cfc17-a0b7-4767-97e1-66bccf0eeb46" src="https://github.com/user-attachments/assets/846d2bc5-ac61-4692-8a72-103aee458677" />
+
+- Interactive Graph:[Product Category Revenue by State](https://public.tableau.com/views/Olist_17762903105860/ProductCategoryRevenuebyState)
+
+<img width="131" height="52" alt="image" src="https://github.com/user-attachments/assets/dc29261b-3250-46d6-8e60-fa2b2b7cbf9b" />
+<img width="843" height="540" alt="image" src="https://github.com/user-attachments/assets/7c970873-8b64-47be-90dd-a1a6579cad09" />
+
 
 ## 客户行为类
 ### Repeat Purchase Rate: 3.12%
@@ -238,6 +244,8 @@ COUNT(*) AS order_count
 FROM T
 GROUP BY price_tier;
 ```
+<img width="365" height="160" alt="image" src="https://github.com/user-attachments/assets/3e66617f-11db-4013-9c93-7e18aaaa87e5" />
+
 </details>
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/ae476547-8670-4f2e-90e6-4067639a3880" />
 
@@ -263,9 +271,11 @@ ON ood.order_id = p.order_id
 GROUP BY state
 ORDER BY state_gmv DESC;
 ```
-</details>
-<img width="1364" height="780" alt="image" src="https://github.com/user-attachments/assets/356dcd66-8887-432f-bcf1-0bebb30da127" />
+<img width="665" height="155" alt="image" src="https://github.com/user-attachments/assets/f2175ea4-6bba-4365-b327-a55bac38f79f" />
 
+</details>
+<img width="157" height="48" alt="image" src="https://github.com/user-attachments/assets/7045f92a-572a-47b8-acdb-d5964bae64fb" />
+<img width="1064" height="576" alt="image" src="https://github.com/user-attachments/assets/9bda85b0-aa37-4381-99c7-2ad5cc459321" />
 
 ### Product Category Revenue by State
 <details>
@@ -295,6 +305,8 @@ JOIN product_category_name_translation pcnt ON opd.product_category_name = pcnt.
 JOIN T2 ON T.customer_state  = T2.geolocation_state
 ORDER BY T.customer_state,T.total_revenue;
 ```
+<img width="835" height="160" alt="image" src="https://github.com/user-attachments/assets/f48ddc1f-814e-42ce-a7c8-5d5b1fad1015" />
+
 </details>
 
 - Interactive map: [Product Category Revenue by State](https://public.tableau.com/views/Olist_17762903105860/ProductCategoryRevenuebyState)
@@ -412,6 +424,8 @@ FROM T4
 GROUP BY customer_state 
 ORDER BY avg_state_lead_time DESC;
 ```
+<img width="665" height="160" alt="image" src="https://github.com/user-attachments/assets/b5a87c20-9199-4795-b016-ea711ac68490" />
+
 </details>
 <img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/3284c916-b6a5-4410-b210-1e891186f51a" />
 
@@ -429,6 +443,8 @@ CONCAT(ROUND(COUNT(review_score)/(SELECT COUNT(*) FROM olist_order_reviews_datas
 FROM olist_order_reviews_dataset 
 GROUP BY review_score ORDER BY review_score;
 ```
+<img width="565" height="160" alt="image" src="https://github.com/user-attachments/assets/9e75cd29-423f-444a-8422-a0f2742c3a66" />
+
 </details>
 <img width="150" height="70" alt="image" src="https://github.com/user-attachments/assets/16c817e5-2bae-4491-bed7-2a598b81a435" />
 <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/7a5f973f-93bc-45ff-b9b2-d18142c142bf" />
@@ -462,6 +478,8 @@ INNER JOIN olist_order_reviews_dataset oord
 ON T3.order_id = oord.order_id)
 SELECT * FROM T4;
 ```
+<img width="1084" height="160" alt="image" src="https://github.com/user-attachments/assets/c81fb834-19c0-4558-9e07-24956d57e27d" />
+
 </details>
 <img width="548" height="441" alt="image" src="https://github.com/user-attachments/assets/f33d1b08-b0c0-4eff-9381-c98ae5fe53e7" />
 
@@ -510,6 +528,8 @@ FROM T
 WHERE DATEDIFF(review_date,delivery_date) >= 0)
 SELECT * FROM T2;
 ```
+<img width="670" height="160" alt="image" src="https://github.com/user-attachments/assets/48868375-e45f-4c57-8480-36e16582db1b" />
+
 </details>
 <img width="480" height="320" alt="image" src="https://github.com/user-attachments/assets/0a0940e4-180d-4507-acc5-3e31b9662635" />
 
@@ -541,6 +561,8 @@ review_score
 FROM T)
 SELECT * FROM T2;
 ```
+<img width="640" height="159" alt="image" src="https://github.com/user-attachments/assets/3a9d0bb7-515c-4e9c-b293-dbd15c104a40" />
+
 </details>
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/a55046d5-9bcd-43d5-8922-f51fcc9b7966" />
 
@@ -565,9 +587,12 @@ FROM T)
 SELECT review_day_of_week,COUNT(*),ROUND(AVG(review_score),2) AS avg_score FROM T2 GROUP BY review_day_of_week ORDER BY review_day_of_week;
 SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_score FROM T2 GROUP BY review_hour ORDER BY review_hour;
 ```
+<img width="581" height="210" alt="image" src="https://github.com/user-attachments/assets/7cd7ed98-6882-4f8b-aa3a-63d5e4ba47bd" />
+<img width="553" height="166" alt="image" src="https://github.com/user-attachments/assets/f77cc3d4-7a18-4167-baaf-4a0f916fdb31" />
+
 </details>
-<img width="598" height="272" alt="image" src="https://github.com/user-attachments/assets/8573f5b1-4178-4b0f-aeb2-34a298bad694" />
-<img width="750" height="390" alt="image" src="https://github.com/user-attachments/assets/e32cb163-6ffb-47c1-9d08-3103f84affb5" />
+<img width="612" height="287" alt="image" src="https://github.com/user-attachments/assets/632e698c-f392-434e-b20c-13a72cd96c8e" />
+<img width="863" height="356" alt="image" src="https://github.com/user-attachments/assets/5248bd9e-baa2-4a57-a7b9-845f2d1f62d2" />
 
 
 ### Customers who left a score but no reviews
@@ -617,9 +642,10 @@ SELECT order_id,product_name,price,lead_time,review_score FROM T6
 WHERE (review_comment_title IS NULL OR review_comment_title = '')
 AND (review_comment_message IS NULL OR review_comment_message = ''); 
 ```
-</details>
-<img width="834" height="481" alt="image" src="https://github.com/user-attachments/assets/5f4f2034-a9d6-44c3-a094-04d6ae96492d" />
+<img width="946" height="160" alt="image" src="https://github.com/user-attachments/assets/a8cdbd9d-2bb0-4eff-94e6-d031aa0e9699" />
 
+</details>
+<img width="577" height="339" alt="image" src="https://github.com/user-attachments/assets/10a97d3e-81ad-4711-a42c-4b7acd9be9f2" />
 
 ### Orders with no score/review record
 - Orders with no score/review record occupy a very small fraction of the data set: 683 records, so they have been excluded from further investigation as they lack volume for meaningful analysis.
