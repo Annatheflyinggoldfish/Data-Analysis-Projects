@@ -611,7 +611,8 @@ AND (review_comment_message IS NULL OR review_comment_message = '');
 <img width="834" height="481" alt="image" src="https://github.com/user-attachments/assets/5f4f2034-a9d6-44c3-a094-04d6ae96492d" />
 
 
-### Customers who never left a score or review
+### Orders with no score/review record: 683
+- Orders with no score/review record occupy a very small fraction of the data set, so they have been excluded from further investigation as it lacks volume for meaningful analysis.
 <details>
 <summary>View SQL</summary>
  
