@@ -656,6 +656,9 @@ INNER JOIN T3 ON nr.order_id = T3.order_id
 INNER JOIN T5 ON nr.order_id = T5.order_id
 ORDER BY nr.customer_id;
 ```
+
+<img width="1050" height="161" alt="image" src="https://github.com/user-attachments/assets/77e3f5be-91e5-4bbb-8059-5c146cb3b554" />
+
 </details>
  
 ## 结论
