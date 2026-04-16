@@ -9,7 +9,8 @@
 ## About the dataset
 - Data Source: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
 - Data Structure:
-<img width="987" height="588" alt="image" src="https://github.com/user-attachments/assets/dd4caf8d-03d1-4c37-9730-75e24dd66979" />
+<img width="911" height="628" alt="image" src="https://github.com/user-attachments/assets/9ddaa6aa-7708-4571-8ebe-08edf693e22b" />
+
 
 ## General Performance
 ### Monthly Order Count, GMV, and Average Order Value
@@ -31,8 +32,12 @@ AND ood.order_purchase_timestamp < '2018-09-01'
 GROUP BY DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
+<img width="668" height="165" alt="image" src="https://github.com/user-attachments/assets/795d8f5f-53ff-4584-af05-b256b591331a" />
+
 </details>
-<img width="1485" height="775" alt="14558d11-5c43-43e0-8deb-2889082015e2" src="https://github.com/user-attachments/assets/f485718c-b27e-4c0a-bcd8-37eb39c91d21" />
+<img width="117" height="49" alt="image" src="https://github.com/user-attachments/assets/92db767d-70ab-481e-8791-5edcb50ab672" />
+<img width="837" height="517" alt="image" src="https://github.com/user-attachments/assets/07f6572f-0e67-419a-83ba-a62fb98b9820" />
+
 
 
 ### Monthly Distribution by Order Value Tier
@@ -57,11 +62,11 @@ AND ood.order_purchase_timestamp < '2018-09-01'
 GROUP BY month, value_tier
 ORDER BY month, value_tier;
 ```
+<img width="504" height="185" alt="image" src="https://github.com/user-attachments/assets/447323aa-9dc9-4bb2-85dc-6fe824f5051b" />
 
 </details>
-<img width="1461" height="775" alt="62e040dc-e0e5-41e2-a133-d116a5274a9f" src="https://github.com/user-attachments/assets/1d941d86-d073-4eb0-9a54-b3417899126a" />
-
-
+<img width="117" height="52" alt="image" src="https://github.com/user-attachments/assets/8355a408-7c39-4ac4-8855-1b7b1eb26ca4" />
+<img width="878" height="462" alt="image" src="https://github.com/user-attachments/assets/5fef912c-4f66-4eba-8673-8a60a154ad5a" />
  
 ### TOP 10 best-selling products
 <details>
@@ -79,6 +84,7 @@ INNER JOIN product_category_name_translation pcnt
 ON opd.product_category_name  = pcnt.product_category_name 
 GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
 ```
+<img width="579" height="156" alt="image" src="https://github.com/user-attachments/assets/22f8e7a3-d705-4102-8aa1-90b2b7b3fac3" />
 
 </details>
 
