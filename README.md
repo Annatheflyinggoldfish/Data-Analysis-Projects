@@ -48,7 +48,8 @@ ORDER BY month;
 </details>
 <img width="117" height="49" alt="image" src="https://github.com/user-attachments/assets/92db767d-70ab-481e-8791-5edcb50ab672" />
 
-<img width="837" height="517" alt="image" src="https://github.com/user-attachments/assets/07f6572f-0e67-419a-83ba-a62fb98b9820" />
+<img width="910" height="555" alt="image" src="https://github.com/user-attachments/assets/0aba2d7e-67dd-46b3-b81b-e63b6ab2d791" />
+
 
 ### 1.2 Monthly Distribution by Order Value Tier
 <details>
