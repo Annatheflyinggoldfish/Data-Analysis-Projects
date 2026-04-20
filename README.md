@@ -11,11 +11,11 @@
 - The purpose of this analysis is to identify patterns in sales performance, customer behavior, delivery efficiency, and product category trends across Brazilian states.
 
 ## Table of Contents
-- [Sales Trend](#sales-trend)
-- [Geographical Distribution](#geographical-distribution)
-- [Product Category Performance](#product-category-performance)
-- [Delivery Lead Time](#delivery-lead-time)
-- [Customer Review Analysis](#customer-review-analysis)
+* [1. Sales Performance](#1-sales-performance)
+* [2. Customer Behavior](#2-customer-behavior)
+* [3. Regional Analysis](#3-regional-analysis)
+* [4. Delivery Efficiency](#4-delivery-efficiency)
+* [5. Reviews and Customer Feedback](#5-reviews-and-customer-feedback)
 
 
 ### Data Structure:
