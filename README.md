@@ -11,11 +11,11 @@
 - The purpose of this analysis is to identify patterns in sales performance, customer behavior, delivery efficiency, and product category trends across Brazilian states.
 
 ### Table of Contents
-* [1. Sales Performance](#1-sales-performance)
-* [2. Customer Behavior](#2-customer-behavior)
-* [3. Regional Analysis](#3-regional-analysis)
-* [4. Delivery Efficiency](#4-delivery-efficiency)
-* [5. Reviews and Customer Feedback](#5-reviews-and-customer-feedback)
+- [1. Sales Performance](#1-sales-performance)
+- [2. Customer Behavior](#2-customer-behavior)
+- [3. Regional Analysis](#3-regional-analysis)
+- [4. Delivery Efficiency](#4-delivery-efficiency)
+- [5. Reviews and Customer Feedback](#5-reviews-and-customer-feedback)
 
 
 ### Data Structure:
@@ -24,7 +24,10 @@
 
 ## 1. Sales Performance
 ### 1.1 Monthly Order Count, GMV, and Average Order Value
-- 
+- The GMV showed continuing growth starting in January 2017, reaching a significant peak in November 2017, likely driven by Black Friday promotions. The decline in December 2017 may be due to the cooldown period after Black Friday.
+- Notably, between April 2018 and July 2018, the order count line fell below the GMV line, suggesting a potential increase in Average Order Value. However, the Average Order Value line chart didn't validate my hypothesis by showing an increase during this period, so it might indicate a growing share of higher-value orders within the overall order mix. 
+- To validate this hypothesis, I conducted a Monthly Distribution analysis by Order Value Tier in section 1.2.
+
 <details>
 <summary>View SQL</summary>
 
@@ -52,6 +55,8 @@ ORDER BY month;
 
 
 ### 1.2 Monthly Distribution by Order Value Tier
+- The High-value segment did not show a significant increase between April and July 2018, but the Mid-value tier order count was notably higher than the Low-value tier during this period.
+- This shift suggests a structural transition from low-end to mid-range transactions, rather than a surge of high-value orders, which explained why the GMV remained resilient despite the decline of order volume.
 <details>
 <summary>View SQL</summary>
  
@@ -80,6 +85,8 @@ ORDER BY month, value_tier;
 <img width="878" height="462" alt="image" src="https://github.com/user-attachments/assets/5fef912c-4f66-4eba-8673-8a60a154ad5a" />
  
 ### 1.3 TOP 10 best-selling products
+- The Bed/Bath/Table, Health/Beauty, and Sports/Leisure categories dominated in sales volume. However, the main GMV drivers were Bed/Bath/Table, Health/Beauty, and Watches/Gifts.
+- This pattern is logically consistent: consumers tend to purchase everyday necessities frequently, while allocating higher budgets for gifts.
 <details>
 <summary>View SQL</summary>
  
@@ -102,6 +109,7 @@ GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
 
 
 ### 1.4 TOP 10 seller
+- The top seller dominates the platform's revenue, surpassing the second-ranked seller by nearly $200k in GMV.
 <details>
 <summary>View SQL</summary>
  
@@ -129,6 +137,8 @@ ORDER BY seller_gmv DESC;
 <img width="588" height="283" alt="image" src="https://github.com/user-attachments/assets/8bdf35f4-d9e0-41c9-aa68-57c34ef534fd" />
 
 ### 1.5 Top 10 Sellers' Contribution to Total GMV 
+- Despite the leader's dominance, the combined GMV contribution of the Top 10 sellers remains under 20%, indicating a very decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
+
 <details>
 <summary>View SQL</summary>
  
