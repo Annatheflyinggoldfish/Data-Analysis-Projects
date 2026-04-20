@@ -10,6 +10,13 @@
 - The dataset was provided by Olist, a Brazilian e-commerce Store, via Kaggle. The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil.
 - The purpose of this analysis is to identify patterns in sales performance, customer behavior, delivery efficiency, and product category trends across Brazilian states.
 
+## Table of Contents
+- [Sales Trend](#sales-trend)
+- [Geographical Distribution](#geographical-distribution)
+- [Product Category Performance](#product-category-performance)
+- [Delivery Lead Time](#delivery-lead-time)
+- [Customer Review Analysis](#customer-review-analysis)
+
 
 ### Data Structure:
 <img width="911" height="628" alt="image" src="https://github.com/user-attachments/assets/9ddaa6aa-7708-4571-8ebe-08edf693e22b" />
