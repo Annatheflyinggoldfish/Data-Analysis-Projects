@@ -2,15 +2,15 @@
 - This is my first end-to-end data analysis project as a self-taught junior analyst transitioning into the field, covering data extraction, transformation, and visualization.
 - Currently expanding my skill set with Python as the next step in my data analytics journey.
 
-## Tools
+### Tools
 - MySQL, Tableau Public
 
-## Introduction
+### Introduction
 - Data Source: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
 - The dataset was provided by Olist, a Brazilian e-commerce Store, via Kaggle. The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil.
 - The purpose of this analysis is to identify patterns in sales performance, customer behavior, delivery efficiency, and product category trends across Brazilian states.
 
-## Table of Contents
+### Table of Contents
 * [1. Sales Performance](#1-sales-performance)
 * [2. Customer Behavior](#2-customer-behavior)
 * [3. Regional Analysis](#3-regional-analysis)
