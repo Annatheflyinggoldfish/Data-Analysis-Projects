@@ -171,7 +171,7 @@ SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 <img width="90" height="23" alt="image" src="https://github.com/user-attachments/assets/8e4704e6-a65c-4566-8e83-0163142bf973" />
 <img width="364" height="361" alt="image" src="https://github.com/user-attachments/assets/7832e289-2fc8-44f4-a29e-482cc7c02ca5" />
 
-### 1.6 TOP 10 Best Selling Product Categories Rankings by Month（需要过滤时间然后重新做图）
+### 1.6 TOP 10 Best Selling Product Categories Rankings by Month
 - The heatmap indicates that most categories appear sporadically within the top 10 rankings, with no recognizable seasonal patterns showing from the map.
 - The dominance of Bed/Bath/Table, Health/Beauty, and Sports/Leisure, and Watches/Gifts, is consistent with findings in previous sections.
   
@@ -212,7 +212,9 @@ SELECT * FROM T4 WHERE rn <= 10;
 
 
 ## 2. Customer Behavior
-### 2.1 Repeat Purchase Rate: 3.12%
+### 2.1 Repeat Purchase Rate
+- The repeat purchase rate stands at just **3.12%**, suggesting that the majority of customers make only a single purchase, and indicating this platform doesn't exhibit a healthy loyalty-driven ecosystem.
+
 <details>
 <summary>View SQL</summary>
  
@@ -229,7 +231,8 @@ FROM T WHERE order_count >= 2;
 <img width="280" height="60" alt="image" src="https://github.com/user-attachments/assets/326c3591-58c1-4b12-9f11-c57bdfe8bc60" />
  </details>
  
-### 2.2 Average Inter-purchase Time: 78 Days
+### 2.2 Average Inter-purchase Time
+- The average inter-purchase time is approximately **78 days**, which indicates a low purchase frequency and reinforces the previous conclusion of low customer retention.
 <details>
 <summary>View SQL</summary>
  
@@ -252,6 +255,10 @@ SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM T2;
 </details>
 
 ### 2.3 Average Order Value Distribution
+- Orders in the 50–100 price range dominate in sales volume, with the majority of orders falling below 200.
+- For orders exceeding 100, a clear inverse relationship is observed between order value and volume: The higher the price, the fewer the orders.
+- This distribution indicates that the platform primarily caters to budget-sensitive consumers.
+
 <details>
 <summary>View SQL</summary>
  
