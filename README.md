@@ -24,6 +24,7 @@
 
 ## 1. Sales Performance
 ### 1.1 Monthly Order Count, GMV, and Average Order Value
+- 
 <details>
 <summary>View SQL</summary>
 
