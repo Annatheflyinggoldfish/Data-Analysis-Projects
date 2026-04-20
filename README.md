@@ -15,7 +15,7 @@
 <img width="911" height="628" alt="image" src="https://github.com/user-attachments/assets/9ddaa6aa-7708-4571-8ebe-08edf693e22b" />
 
 
-## General Performance
+## Sales Performance
 ### Monthly Order Count, GMV, and Average Order Value
 <details>
 <summary>View SQL</summary>
@@ -188,7 +188,7 @@ SELECT * FROM T4 WHERE rn <= 10;
 <img width="843" height="540" alt="image" src="https://github.com/user-attachments/assets/7c970873-8b64-47be-90dd-a1a6579cad09" />
 
 
-## 客户行为类
+## Customer Behavior
 ### Repeat Purchase Rate: 3.12%
 <details>
 <summary>View SQL</summary>
@@ -344,7 +344,7 @@ SELECT ROUND(AVG(timediff),1) AS latency FROM T3 WHERE timediff >=0;
 
 </details>
 
-## 物流类
+## Delivery Efficiency
 ### On Time Delivery Rate: 91.89%
 <details>
 <summary>View SQL</summary>
@@ -433,7 +433,7 @@ ORDER BY avg_state_lead_time DESC;
 <img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/3284c916-b6a5-4410-b210-1e891186f51a" />
 
 
-## 评论/满意度类
+## Reviews and Customer Feedback
 ### Rating Distrabution Ratio
 <details>
 <summary>View SQL</summary>
@@ -452,7 +452,7 @@ GROUP BY review_score ORDER BY review_score;
 <img width="150" height="70" alt="image" src="https://github.com/user-attachments/assets/16c817e5-2bae-4491-bed7-2a598b81a435" />
 <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/7a5f973f-93bc-45ff-b9b2-d18142c142bf" />
 
-### 物流延误和差评的相关性（图表导出来拖进tableau）
+### Correlation Between Lead Time(Shipping Time) and Customer Feedback
 <details>
 <summary>View SQL</summary>
  
@@ -503,7 +503,7 @@ AND review_comment_message != '';
 </details>
 
 
-### 回复时间对评分的影响(收货和评论间隔时长，以及评分)
+### Correlation Between Time to Review and Customer Feedback
 <details>
 <summary>View SQL</summary>
  
@@ -537,8 +537,7 @@ SELECT * FROM T2;
 <img width="480" height="320" alt="image" src="https://github.com/user-attachments/assets/0a0940e4-180d-4507-acc5-3e31b9662635" />
 
 
-## 交叉分析类
-### 高价产品是否评分更高（做评分和order价格的对比）
+### Correlation Between the Product Price and Customer Feedback
 <details>
 <summary>View SQL</summary>
  
@@ -569,7 +568,7 @@ SELECT * FROM T2;
 </details>
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/a55046d5-9bcd-43d5-8922-f51fcc9b7966" />
 
-### 差评的时间规律 — 差评集中在一周的哪几天、哪个时段提交？情绪是否有周期性？
+### Rating Trends by Time of Day & Day of Week
 <details>
 <summary>View SQL</summary>
  
@@ -700,6 +699,6 @@ ORDER BY nr.customer_id;
 
 </details>
  
-## 结论
+## Conclusion
 - 发现1
 - 发现2
