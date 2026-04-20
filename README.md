@@ -171,7 +171,10 @@ SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 <img width="90" height="23" alt="image" src="https://github.com/user-attachments/assets/8e4704e6-a65c-4566-8e83-0163142bf973" />
 <img width="364" height="361" alt="image" src="https://github.com/user-attachments/assets/7832e289-2fc8-44f4-a29e-482cc7c02ca5" />
 
-### 1.6 TOP 10 Best Selling Product Categories Rankings by Month
+### 1.6 TOP 10 Best Selling Product Categories Rankings by Month（需要过滤时间然后重新做图）
+- The heatmap indicates that most categories appear sporadically within the top 10 rankings, with no recognizable seasonal patterns showing from the map.
+- The dominance of Bed/Bath/Table, Health/Beauty, and Sports/Leisure, and Watches/Gifts, is consistent with findings in previous sections.
+  
 <details>
 <summary>View SQL</summary>
  
@@ -190,7 +193,10 @@ ON opd.product_category_name = pcnt.product_category_name
 INNER JOIN olist_orders_dataset ood 
 ON T.order_id = ood.order_id),
 T3 AS
-(SELECT months,product_name,SUM(price) AS total_price FROM T2 GROUP BY months,product_name),
+(SELECT months,product_name,SUM(price) AS total_price FROM T2 
+WHERE months >= '2017-01'
+AND months < '2018-09'
+GROUP BY months,product_name),
 T4 AS
 (SELECT months,product_name,total_price,
 DENSE_RANK() OVER (PARTITION BY months ORDER BY total_price DESC) AS rn
@@ -201,10 +207,8 @@ SELECT * FROM T4 WHERE rn <= 10;
 
 </details>
 
-- Interactive Graph:[Product Category Revenue by State](https://public.tableau.com/views/Olist_17762903105860/ProductCategoryRevenuebyState)
-
 <img width="131" height="52" alt="image" src="https://github.com/user-attachments/assets/dc29261b-3250-46d6-8e60-fa2b2b7cbf9b" />
-<img width="843" height="540" alt="image" src="https://github.com/user-attachments/assets/7c970873-8b64-47be-90dd-a1a6579cad09" />
+<img width="784" height="529" alt="image" src="https://github.com/user-attachments/assets/0de6e148-3673-4872-922b-c8dc92a52742" />
 
 
 ## 2. Customer Behavior
