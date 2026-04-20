@@ -15,8 +15,8 @@
 <img width="911" height="628" alt="image" src="https://github.com/user-attachments/assets/9ddaa6aa-7708-4571-8ebe-08edf693e22b" />
 
 
-## Sales Performance
-### Monthly Order Count, GMV, and Average Order Value
+## 1. Sales Performance
+### 1.1 Monthly Order Count, GMV, and Average Order Value
 <details>
 <summary>View SQL</summary>
 
@@ -42,7 +42,7 @@ ORDER BY month;
 
 <img width="837" height="517" alt="image" src="https://github.com/user-attachments/assets/07f6572f-0e67-419a-83ba-a62fb98b9820" />
 
-### Monthly Distribution by Order Value Tier
+### 1.2 Monthly Distribution by Order Value Tier
 <details>
 <summary>View SQL</summary>
  
@@ -70,7 +70,7 @@ ORDER BY month, value_tier;
 <img width="117" height="52" alt="image" src="https://github.com/user-attachments/assets/8355a408-7c39-4ac4-8855-1b7b1eb26ca4" />
 <img width="878" height="462" alt="image" src="https://github.com/user-attachments/assets/5fef912c-4f66-4eba-8673-8a60a154ad5a" />
  
-### TOP 10 best-selling products
+### 1.3 TOP 10 best-selling products
 <details>
 <summary>View SQL</summary>
  
@@ -92,7 +92,7 @@ GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
 <img width="619" height="490" alt="image" src="https://github.com/user-attachments/assets/f69df1f6-9ed6-41bd-b184-49dc9494354e" />
 
 
-### TOP 10 seller
+### 1.4 TOP 10 seller
 <details>
 <summary>View SQL</summary>
  
@@ -119,7 +119,7 @@ ORDER BY seller_gmv DESC;
 </details>
 <img width="588" height="283" alt="image" src="https://github.com/user-attachments/assets/8bdf35f4-d9e0-41c9-aa68-57c34ef534fd" />
 
-### Top 10 Sellers' Contribution to Total GMV 
+### 1.5 Top 10 Sellers' Contribution to Total GMV 
 <details>
 <summary>View SQL</summary>
  
@@ -152,7 +152,7 @@ SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 <img width="90" height="23" alt="image" src="https://github.com/user-attachments/assets/8e4704e6-a65c-4566-8e83-0163142bf973" />
 <img width="364" height="361" alt="image" src="https://github.com/user-attachments/assets/7832e289-2fc8-44f4-a29e-482cc7c02ca5" />
 
-### TOP 10 Best Selling Product Categories Rankings by Month
+### 1.6 TOP 10 Best Selling Product Categories Rankings by Month
 <details>
 <summary>View SQL</summary>
  
@@ -188,8 +188,8 @@ SELECT * FROM T4 WHERE rn <= 10;
 <img width="843" height="540" alt="image" src="https://github.com/user-attachments/assets/7c970873-8b64-47be-90dd-a1a6579cad09" />
 
 
-## Customer Behavior
-### Repeat Purchase Rate: 3.12%
+## 2. Customer Behavior
+### 2.1 Repeat Purchase Rate: 3.12%
 <details>
 <summary>View SQL</summary>
  
@@ -206,7 +206,7 @@ FROM T WHERE order_count >= 2;
 <img width="280" height="60" alt="image" src="https://github.com/user-attachments/assets/326c3591-58c1-4b12-9f11-c57bdfe8bc60" />
  </details>
  
-### Average Inter-purchase Time: 78 Days
+### 2.2 Average Inter-purchase Time: 78 Days
 <details>
 <summary>View SQL</summary>
  
@@ -228,7 +228,7 @@ SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM T2;
 <img width="300" height="60" alt="image" src="https://github.com/user-attachments/assets/0cc776fe-2100-408a-ae21-c04bf3935ab1" />
 </details>
 
-### Average Order Value Distribution
+### 2.3 Average Order Value Distribution
 <details>
 <summary>View SQL</summary>
  
@@ -252,8 +252,8 @@ GROUP BY price_tier;
 </details>
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/ae476547-8670-4f2e-90e6-4067639a3880" />
 
-## Regional Analysis
-### Order Volume, GMV, and Customer Distribution By State
+## 3. Regional Analysis
+### 3.1 Order Volume, GMV, and Customer Distribution By State
 <details>
 <summary>View SQL</summary>
  
@@ -280,7 +280,7 @@ ORDER BY state_gmv DESC;
 <img width="157" height="48" alt="image" src="https://github.com/user-attachments/assets/7045f92a-572a-47b8-acdb-d5964bae64fb" />
 <img width="1064" height="576" alt="image" src="https://github.com/user-attachments/assets/9bda85b0-aa37-4381-99c7-2ad5cc459321" />
 
-### Product Category Revenue by State
+### 3.2 Product Category Revenue by State
 <details>
 <summary>View SQL</summary>
  
@@ -316,7 +316,7 @@ ORDER BY T.customer_state,T.total_revenue;
 <img width="1090" height="585" alt="image" src="https://github.com/user-attachments/assets/abd53b17-74c8-4e68-a24a-5b296014f78b" />
 
 
-### Time Latency for Customer Feedback: 3.6 Days
+### 3.3 Time Latency for Customer Feedback: 3.6 Days
 <details>
 <summary>View SQL</summary>
  
@@ -344,8 +344,8 @@ SELECT ROUND(AVG(timediff),1) AS latency FROM T3 WHERE timediff >=0;
 
 </details>
 
-## Delivery Efficiency
-### On Time Delivery Rate: 91.89%
+## 4. Delivery Efficiency
+### 4.1 On Time Delivery Rate: 91.89%
 <details>
 <summary>View SQL</summary>
  
@@ -370,7 +370,7 @@ FROM T2 WHERE deliver_time <= estimated_delivery;
 </details>
 
 
-### Average Lead(Delivery) Time: 12.5 Days
+### 4.2 Average Lead(Delivery) Time: 12.5 Days
 <details>
 <summary>View SQL</summary>
  
@@ -394,7 +394,7 @@ SELECT ROUND(AVG(lead_ime),1) AS avg_lead_ime FROM T3;
 <img width="225" height="61" alt="image" src="https://github.com/user-attachments/assets/af8b295f-dd72-4092-bde8-020577f8c7b6" />
 </details>
 
-### Average Lead Time & Delivery Gap By State
+### 4.3 Average Lead Time & Delivery Gap By State
 <details>
 <summary>View SQL</summary>
  
@@ -433,8 +433,8 @@ ORDER BY avg_state_lead_time DESC;
 <img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/3284c916-b6a5-4410-b210-1e891186f51a" />
 
 
-## Reviews and Customer Feedback
-### Rating Distrabution Ratio
+## 5. Reviews and Customer Feedback
+### 5.1 Rating Distrabution Ratio
 <details>
 <summary>View SQL</summary>
  
@@ -452,7 +452,7 @@ GROUP BY review_score ORDER BY review_score;
 <img width="150" height="70" alt="image" src="https://github.com/user-attachments/assets/16c817e5-2bae-4491-bed7-2a598b81a435" />
 <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/7a5f973f-93bc-45ff-b9b2-d18142c142bf" />
 
-### Correlation Between Lead Time(Shipping Time) and Customer Feedback
+### 5.2 Correlation Between Lead Time(Shipping Time) and Customer Feedback
 <details>
 <summary>View SQL</summary>
  
@@ -487,7 +487,7 @@ SELECT * FROM T4;
 <img width="548" height="441" alt="image" src="https://github.com/user-attachments/assets/f33d1b08-b0c0-4eff-9381-c98ae5fe53e7" />
 
 
-### Review Rate: 41.30%
+### 5.3 Review Rate: 41.30%
 <details>
 <summary>View SQL</summary>
  
@@ -503,7 +503,7 @@ AND review_comment_message != '';
 </details>
 
 
-### Correlation Between Time to Review and Customer Feedback
+### 5.4 Correlation Between Time to Review and Customer Feedback
 <details>
 <summary>View SQL</summary>
  
@@ -537,7 +537,7 @@ SELECT * FROM T2;
 <img width="480" height="320" alt="image" src="https://github.com/user-attachments/assets/0a0940e4-180d-4507-acc5-3e31b9662635" />
 
 
-### Correlation Between the Product Price and Customer Feedback
+### 5.5 Correlation Between the Product Price and Customer Feedback
 <details>
 <summary>View SQL</summary>
  
@@ -568,7 +568,7 @@ SELECT * FROM T2;
 </details>
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/a55046d5-9bcd-43d5-8922-f51fcc9b7966" />
 
-### Rating Trends by Time of Day & Day of Week
+### 5.6 Rating Trends by Time of Day & Day of Week
 <details>
 <summary>View SQL</summary>
  
@@ -597,7 +597,7 @@ SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_sc
 <img width="863" height="356" alt="image" src="https://github.com/user-attachments/assets/5248bd9e-baa2-4a57-a7b9-845f2d1f62d2" />
 
 
-### Customers who left a score but no reviews
+### 5.7 Customers who left a score but no reviews
 <details>
 <summary>View SQL</summary>
  
@@ -649,7 +649,7 @@ AND (review_comment_message IS NULL OR review_comment_message = '');
 </details>
 <img width="577" height="339" alt="image" src="https://github.com/user-attachments/assets/10a97d3e-81ad-4711-a42c-4b7acd9be9f2" />
 
-### Orders with no score/review record
+### 5.8 Orders with no score/review record
 - Orders with no score/review record occupy a very small fraction of the data set: 683 records, so they have been excluded from further investigation as they lack volume for meaningful analysis.
 <details>
 <summary>View SQL</summary>
