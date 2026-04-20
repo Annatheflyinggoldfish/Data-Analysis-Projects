@@ -1,14 +1,16 @@
 # Olist Brazilian E-Commerce Business Performance Analysis
+- This is the first project I have finished as a transitioning self-taught junior data analyst, and the analysis is overall descriptive, just to showcase my SQL and Tableau skills.
+- I'm just trying to make a sum up for what I learned so far while continuing my journey by learning Python.
 
 ## Tools
 - MySQL, Tableau Public
 
 ## Introduction
-- Olist E-Commerce Analytics:
-
-## About the dataset
 - Data Source: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
-- Data Structure:
+- The dataset was provided by Olist, a Brazilian e-commerce Store, via Kaggle. The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil. 
+
+
+### Data Structure:
 <img width="911" height="628" alt="image" src="https://github.com/user-attachments/assets/9ddaa6aa-7708-4571-8ebe-08edf693e22b" />
 
 
