@@ -438,6 +438,7 @@ ORDER BY avg_state_lead_time DESC;
 ## 5. Customer Feedback and Reviews
 ### 5.1 Review Rate & Unreviewed Orders
 #### Review Rate: 42.95%
+- Of all orders, 42.95% received a written review (either a comment title, message, or both), while 56.52% of the orders only received a rating score and no written comment. A small fraction of 768 orders (0.77%) have no review record at all and have been excluded from further analysis. Unless otherwise noted, analyses in Sections 5.3–5.5 are based on orders with a written review. Section 5.6 examines the score-only group as a supplementary comparison.
 <details>
 <summary>View SQL</summary>
  
