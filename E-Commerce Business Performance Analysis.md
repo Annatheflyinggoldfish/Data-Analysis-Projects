@@ -548,127 +548,61 @@ SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_sc
 <img width="612" height="287" alt="image" src="https://github.com/user-attachments/assets/632e698c-f392-434e-b20c-13a72cd96c8e" />
 <img width="863" height="356" alt="image" src="https://github.com/user-attachments/assets/5248bd9e-baa2-4a57-a7b9-845f2d1f62d2" />
 
-### 5.5 Review Participation: Written Reviews vs. Score-Only Orders
-#### Written Reviews: 42.95%
-- Of all orders, 42.95% received a written review (either a comment title, message, or both), while 56.52% of the orders only received a rating score and no written comment. A small fraction of 768 orders (0.77%) have no review record at all and have been excluded from further analysis. Unless otherwise noted, analyses in Sections 5.3–5.5 are based on orders with a written review. Section 5.6 examines the score-only group as a supplementary comparison.
+### 5.5 Review Participation Distribution
+#### Written Review Orders， Score-Only Orders, and No Review Orders Distribution
+- Of all orders, 42.95% received a written review (either a comment title, message, or both), while 56.52% of the orders only received a rating score and no written comment. A small fraction of 768 orders (0.77%) have no review record at all.
+
 <details>
 <summary>View SQL</summary>
  
 ```sql
-SELECT CONCAT(ROUND(COUNT(review_comment_message)/(SELECT COUNT(*) FROM olist_orders_dataset)*100,2),'%')
-AS review_rate
-FROM olist_order_reviews_dataset
-WHERE (review_comment_message IS NOT NULL AND review_comment_message != '')
-OR (review_comment_title IS NOT NULL AND review_comment_title != '');
-```
-
-<img width="215" height="60" alt="image" src="https://github.com/user-attachments/assets/d4cf1ff6-961c-4d67-95c8-e2eabfb4bc6b" />
-</details>
-
-#### Score Only Rate: 54.76%
-<details>
-<summary>View SQL</summary>
- 
-```sql
-WITH review_table AS 
+WITH reviews AS 
 (SELECT order_id, review_score, review_comment_title, review_comment_message,
 ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
-FROM olist_order_reviews_dataset), 
-T AS
-(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
-FROM olist_orders_dataset
-WHERE order_delivered_customer_date IS NOT NULL
-AND order_delivered_customer_date != ''),
-T2 AS
-(SELECT order_id,
-STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
-STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time
-FROM T),
-T3 AS 
-(SELECT order_id,deliver_time,purchase_time,
-DATEDIFF(deliver_time,purchase_time) AS lead_time
-FROM T2),
-T4 AS
-(SELECT order_id,product_id,SUM(price) AS price FROM olist_order_items_dataset ooid GROUP BY order_id,product_id),
-T5 AS
-(SELECT T4.order_id,T4.product_id,ood.customer_id,T4.price,
-DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS months,
-pcnt.product_category_name_english AS product_name
-FROM T4
-INNER JOIN olist_products_dataset opd
-ON T4.product_id = opd.product_id
-INNER JOIN product_category_name_translation pcnt
-ON opd.product_category_name = pcnt.product_category_name
-INNER JOIN olist_orders_dataset ood 
-ON T4.order_id = ood.order_id),
-T6 AS
-(SELECT T3.order_id,T5.product_name,T5.price,T3.lead_time,rt.review_score,rt.review_comment_title,rt.review_comment_message 
-FROM T3 INNER JOIN T5 
-ON T3.order_id = T5.order_id
-INNER JOIN review_table rt
-ON T5.order_id = rt.order_id
-WHERE rn = 1)
-SELECT 
-COUNT(DISTINCT T6.order_id) AS score_only_orders,
-(SELECT COUNT(DISTINCT order_id) FROM olist_orders_dataset) AS total_orders,
-CONCAT(ROUND(COUNT(DISTINCT T6.order_id) * 100.0 / 
-(SELECT COUNT(DISTINCT order_id) FROM olist_orders_dataset), 2), '%') AS score_only_rate
-FROM T6
-WHERE (review_comment_title IS NULL OR review_comment_title = '')
-AND (review_comment_message IS NULL OR review_comment_message = '');
+FROM olist_order_reviews_dataset)
+SELECT
+SUM(CASE WHEN r.order_id IS NULL THEN 1 ELSE 0 END) AS no_review,
+SUM(CASE WHEN r.order_id IS NOT NULL 
+AND (r.review_comment_title IS NULL OR r.review_comment_title = '')
+AND (r.review_comment_message IS NULL OR r.review_comment_message = '') 
+THEN 1 ELSE 0 END) AS score_onlyt,
+SUM(CASE WHEN (r.review_comment_title IS NOT NULL AND r.review_comment_title != '')
+OR (r.review_comment_message IS NOT NULL AND r.review_comment_message != '') 
+THEN 1 ELSE 0 END) AS full_review
+FROM olist_orders_dataset o
+LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
 ```
-<img width="616" height="64" alt="image" src="https://github.com/user-attachments/assets/725e8128-e4eb-493e-964f-eb32ec29fc28" />
+<img width="529" height="64" alt="image" src="https://github.com/user-attachments/assets/46863da3-6b97-47f5-8529-8bc7cc7316dc" />
 
 </details>
 
+<img width="791" height="157" alt="image" src="https://github.com/user-attachments/assets/9cb38e96-e325-417e-9b00-9c4e9fc1977a" />
 
-#### Orders with no score/review record
-- Orders with no score/review record occupy a very small fraction of the data set: 683 records, so they have been excluded from further investigation as they lack volume for meaningful analysis.
+#### Average Review Scores: Written Review Orders vs. Score-Only Orders
+- Customers who left a score without a written review gave an average rating of **4.38**, notably higher than the **3.70** average for those who wrote a review. This suggests that dissatisfied customers are more likely to leave a written review, while satisfied customers tend to leave a score only. The louder the customer, the lower the score."
+  
 <details>
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS
-(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date
-FROM olist_orders_dataset
-WHERE order_delivered_customer_date IS NOT NULL
-AND order_delivered_customer_date != ''),
-T2 AS
-(SELECT order_id,
-STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
-STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time
-FROM T),
-T3 AS 
-(SELECT order_id,deliver_time,purchase_time,
-DATEDIFF(deliver_time,purchase_time) AS lead_time
-FROM T2),
-T4 AS
-(SELECT order_id,product_id,SUM(price) AS price 
-FROM olist_order_items_dataset ooid 
-GROUP BY order_id,product_id),
-T5 AS
-(SELECT T4.order_id,T4.product_id,ood.customer_id,T4.price,
-DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS months,
-pcnt.product_category_name_english AS product_name
-FROM T4
-INNER JOIN olist_products_dataset opd
-ON T4.product_id = opd.product_id
-INNER JOIN product_category_name_translation pcnt
-ON opd.product_category_name = pcnt.product_category_name
-INNER JOIN olist_orders_dataset ood 
-ON T4.order_id = ood.order_id),
-never_reviewed AS 
-(SELECT ood.customer_id, ood.order_id
-FROM olist_orders_dataset ood
-WHERE NOT EXISTS (SELECT 1 FROM olist_order_reviews_dataset rt WHERE ood.order_id = rt.order_id))
-SELECT nr.order_id,nr.customer_id,T5.product_name,T5.price,T3.lead_time 
-FROM never_reviewed nr
-INNER JOIN T3 ON nr.order_id = T3.order_id
-INNER JOIN T5 ON nr.order_id = T5.order_id
-ORDER BY nr.customer_id;
+WITH reviews AS
+(SELECT order_id, review_score, review_comment_title, review_comment_message,
+ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
+FROM olist_order_reviews_dataset)
+SELECT
+ROUND(AVG(CASE WHEN r.order_id IS NOT NULL
+AND (r.review_comment_title IS NULL OR r.review_comment_title = '')
+AND (r.review_comment_message IS NULL OR r.review_comment_message = '')
+THEN r.review_score END), 2) AS score_only_avg,
+ROUND(AVG(CASE WHEN (r.review_comment_title IS NOT NULL AND r.review_comment_title != '')
+OR (r.review_comment_message IS NOT NULL AND r.review_comment_message != '')
+THEN r.review_score END), 2) AS full_review_avg
+FROM olist_orders_dataset o
+LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
 ```
 
-<img width="1050" height="161" alt="image" src="https://github.com/user-attachments/assets/77e3f5be-91e5-4bbb-8059-5c146cb3b554" />
+<img width="429" height="61" alt="image" src="https://github.com/user-attachments/assets/a97a6a71-0992-4aac-a65f-24d9ab18ebed" />
 
 </details>
+
 
