@@ -212,7 +212,7 @@ SELECT * FROM T4 WHERE rn <= 10;
 
 
 ## 2. Customer Behavior
-### 2.1 Repeat Purchase Rate
+### 2.1 Repeat Purchase Rate: 3.12%
 - The repeat purchase rate stands at just **3.12%**, suggesting that the majority of customers make only a single purchase, and indicating this platform doesn't exhibit a healthy loyalty-driven ecosystem.
 
 <details>
@@ -231,7 +231,7 @@ FROM T WHERE order_count >= 2;
 <img width="280" height="60" alt="image" src="https://github.com/user-attachments/assets/326c3591-58c1-4b12-9f11-c57bdfe8bc60" />
  </details>
  
-### 2.2 Average Inter-purchase Time
+### 2.2 Average Inter-purchase Time: 78 days
 - The average inter-purchase time is approximately **78 days**, which indicates a low purchase frequency and reinforces the previous conclusion of low customer retention.
 <details>
 <summary>View SQL</summary>
