@@ -434,7 +434,7 @@ ORDER BY avg_state_lead_time DESC;
 <img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/3284c916-b6a5-4410-b210-1e891186f51a" />
 
 
-## 4. Customer Feedback and Reviews
+## 4. Customer Feedback & Reviews
 ### 5.1 Time Latency for Customer Feedback: 3.6 Days
 <details>
 <summary>View SQL</summary>
