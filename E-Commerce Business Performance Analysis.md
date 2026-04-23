@@ -436,75 +436,7 @@ ORDER BY avg_state_lead_time DESC;
 
 
 ## 5. Customer Feedback and Reviews
-### 5.1 Review Rate & Unreviewed Orders
-#### Review Rate: 42.95%
-- Of all orders, 42.95% received a written review (either a comment title, message, or both), while 56.52% of the orders only received a rating score and no written comment. A small fraction of 768 orders (0.77%) have no review record at all and have been excluded from further analysis. Unless otherwise noted, analyses in Sections 5.3–5.5 are based on orders with a written review. Section 5.6 examines the score-only group as a supplementary comparison.
-<details>
-<summary>View SQL</summary>
- 
-```sql
-SELECT CONCAT(ROUND(COUNT(review_comment_message)/(SELECT COUNT(*) FROM olist_orders_dataset)*100,2),'%')
-AS review_rate
-FROM olist_order_reviews_dataset
-WHERE (review_comment_message IS NOT NULL AND review_comment_message != '')
-OR (review_comment_title IS NOT NULL AND review_comment_title != '');
-```
-
-<img width="215" height="60" alt="image" src="https://github.com/user-attachments/assets/d4cf1ff6-961c-4d67-95c8-e2eabfb4bc6b" />
-</details>
-
-
-#### Orders with no score/review record
-- Orders with no score/review record occupy a very small fraction of the data set: 683 records, so they have been excluded from further investigation as they lack volume for meaningful analysis.
-<details>
-<summary>View SQL</summary>
- 
-```sql
-WITH T AS
-(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date
-FROM olist_orders_dataset
-WHERE order_delivered_customer_date IS NOT NULL
-AND order_delivered_customer_date != ''),
-T2 AS
-(SELECT order_id,
-STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
-STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time
-FROM T),
-T3 AS 
-(SELECT order_id,deliver_time,purchase_time,
-DATEDIFF(deliver_time,purchase_time) AS lead_time
-FROM T2),
-T4 AS
-(SELECT order_id,product_id,SUM(price) AS price 
-FROM olist_order_items_dataset ooid 
-GROUP BY order_id,product_id),
-T5 AS
-(SELECT T4.order_id,T4.product_id,ood.customer_id,T4.price,
-DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS months,
-pcnt.product_category_name_english AS product_name
-FROM T4
-INNER JOIN olist_products_dataset opd
-ON T4.product_id = opd.product_id
-INNER JOIN product_category_name_translation pcnt
-ON opd.product_category_name = pcnt.product_category_name
-INNER JOIN olist_orders_dataset ood 
-ON T4.order_id = ood.order_id),
-never_reviewed AS 
-(SELECT ood.customer_id, ood.order_id
-FROM olist_orders_dataset ood
-WHERE NOT EXISTS (SELECT 1 FROM olist_order_reviews_dataset rt WHERE ood.order_id = rt.order_id))
-SELECT nr.order_id,nr.customer_id,T5.product_name,T5.price,T3.lead_time 
-FROM never_reviewed nr
-INNER JOIN T3 ON nr.order_id = T3.order_id
-INNER JOIN T5 ON nr.order_id = T5.order_id
-ORDER BY nr.customer_id;
-```
-
-<img width="1050" height="161" alt="image" src="https://github.com/user-attachments/assets/77e3f5be-91e5-4bbb-8059-5c146cb3b554" />
-
-</details>
-
-### 5.2 Rating Distrabution
+### 5.1 Rating Distrabution
 <details>
 <summary>View SQL</summary>
  
@@ -522,7 +454,7 @@ GROUP BY review_score ORDER BY review_score;
 <img width="150" height="70" alt="image" src="https://github.com/user-attachments/assets/16c817e5-2bae-4491-bed7-2a598b81a435" />
 <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/7a5f973f-93bc-45ff-b9b2-d18142c142bf" />
 
-### 5.3 Correlation: Lead Time vs. Rating
+### 5.2 Correlation: Lead Time vs. Rating
 <details>
 <summary>View SQL</summary>
  
@@ -557,7 +489,7 @@ SELECT * FROM T4;
 <img width="548" height="441" alt="image" src="https://github.com/user-attachments/assets/f33d1b08-b0c0-4eff-9381-c98ae5fe53e7" />
 
 
-### 5.4 Correlation: Product Price vs. Rating
+### 5.3 Correlation: Product Price vs. Rating
 <details>
 <summary>View SQL</summary>
  
@@ -588,7 +520,7 @@ SELECT * FROM T2;
 </details>
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/a55046d5-9bcd-43d5-8922-f51fcc9b7966" />
 
-### 5.5 Rating Trends by Time of Day & Day of Week
+### 5.4 Rating Trends by Time of Day & Day of Week
 <details>
 <summary>View SQL</summary>
  
@@ -616,7 +548,23 @@ SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_sc
 <img width="612" height="287" alt="image" src="https://github.com/user-attachments/assets/632e698c-f392-434e-b20c-13a72cd96c8e" />
 <img width="863" height="356" alt="image" src="https://github.com/user-attachments/assets/5248bd9e-baa2-4a57-a7b9-845f2d1f62d2" />
 
-### 5.6 Customers who left a score but no reviews
+### 5.5 Review Participation: Written Reviews vs. Score-Only Orders
+#### Written Reviews: 42.95%
+- Of all orders, 42.95% received a written review (either a comment title, message, or both), while 56.52% of the orders only received a rating score and no written comment. A small fraction of 768 orders (0.77%) have no review record at all and have been excluded from further analysis. Unless otherwise noted, analyses in Sections 5.3–5.5 are based on orders with a written review. Section 5.6 examines the score-only group as a supplementary comparison.
+<details>
+<summary>View SQL</summary>
+ 
+```sql
+SELECT CONCAT(ROUND(COUNT(review_comment_message)/(SELECT COUNT(*) FROM olist_orders_dataset)*100,2),'%')
+AS review_rate
+FROM olist_order_reviews_dataset
+WHERE (review_comment_message IS NOT NULL AND review_comment_message != '')
+OR (review_comment_title IS NOT NULL AND review_comment_title != '');
+```
+
+<img width="215" height="60" alt="image" src="https://github.com/user-attachments/assets/d4cf1ff6-961c-4d67-95c8-e2eabfb4bc6b" />
+</details>
+
 #### Score Only Rate: 54.76%
 <details>
 <summary>View SQL</summary>
@@ -673,18 +621,15 @@ AND (review_comment_message IS NULL OR review_comment_message = '');
 
 </details>
 
-#### Correlation: Lead Time vs. Rating & Product Price vs. Rating
 
+#### Orders with no score/review record
+- Orders with no score/review record occupy a very small fraction of the data set: 683 records, so they have been excluded from further investigation as they lack volume for meaningful analysis.
 <details>
 <summary>View SQL</summary>
  
 ```sql
-WITH review_table AS 
-(SELECT order_id, review_score, review_comment_title, review_comment_message,
-ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
-FROM olist_order_reviews_dataset), 
-T AS
-(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
+WITH T AS
+(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date
 FROM olist_orders_dataset
 WHERE order_delivered_customer_date IS NOT NULL
 AND order_delivered_customer_date != ''),
@@ -698,7 +643,9 @@ T3 AS
 DATEDIFF(deliver_time,purchase_time) AS lead_time
 FROM T2),
 T4 AS
-(SELECT order_id,product_id,SUM(price) AS price FROM olist_order_items_dataset ooid GROUP BY order_id,product_id),
+(SELECT order_id,product_id,SUM(price) AS price 
+FROM olist_order_items_dataset ooid 
+GROUP BY order_id,product_id),
 T5 AS
 (SELECT T4.order_id,T4.product_id,ood.customer_id,T4.price,
 DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS months,
@@ -710,18 +657,18 @@ INNER JOIN product_category_name_translation pcnt
 ON opd.product_category_name = pcnt.product_category_name
 INNER JOIN olist_orders_dataset ood 
 ON T4.order_id = ood.order_id),
-T6 AS
-(SELECT T3.order_id,T5.product_name,T5.price,T3.lead_time,rt.review_score,rt.review_comment_title,rt.review_comment_message 
-FROM T3 INNER JOIN T5 
-ON T3.order_id = T5.order_id
-INNER JOIN review_table rt
-ON T5.order_id = rt.order_id
-WHERE rn = 1)
-SELECT order_id,product_name,price,lead_time,review_score FROM T6 
-WHERE (review_comment_title IS NULL OR review_comment_title = '')
-AND (review_comment_message IS NULL OR review_comment_message = ''); 
+never_reviewed AS 
+(SELECT ood.customer_id, ood.order_id
+FROM olist_orders_dataset ood
+WHERE NOT EXISTS (SELECT 1 FROM olist_order_reviews_dataset rt WHERE ood.order_id = rt.order_id))
+SELECT nr.order_id,nr.customer_id,T5.product_name,T5.price,T3.lead_time 
+FROM never_reviewed nr
+INNER JOIN T3 ON nr.order_id = T3.order_id
+INNER JOIN T5 ON nr.order_id = T5.order_id
+ORDER BY nr.customer_id;
 ```
-<img width="946" height="160" alt="image" src="https://github.com/user-attachments/assets/a8cdbd9d-2bb0-4eff-94e6-d031aa0e9699" />
+
+<img width="1050" height="161" alt="image" src="https://github.com/user-attachments/assets/77e3f5be-91e5-4bbb-8059-5c146cb3b554" />
 
 </details>
-<img width="577" height="339" alt="image" src="https://github.com/user-attachments/assets/10a97d3e-81ad-4711-a42c-4b7acd9be9f2" />
+
