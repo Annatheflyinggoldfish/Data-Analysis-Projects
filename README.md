@@ -346,34 +346,6 @@ ORDER BY T.customer_state,T.total_revenue;
 <img width="1090" height="585" alt="image" src="https://github.com/user-attachments/assets/abd53b17-74c8-4e68-a24a-5b296014f78b" />
 
 
-### 3.3 Time Latency for Customer Feedback: 3.6 Days
-<details>
-<summary>View SQL</summary>
- 
-```sql
-WITH T AS
-(SELECT oord.order_id,ood.order_delivered_customer_date ,oord.review_answer_timestamp
-FROM olist_order_reviews_dataset oord
-INNER JOIN olist_orders_dataset ood
-ON oord.order_id = ood.order_id
-WHERE ood.order_delivered_customer_date IS NOT NULL
-AND ood.order_delivered_customer_date != ''),
-T2 AS
-(SELECT 
-order_id,
-STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_date,
-STR_TO_DATE(review_answer_timestamp,'%Y/%m/%d %H:%i:%s') AS review_date
-FROM T),
-T3 AS
-(SELECT order_id,
-TIMESTAMPDIFF(HOUR, deliver_date, review_date) / 24 AS timediff
-FROM T2)
-SELECT ROUND(AVG(timediff),1) AS latency FROM T3 WHERE timediff >=0;
-```
-<img width="186" height="65" alt="image" src="https://github.com/user-attachments/assets/1abe10b1-56da-4db6-8ede-60e5ed039d84" />
-
-</details>
-
 ## 4. Delivery Efficiency
 ### 4.1 On Time Delivery Rate: 91.89%
 <details>
@@ -464,7 +436,35 @@ ORDER BY avg_state_lead_time DESC;
 
 
 ## 5. Reviews and Customer Feedback
-### 5.1 Rating Distrabution Ratio
+### 5.1 Time Latency for Customer Feedback: 3.6 Days
+<details>
+<summary>View SQL</summary>
+ 
+```sql
+WITH T AS
+(SELECT oord.order_id,ood.order_delivered_customer_date ,oord.review_answer_timestamp
+FROM olist_order_reviews_dataset oord
+INNER JOIN olist_orders_dataset ood
+ON oord.order_id = ood.order_id
+WHERE ood.order_delivered_customer_date IS NOT NULL
+AND ood.order_delivered_customer_date != ''),
+T2 AS
+(SELECT 
+order_id,
+STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_date,
+STR_TO_DATE(review_answer_timestamp,'%Y/%m/%d %H:%i:%s') AS review_date
+FROM T),
+T3 AS
+(SELECT order_id,
+TIMESTAMPDIFF(HOUR, deliver_date, review_date) / 24 AS timediff
+FROM T2)
+SELECT ROUND(AVG(timediff),1) AS latency FROM T3 WHERE timediff >=0;
+```
+<img width="186" height="65" alt="image" src="https://github.com/user-attachments/assets/1abe10b1-56da-4db6-8ede-60e5ed039d84" />
+
+</details>
+
+### 5.2 Rating Distrabution Ratio
 <details>
 <summary>View SQL</summary>
  
@@ -482,7 +482,7 @@ GROUP BY review_score ORDER BY review_score;
 <img width="150" height="70" alt="image" src="https://github.com/user-attachments/assets/16c817e5-2bae-4491-bed7-2a598b81a435" />
 <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/7a5f973f-93bc-45ff-b9b2-d18142c142bf" />
 
-### 5.2 Correlation Between Lead Time(Shipping Time) and Customer Feedback
+### 5.3 Correlation Between Lead Time(Shipping Time) and Customer Feedback
 <details>
 <summary>View SQL</summary>
  
@@ -517,7 +517,7 @@ SELECT * FROM T4;
 <img width="548" height="441" alt="image" src="https://github.com/user-attachments/assets/f33d1b08-b0c0-4eff-9381-c98ae5fe53e7" />
 
 
-### 5.3 Review Rate: 41.30%
+### 5.4 Review Rate: 41.30%
 <details>
 <summary>View SQL</summary>
  
@@ -533,7 +533,7 @@ AND review_comment_message != '';
 </details>
 
 
-### 5.4 Correlation Between Time to Review and Customer Feedback
+### 5.5 Correlation Between Time to Review and Customer Feedback
 <details>
 <summary>View SQL</summary>
  
@@ -567,7 +567,7 @@ SELECT * FROM T2;
 <img width="480" height="320" alt="image" src="https://github.com/user-attachments/assets/0a0940e4-180d-4507-acc5-3e31b9662635" />
 
 
-### 5.5 Correlation Between the Product Price and Customer Feedback
+### 5.6 Correlation Between the Product Price and Customer Feedback
 <details>
 <summary>View SQL</summary>
  
@@ -598,7 +598,7 @@ SELECT * FROM T2;
 </details>
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/a55046d5-9bcd-43d5-8922-f51fcc9b7966" />
 
-### 5.6 Rating Trends by Time of Day & Day of Week
+### 5.7 Rating Trends by Time of Day & Day of Week
 <details>
 <summary>View SQL</summary>
  
@@ -627,7 +627,7 @@ SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_sc
 <img width="863" height="356" alt="image" src="https://github.com/user-attachments/assets/5248bd9e-baa2-4a57-a7b9-845f2d1f62d2" />
 
 
-### 5.7 Customers who left a score but no reviews
+### 5.8 Customers who left a score but no reviews
 <details>
 <summary>View SQL</summary>
  
@@ -679,7 +679,7 @@ AND (review_comment_message IS NULL OR review_comment_message = '');
 </details>
 <img width="577" height="339" alt="image" src="https://github.com/user-attachments/assets/10a97d3e-81ad-4711-a42c-4b7acd9be9f2" />
 
-### 5.8 Orders with no score/review record
+### 5.9 Orders with no score/review record
 - Orders with no score/review record occupy a very small fraction of the data set: 683 records, so they have been excluded from further investigation as they lack volume for meaningful analysis.
 <details>
 <summary>View SQL</summary>
