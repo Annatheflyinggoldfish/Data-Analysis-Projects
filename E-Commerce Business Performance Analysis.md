@@ -15,7 +15,7 @@
 - [2. Customer Behavior](#2-customer-behavior)
 - [3. Regional Analysis](#3-regional-analysis)
 - [4. Delivery Efficiency](#4-delivery-efficiency)
-- [5. Customer Feedback & Reviews](#5-customer-feedback-and-reviews)
+- [5. Customer Feedback and Reviews](#5-customer-feedback-and-reviews)
 
 
 ### Data Structure:
@@ -435,7 +435,7 @@ ORDER BY avg_state_lead_time DESC;
 <img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/3284c916-b6a5-4410-b210-1e891186f51a" />
 
 
-## 5. Customer Feedback & Reviews
+## 5. Customer Feedback and Reviews
 ### 5.1 Time Latency for Customer Feedback: 3.6 Days
 <details>
 <summary>View SQL</summary>
