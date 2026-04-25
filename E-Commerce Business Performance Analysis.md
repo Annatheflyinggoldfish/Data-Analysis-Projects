@@ -284,6 +284,8 @@ GROUP BY price_tier;
 
 ## 3. Regional Analysis
 ### 3.1 Order Volume, GMV, and Customer Distribution By State
+- SP (São Paulo), RJ (Rio de Janeiro), and MG (Minas Gerais) dominated Olist’s market, which reflected Brazil’s economic and logistical landscape in 2018. As the nation's top economic hub, São Paulo serves as the logistical epicenter, while RJ and MG rank as the 2nd and 3rd wealthiest states.
+- While the Brazilian e-commerce sector showed consistent growth before and after 2018, the country's e-commerce didn't experience its major boom until 2020. Thus, Olist’s 2018 concentration in the 'Golden Triangle' (SP-RJ-MG) is a logical outcome of that era's market limitations.
 <details>
 <summary>View SQL</summary>
  
@@ -311,6 +313,8 @@ ORDER BY state_gmv DESC;
 <img width="1064" height="576" alt="image" src="https://github.com/user-attachments/assets/9bda85b0-aa37-4381-99c7-2ad5cc459321" />
 
 ### 3.2 Product Category Revenue by State
+- The map below visualises total product revenue by state across Brazil. As Tableau was unable to recognise Brazil's state abbreviations, I defined state boundaries and locations based on their latitude and longitude. This enabled map rendering, though accuracy may vary for large states.
+- Readers are encouraged to interact with the visualisation directly: product categories can be filtered using the panel on the right, and selecting an individual state will display its corresponding total revenue.
 <details>
 <summary>View SQL</summary>
  
@@ -342,12 +346,13 @@ ORDER BY T.customer_state,T.total_revenue;
 
 </details>
 
-- Interactive map: [Product Category Revenue by State](https://public.tableau.com/views/Olist_17762903105860/ProductCategoryRevenuebyState)
+- Interactive map: [Product Category Revenue by State](https://public.tableau.com/app/profile/liping.huang5577/viz/ProductCategoryRevenuebyState/ProductCategoryRevenuebyState#1)
 <img width="1090" height="585" alt="image" src="https://github.com/user-attachments/assets/abd53b17-74c8-4e68-a24a-5b296014f78b" />
 
 
 ## 4. Delivery Efficiency
 ### 4.1 On Time Delivery Rate: 91.89%
+- Olist recorded an on-time delivery rate of 91.89%. It appears strong;  however, it may also indicate that the estimated delivery time is conservatively set.
 <details>
 <summary>View SQL</summary>
  
@@ -373,6 +378,7 @@ FROM T2 WHERE deliver_time <= estimated_delivery;
 
 
 ### 4.2 Average Lead(Delivery) Time: 12.5 Days
+- The national average lead time of 12.5 days provides limited insight, as logistical performance can vary greatly across states, therefore it will be further examined in the following section.
 <details>
 <summary>View SQL</summary>
  
@@ -397,6 +403,9 @@ SELECT ROUND(AVG(lead_ime),1) AS avg_lead_ime FROM T3;
 </details>
 
 ### 4.3 Average Lead Time & Delivery Gap By State
+- The gap between estimated and actual delivery time was positive among all states, this indicate that the estimated delivery time(EDT) is conservatively set to mitigate the risk of delayed delivery. It's a pragmatical appoach to adapt the logistical enviroment in 2018, but it means the 91.89% on-time rate is largely due to inflation and the ambiguous actual EDT makes it difficult for customers to make informed purchasing decisions, which might atually effect customer satisfaction instead of enhancing it.
+- In addition, the northern states of RO, AC, AM, AP, and RR showed disproportionately large delivery gaps, suggesting these regions have predicted logistical uncertainty.
+
 <details>
 <summary>View SQL</summary>
  
