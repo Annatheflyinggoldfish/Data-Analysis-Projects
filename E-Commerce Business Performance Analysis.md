@@ -403,8 +403,10 @@ SELECT ROUND(AVG(lead_ime),1) AS avg_lead_ime FROM T3;
 </details>
 
 ### 4.3 Average Lead Time & Delivery Gap By State
-- The gap between estimated and actual delivery time was positive among all states, this indicate that the estimated delivery time(EDT) is conservatively set to mitigate the risk of delayed delivery. It's a pragmatical appoach to adapt the logistical enviroment in 2018, but it means the 91.89% on-time rate is largely due to inflation and the ambiguous actual EDT makes it difficult for customers to make informed purchasing decisions, which might atually effect customer satisfaction instead of enhancing it.
-- In addition, the northern states of RO, AC, AM, AP, and RR showed disproportionately large delivery gaps, suggesting these regions have predicted logistical uncertainty.
+- The gap between estimated and actual delivery time was positive among all states, indicating that the estimated delivery time(EDT) is conservatively set to mitigate the risk of delayed delivery. It's a pragmatic approach to adapt the logistical environment in 2018, but it means the 91.89% on-time rate is largely due to inflation and the ambiguity makes it difficult for customers to make informed purchasing decisions, which might actually affect customer satisfaction instead of enhancing it.
+- When it comes to lead time, the dispersed data points indicate a highly fragmented logistical landscape, suggesting this country's logistical infrastructure varies considerably.
+- In addition, the northern states of RO, AC, AM, AP, and RR showed disproportionately large delivery gaps, suggesting these regions have structural logistical uncertainty.
+- Ultimately, Olist's delivery reliability was heavily dictated by national geography.
 
 <details>
 <summary>View SQL</summary>
