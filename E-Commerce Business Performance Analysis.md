@@ -352,7 +352,7 @@ ORDER BY T.customer_state,T.total_revenue;
 
 ## 4. Delivery Efficiency
 ### 4.1 On Time Delivery Rate: 91.89%
-- Olist recorded an on-time delivery rate of 91.89%. It appears strong;  however, it may also indicate that the estimated delivery time is conservatively set.
+- Olist recorded an on-time delivery rate of 91.89%, which appears healthy. However, it may indicate that the estimated delivery time is conservatively set to manage customer expectations."
 <details>
 <summary>View SQL</summary>
  
@@ -541,7 +541,7 @@ SELECT * FROM T2;
 - The data suggests that customer sentiment is closely linked to specific time cycles:
 - Weekly Trend: The average ratings reach the lowest point on Monday (~4.04), potentially reflecting a "Monday Blues" effect, then the ratings steadily improve throughout the week, peaking on Thursday (~4.11), which is counter-intuitive, as it’s higher than Friday and Saturday.
 - Daily Trend: Early morning (4–7 AM) shows the lowest ratings (3.67 – 3.78), with the lowest dip occurring at 5 am (~3.7). Starting from here, ratings climb consistently as the day progresses, peaking late at night (23:00) before dropping again.
-- These patterns reveals that ratings are not just a measure of service and product quality, but are influenced by the reviewers’ mood and the timing of the review. Customers are most generous when relaxing late at night and most critical during early morning or the start of the work week.
+- These patterns reveal that ratings are not just a measure of service and product quality, but are also influenced by the timing of the review submission. Customers are most generous when relaxing late at night and most critical during early morning or the start of the work week.
 
 <details>
 <summary>View SQL</summary>
