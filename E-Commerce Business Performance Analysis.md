@@ -447,7 +447,8 @@ ORDER BY avg_state_lead_time DESC;
 
 
 ## 5. Customer Feedback and Reviews
-### 5.1 Rating Distrabution
+### 5.1 Rating Distribution
+- The review scores showed a classic J-shaped distribution, where customers are more likely to leave feedback at the extremes of their experience. But notably, the customer satisfaction rate on the platform is relatively healthy, with 5-star and 4-star ratings representing 77% of the feedback, considerably larger than 1-star (11.51%), 2-star (3.18%), and 3-star (8.24%).
 <details>
 <summary>View SQL</summary>
  
@@ -466,6 +467,8 @@ GROUP BY review_score ORDER BY review_score;
 <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/7a5f973f-93bc-45ff-b9b2-d18142c142bf" />
 
 ### 5.2 Correlation: Lead Time vs. Rating
+- The analysis of the correlation between lead time and rating is quite intuitive: The quicker the orders arrive, the higher the ratings might be.
+- Alternatively, the delivery gap also showed a similar correlation — the bigger the gap between the estimated and actual delivery date, the higher the customer satisfaction. 
 <details>
 <summary>View SQL</summary>
  
@@ -501,6 +504,9 @@ SELECT * FROM T4;
 
 
 ### 5.3 Correlation: Product Price vs. Rating
+- The line chart reveals no clear correlation between the product price and review score. Ratings remained largely stable across all price tiers, fluctuating narrowly between 3.90 and 4.16.
+- A notable spike at the R$300–350 tier and a dip at R$350–400 suggest slight variation, though these fluctuations are likely due to the diverse product mix within each tier rather than price itself.
+- Overall, product price appears to have minimal influence on customer satisfaction, implying that other factors(such as delivery performance and product quality) are stronger affectors.
 <details>
 <summary>View SQL</summary>
  
@@ -532,6 +538,11 @@ SELECT * FROM T2;
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/a55046d5-9bcd-43d5-8922-f51fcc9b7966" />
 
 ### 5.4 Rating Trends by Time of Day & Day of Week
+- The data suggests that customer sentiment is closely linked to specific time cycles:
+- Weekly Trend: The average ratings reach the lowest point on Monday (~4.04), potentially reflecting a "Monday Blues" effect, then the ratings steadily improve throughout the week, peaking on Thursday (~4.11), which is counter-intuitive, as it’s higher than Friday and Saturday.
+- Daily Trend: Early morning (4–7 AM) shows the lowest ratings (3.67 – 3.78), with the lowest dip occurring at 5 am (~3.7). Starting from here, ratings climb consistently as the day progresses, peaking late at night (23:00) before dropping again.
+- These patterns reveals that ratings are not just a measure of service and product quality, but are influenced by the reviewers’ mood and the timing of the review. Customers are most generous when relaxing late at night and most critical during early morning or the start of the work week.
+
 <details>
 <summary>View SQL</summary>
  
@@ -556,6 +567,7 @@ SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_sc
 <img width="553" height="166" alt="image" src="https://github.com/user-attachments/assets/f77cc3d4-7a18-4167-baaf-4a0f916fdb31" />
 
 </details>
+<img width="126" height="54" alt="image" src="https://github.com/user-attachments/assets/b42f268c-484a-41ce-b533-246bc4009aac" />
 <img width="612" height="287" alt="image" src="https://github.com/user-attachments/assets/632e698c-f392-434e-b20c-13a72cd96c8e" />
 <img width="863" height="356" alt="image" src="https://github.com/user-attachments/assets/5248bd9e-baa2-4a57-a7b9-845f2d1f62d2" />
 
