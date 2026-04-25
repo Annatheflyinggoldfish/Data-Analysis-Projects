@@ -24,9 +24,10 @@
 
 ## 1. Sales Performance
 ### 1.1 Monthly Order Count, GMV, and Average Order Value
-- The GMV showed continuing growth starting in January 2017, reaching a significant peak in November 2017, likely driven by Black Friday promotions. The decline in December 2017 may be due to the cooldown period after Black Friday.
-- Notably, between April 2018 and July 2018, the order count line fell below the GMV line, suggesting a potential increase in Average Order Value. However, the Average Order Value line chart didn't validate my hypothesis by showing an increase during this period, so it might indicate a growing share of higher-value orders within the overall order mix. 
-- To validate this hypothesis, I conducted a Monthly Distribution analysis by Order Value Tier in section 1.2.
+- GMV and order count tracked closely throughout the observed period, both growing steadily from January 2017 and peaking in November, likely driven by Black Friday promotions. The decline in December reflects a post-Black Friday cooldown.
+- Average Order Value (AOV) remained largely flat throughout, fluctuating between 145 and 175 BRL with no clear trend. This indicates that GMV growth was driven largely by order volume expansion rather than increased spending per order. The divergence between GMV and order volume between March and June 2018 matches this pattern: AOV showed no increase during this period, confirming that overall spending patterns remained stable.
+- Conclusion
+
 
 <details>
 <summary>View SQL</summary>
@@ -53,38 +54,7 @@ ORDER BY month;
 
 <img width="910" height="555" alt="image" src="https://github.com/user-attachments/assets/0aba2d7e-67dd-46b3-b81b-e63b6ab2d791" />
 
-
-### 1.2 Monthly Distribution by Order Value Tier
-- The High-value segment did not show a significant increase between April and July 2018, but the Mid-value tier order count was notably higher than the Low-value tier during this period.
-- This shift suggests a structural transition from low-end to mid-range transactions, rather than a surge of high-value orders, which explained why the GMV remained resilient despite the decline of order volume.
-<details>
-<summary>View SQL</summary>
- 
-```sql
-WITH payments AS
-(SELECT order_id,SUM(payment_value) AS payment FROM olist_order_payments_dataset GROUP BY order_id)
-SELECT
-DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS month,
-CASE 
-WHEN p.payment < 100 THEN 'low (<100)'
-WHEN p.payment < 500 THEN 'mid (100-500)'
-ELSE 'high (500+)'
-END AS value_tier,
-COUNT(ood.order_id) AS order_count
-FROM olist_orders_dataset ood
-JOIN payments p ON ood.order_id = p.order_id
-WHERE ood.order_purchase_timestamp >= '2017-01-01'
-AND ood.order_purchase_timestamp < '2018-09-01'
-GROUP BY month, value_tier
-ORDER BY month, value_tier;
-```
-<img width="504" height="185" alt="image" src="https://github.com/user-attachments/assets/447323aa-9dc9-4bb2-85dc-6fe824f5051b" />
-
-</details>
-<img width="117" height="52" alt="image" src="https://github.com/user-attachments/assets/8355a408-7c39-4ac4-8855-1b7b1eb26ca4" />
-<img width="878" height="462" alt="image" src="https://github.com/user-attachments/assets/5fef912c-4f66-4eba-8673-8a60a154ad5a" />
- 
-### 1.3 TOP 10 best-selling products
+### 1.2 TOP 10 Best-selling Products
 - The Bed/Bath/Table, Health/Beauty, and Sports/Leisure categories dominated in sales volume. However, the main GMV drivers were Bed/Bath/Table, Health/Beauty, and Watches/Gifts.
 - This pattern is logically consistent: consumers tend to purchase everyday necessities frequently, while allocating higher budgets for gifts.
 <details>
@@ -108,7 +78,7 @@ GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
 <img width="619" height="490" alt="image" src="https://github.com/user-attachments/assets/f69df1f6-9ed6-41bd-b184-49dc9494354e" />
 
 
-### 1.4 TOP 10 seller
+### 1.3 TOP 10 Sellers
 - The top seller dominates the platform's revenue, surpassing the second-ranked seller by nearly $200k in GMV.
 <details>
 <summary>View SQL</summary>
@@ -136,8 +106,8 @@ ORDER BY seller_gmv DESC;
 </details>
 <img width="588" height="283" alt="image" src="https://github.com/user-attachments/assets/8bdf35f4-d9e0-41c9-aa68-57c34ef534fd" />
 
-### 1.5 Top 10 Sellers' Contribution to Total GMV 
-- Despite the leader's dominance, the combined GMV contribution of the Top 10 sellers remains under 20%, indicating a very decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
+### 1.4 Top 10 Sellers' Contribution to Total GMV 
+- Despite the leader's dominance, the total GMV contribution of the Top 10 sellers remains under 20%, indicating a very decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
 
 <details>
 <summary>View SQL</summary>
@@ -171,7 +141,7 @@ SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 <img width="90" height="23" alt="image" src="https://github.com/user-attachments/assets/8e4704e6-a65c-4566-8e83-0163142bf973" />
 <img width="364" height="361" alt="image" src="https://github.com/user-attachments/assets/7832e289-2fc8-44f4-a29e-482cc7c02ca5" />
 
-### 1.6 TOP 10 Best Selling Product Categories Rankings by Month
+### 1.5 TOP 10 Best Selling Product Categories Rankings by Month
 - The heatmap indicates that most categories appear sporadically within the top 10 rankings, with no recognizable seasonal patterns showing from the map.
 - The dominance of Bed/Bath/Table, Health/Beauty, and Sports/Leisure, and Watches/Gifts, is consistent with findings in previous sections.
   
@@ -232,7 +202,7 @@ FROM T WHERE order_count >= 2;
  </details>
  
 ### 2.2 Average Inter-purchase Time: 78 days
-- The average inter-purchase time is approximately **78 days**, which indicates a low purchase frequency and reinforces the previous conclusion of low customer retention.
+- The average inter-purchase interval is approximately **78 days**, which indicates a low purchase frequency and reinforces the previous conclusion of weak customer loyalty.
 <details>
 <summary>View SQL</summary>
  
@@ -255,9 +225,9 @@ SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM T2;
 </details>
 
 ### 2.3 Average Order Value Distribution
-- Orders in the 50–100 price range dominate in sales volume, with the majority of orders falling below 200.
-- For orders exceeding 100, a clear inverse relationship is observed between order value and volume: The higher the price, the fewer the orders.
-- This distribution indicates that the platform primarily caters to budget-sensitive consumers.
+- Orders in the 50–100 BRL price range dominate in sales volume, with the majority of orders falling below 200 BRL.
+- For orders exceeding 100 BRL, a clear inverse relationship is observed between order value and volume: The higher the price, the fewer the orders.
+- This distribution indicates that Olist's customer base is primarily price-sensitive and driven by low-value transactions.
 
 <details>
 <summary>View SQL</summary>
@@ -284,7 +254,7 @@ GROUP BY price_tier;
 
 ## 3. Regional Analysis
 ### 3.1 Order Volume, GMV, and Customer Distribution By State
-- SP (São Paulo), RJ (Rio de Janeiro), and MG (Minas Gerais) dominated Olist’s market, which reflected Brazil’s economic and logistical landscape in 2018. As the nation's top economic hub, São Paulo serves as the logistical epicenter, while RJ and MG rank as the 2nd and 3rd wealthiest states.
+- SP (São Paulo), RJ (Rio de Janeiro), and MG (Minas Gerais) dominated Olist’s market, which reflected Brazil’s economic and logistical landscape in 2018, where SP, RJ, and MG dominated purchasing power.
 - While the Brazilian e-commerce sector showed consistent growth before and after 2018, the country's e-commerce didn't experience its major boom until 2020. Thus, Olist’s 2018 concentration in the 'Golden Triangle' (SP-RJ-MG) is a logical outcome of that era's market limitations.
 <details>
 <summary>View SQL</summary>
@@ -351,6 +321,9 @@ ORDER BY T.customer_state,T.total_revenue;
 
 
 ## 4. Delivery Efficiency
+- Lead time = actual delivery time
+- Delivery gap = estimated delivery time - actual delivery time
+
 ### 4.1 On Time Delivery Rate: 91.89%
 - Olist recorded an on-time delivery rate of 91.89%, which appears healthy. However, it may indicate that the estimated delivery time is conservatively set to manage customer expectations."
 <details>
@@ -403,7 +376,7 @@ SELECT ROUND(AVG(lead_ime),1) AS avg_lead_ime FROM T3;
 </details>
 
 ### 4.3 Average Lead Time & Delivery Gap By State
-- The gap between estimated and actual delivery time was positive among all states, indicating that the estimated delivery time(EDT) is conservatively set to mitigate the risk of delayed delivery. It's a pragmatic approach to adapt the logistical environment in 2018, but it means the 91.89% on-time rate is largely due to inflation and the ambiguity makes it difficult for customers to make informed purchasing decisions, which might actually affect customer satisfaction instead of enhancing it.
+- The gap between estimated and actual delivery time was positive among all states, indicating that the estimated delivery time(EDT) is conservatively set to mitigate the risk of delayed delivery. It's a pragmatic approach to adapt the logistical environment in 2018, but it means the 91.89% on-time rate is largely due to inflation, which may reduce transparency for customers when evaluating delivery expectations.
 - When it comes to lead time, the dispersed data points indicate a highly fragmented logistical landscape, suggesting this country's logistical infrastructure varies considerably.
 - In addition, the northern states of RO, AC, AM, AP, and RR showed disproportionately large delivery gaps, suggesting these regions have structural logistical uncertainty.
 - Ultimately, Olist's delivery reliability was heavily dictated by national geography.
@@ -468,7 +441,7 @@ GROUP BY review_score ORDER BY review_score;
 
 ### 5.2 Correlation: Lead Time vs. Rating
 - The analysis of the correlation between lead time and rating is quite intuitive: The quicker the orders arrive, the higher the ratings might be.
-- Alternatively, the delivery gap also showed a similar correlation — the bigger the gap between the estimated and actual delivery date, the higher the customer satisfaction. 
+- Alternatively, the delivery gap also showed a similar correlation: The bigger the gap between the estimated and actual delivery date, the higher the customer satisfaction. 
 <details>
 <summary>View SQL</summary>
  
@@ -602,7 +575,7 @@ LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
 <img width="791" height="157" alt="image" src="https://github.com/user-attachments/assets/9cb38e96-e325-417e-9b00-9c4e9fc1977a" />
 
 #### Average Review Scores: Written Review Orders vs. Score-Only Orders
-- Customers who left a score without a written review gave an average rating of **4.38**, notably higher than the **3.70** average for those who wrote a review. This suggests that dissatisfied customers are more likely to leave a written review, while satisfied customers tend to leave a score only. The louder the customer, the lower the score."
+- Customers who left a score without a written review gave an average rating of **4.38**, notably higher than the **3.70** average for those who wrote a review. This suggests that dissatisfied customers are more likely to leave a written review, while satisfied customers tend to leave a score only: The louder the customer, the lower the score."
   
 <details>
 <summary>View SQL</summary>
