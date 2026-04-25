@@ -1,33 +1,61 @@
 # Olist Brazilian E-Commerce Business Performance Analysis
+
 - This is my first end-to-end data analysis project as a self-taught junior analyst transitioning into the field, covering data extraction, transformation, and visualization.
+
 - Currently expanding my skill set with Python as the next step in my data analytics journey.
 
-### Tools
-- MySQL, Tableau Public
-
 ### Introduction
+
 - Data Source: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+  
+- Tools: MySQL, Tableau 
+
 - The dataset was provided by Olist, a Brazilian e-commerce Store, via Kaggle. The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil.
+  
 - The purpose of this analysis is to identify patterns in sales performance, customer behavior, delivery efficiency, and product category trends across Brazilian states.
 
-### Table of Contents
-- [1. Sales Performance](#1-sales-performance)
-- [2. Customer Behavior](#2-customer-behavior)
-- [3. Regional Analysis](#3-regional-analysis)
-- [4. Delivery Efficiency](#4-delivery-efficiency)
-- [5. Customer Feedback and Reviews](#5-customer-feedback-and-reviews)
-
-
 ### Data Structure:
+
 <img width="911" height="628" alt="image" src="https://github.com/user-attachments/assets/9ddaa6aa-7708-4571-8ebe-08edf693e22b" />
 
+### Table of Contents and Summary
 
+[1. Sales Performance](#1-sales-performance)
+
+[2. Customer Behavior](#2-customer-behavior)
+
+[3. Regional Analysis](#3-regional-analysis)
+
+[4. Delivery Efficiency](#4-delivery-efficiency)
+
+[5. Customer Feedback and Reviews](#5-customer-feedback-and-reviews)
+
+### Executive Summary
+
+**1. Sales Performance**
+
+Platform GMV and order volume grew steadily over the observed period, though the pace of growth has begun to slow. Seller concentration remains low, which is a healthy sign for the marketplace ecosystem — but finding ways to re-accelerate growth will be a key priority.
+
+**2. Customer Behavior**
+
+Customer retention is weak, and the average gap between purchases is close to 80 days. This suggests that growth has been largely driven by new customers rather than repeat buyers, which won't be sustainable in the long run.
+
+**3. Regional Analysis**
+
+São Paulo, Rio de Janeiro, and Minas Gerais account for the majority of orders, leaving much of the country underserved. This points to a clear growth opportunity in less-penetrated regions.
+
+**4. Delivery Efficiency**
+
+Overall delivery performance is reasonable in the short term, partly because the platform sets estimated delivery times conservatively to manage customer expectations. However, this approach may reduce transparency over time. More importantly, delivery quality in remote states lags significantly behind core markets — closing this gap would be a prerequisite for any meaningful regional expansion.
+
+**5. Customer Feedback and Reviews**
+
+Overall ratings are positive and review participation is high. Ratings appear to be influenced by when customers leave their review — scores tend to be higher on Sundays and in the evening, and lower on Mondays and early in the morning. This creates an opportunity to nudge customers toward reviewing at times when sentiment is naturally more favorable.
+ 
 ## 1. Sales Performance
 ### 1.1 Monthly Order Count, GMV, and Average Order Value
 - GMV and order count tracked closely throughout the observed period, both growing steadily from January 2017 and peaking in November, likely driven by Black Friday promotions. The decline in December reflects a post-Black Friday cooldown.
 - Average Order Value (AOV) remained largely flat throughout, fluctuating between 145 and 175 BRL with no clear trend. This indicates that GMV growth was driven largely by order volume expansion rather than increased spending per order. The divergence between GMV and order volume between March and June 2018 matches this pattern: AOV showed no increase during this period, confirming that overall spending patterns remained stable.
-- Conclusion
-
 
 <details>
 <summary>View SQL</summary>
@@ -251,6 +279,9 @@ GROUP BY price_tier;
 
 </details>
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/ae476547-8670-4f2e-90e6-4067639a3880" />
+
+### Key Takeaway
+- 
 
 ## 3. Regional Analysis
 ### 3.1 Order Volume, GMV, and Customer Distribution By State
