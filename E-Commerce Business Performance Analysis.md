@@ -79,7 +79,6 @@ ORDER BY month;
 
 </details>
 <img width="117" height="49" alt="image" src="https://github.com/user-attachments/assets/92db767d-70ab-481e-8791-5edcb50ab672" />
-
 <img width="910" height="555" alt="image" src="https://github.com/user-attachments/assets/0aba2d7e-67dd-46b3-b81b-e63b6ab2d791" />
 
 ### 1.2 TOP 10 Best-selling Products
@@ -132,7 +131,7 @@ ORDER BY seller_gmv DESC;
 <img width="480" height="156" alt="image" src="https://github.com/user-attachments/assets/5812e081-c072-4d46-ba27-4cdd456c96b8" />
 
 </details>
-<img width="588" height="283" alt="image" src="https://github.com/user-attachments/assets/8bdf35f4-d9e0-41c9-aa68-57c34ef534fd" />
+<img width="619" height="284" alt="image" src="https://github.com/user-attachments/assets/f3e6d7b4-d661-4380-b5e2-d322640cc6d1" />
 
 ### 1.4 Top 10 Sellers' Contribution to Total GMV 
 - Despite the leader's dominance, the total GMV contribution of the Top 10 sellers remains under 20%, indicating a very decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
@@ -205,7 +204,7 @@ SELECT * FROM T4 WHERE rn <= 10;
 
 </details>
 
-<img width="131" height="52" alt="image" src="https://github.com/user-attachments/assets/dc29261b-3250-46d6-8e60-fa2b2b7cbf9b" />
+<img width="125" height="56" alt="image" src="https://github.com/user-attachments/assets/ef84d2f1-68d3-429c-86c8-94285c7ed4d5" />
 <img width="784" height="529" alt="image" src="https://github.com/user-attachments/assets/0de6e148-3673-4872-922b-c8dc92a52742" />
 
 
