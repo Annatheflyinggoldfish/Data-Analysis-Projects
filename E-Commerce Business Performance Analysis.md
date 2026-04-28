@@ -2,7 +2,7 @@
 
 - This is my first end-to-end data analysis project as a self-taught junior analyst transitioning into the field, covering data extraction, transformation, and visualization.
 
-- Currently expanding my skill set with Python as the next step in my data analytics journey.
+- Currently expanding my skill set with Python as the next step of my data analytics journey.
 
 ### Introduction
 
