@@ -76,11 +76,12 @@ AND ood.order_status NOT IN ('cancelled', 'unavailable')
 GROUP BY DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
-<img width="666" height="160" alt="image" src="https://github.com/user-attachments/assets/f8062173-feac-43cd-9c10-7282c73559c8" />
+<img width="665" height="161" alt="image" src="https://github.com/user-attachments/assets/1454ce23-65cd-48e1-b2ef-ec5919ae1c5d" />
 
 </details>
 <img width="117" height="49" alt="image" src="https://github.com/user-attachments/assets/92db767d-70ab-481e-8791-5edcb50ab672" />
-<img width="910" height="555" alt="image" src="https://github.com/user-attachments/assets/0aba2d7e-67dd-46b3-b81b-e63b6ab2d791" />
+<img width="726" height="436" alt="image" src="https://github.com/user-attachments/assets/96047e20-dc8e-4dcc-a963-523f65da2020" />
+
 
 ### 1.2 TOP 10 Best-selling Products
 - The Bed/Bath/Table, Health/Beauty, and Sports/Leisure categories dominated in sales volume. However, the main GMV drivers were Bed/Bath/Table, Health/Beauty, and Watches/Gifts.
