@@ -310,7 +310,7 @@ ORDER BY state_gmv DESC;
 <img width="1064" height="576" alt="image" src="https://github.com/user-attachments/assets/9bda85b0-aa37-4381-99c7-2ad5cc459321" />
 
 ### 3.2 Product Category Revenue by State
-- The map below visualises total product revenue by state across Brazil. As Tableau was unable to recognise Brazil's state abbreviations, I defined state boundaries and locations based on their latitude and longitude. This enabled map rendering, though accuracy may vary for large states.
+- The map below visualises total product revenue by state across Brazil. As Tableau was unable to recognise Brazil's state abbreviations, I defined state locations based on their latitude and longitude. This allowed map rendering, while accuracy may vary for large states.
 - Readers are encouraged to interact with the visualisation directly: product categories can be filtered using the panel on the right, and selecting an individual state will display its corresponding total revenue.
 <details>
 <summary>View SQL</summary>
