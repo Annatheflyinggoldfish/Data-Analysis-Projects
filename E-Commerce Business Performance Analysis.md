@@ -165,7 +165,7 @@ SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 <img width="356" height="85" alt="image" src="https://github.com/user-attachments/assets/2850ec26-64a4-4201-8a11-082325614b16" />
 
 </details>
-<img width="90" height="23" alt="image" src="https://github.com/user-attachments/assets/8e4704e6-a65c-4566-8e83-0163142bf973" />
+<img width="125" height="56" alt="image" src="https://github.com/user-attachments/assets/ef84d2f1-68d3-429c-86c8-94285c7ed4d5" />
 <img width="364" height="361" alt="image" src="https://github.com/user-attachments/assets/7832e289-2fc8-44f4-a29e-482cc7c02ca5" />
 
 ### 1.5 TOP 10 Best Selling Product Categories Rankings by Month
@@ -204,7 +204,7 @@ SELECT * FROM T4 WHERE rn <= 10;
 
 </details>
 
-<img width="125" height="56" alt="image" src="https://github.com/user-attachments/assets/ef84d2f1-68d3-429c-86c8-94285c7ed4d5" />
+<img width="131" height="49" alt="image" src="https://github.com/user-attachments/assets/ea788cec-88fc-40c8-a737-311963af193f" />
 <img width="784" height="529" alt="image" src="https://github.com/user-attachments/assets/0de6e148-3673-4872-922b-c8dc92a52742" />
 
 
