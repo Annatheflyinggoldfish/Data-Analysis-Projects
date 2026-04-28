@@ -12,7 +12,7 @@
 
 - The dataset was provided by Olist, a Brazilian e-commerce Store, via Kaggle. The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil.
   
-- The purpose of this analysis is to identify patterns in sales performance, customer behavior, delivery efficiency, and rating trends across Brazilian states.
+- This analysis addresses a main question: **Is Olist's growth sustainable?** To answer this, five dimensions are explored: Sales performance, customer behavior, regional distribution, delivery efficiency, and customer feedback. Each dimension revealed a different aspect of the platform's growth dynamics and operational health.
 
 ### Data Structure:
 
@@ -34,23 +34,23 @@
 
 **1. Sales Performance**
 
-Platform GMV and order volume grew steadily over the observed period, though the pace of growth has begun to slow. Seller concentration remains low, which is a healthy sign for the marketplace ecosystem — but finding ways to re-accelerate growth will be a key priority.
+Platform GMV and order volume grew steadily over the observed period, although the pace of growth has begun to slow. Seller concentration remains low, which is a healthy sign for the marketplace ecosystem. In conclusion, finding ways to re-accelerate growth will be the key priority.
 
 **2. Customer Behavior**
 
-Customer retention is weak, and the average gap between purchases is close to 80 days. This suggests that growth has been largely driven by new customers rather than repeat buyers, which won't be sustainable in the long run.
+Customer retention is weak, and the average gap between purchases is nearly 80 days. This suggests that growth has been largely driven by new customers rather than repeat buyers, which won't be sustainable in the long run.
 
 **3. Regional Analysis**
 
-São Paulo, Rio de Janeiro, and Minas Gerais account for the majority of orders, leaving much of the country underserved. This points to a clear growth opportunity in less-penetrated regions.
+São Paulo, Rio de Janeiro, and Minas Gerais account for the majority of orders, leaving much of the country underserved, and those underserved regions are where future growth opportunities lie.
 
 **4. Delivery Efficiency**
 
-Overall delivery performance is reasonable in the short term, partly because the platform sets estimated delivery times conservatively to manage customer expectations. However, this approach may reduce transparency over time. More importantly, delivery quality in remote states lags significantly behind core markets — closing this gap would be a prerequisite for any meaningful regional expansion.
+Overall delivery performance is reasonable, partly because the platform sets estimated delivery times conservatively to manage customer expectations. However, this approach may damage customer trust due to the lack of transparency. More importantly, delivery quality in remote states fell far behind core markets, and closing this gap would be essential for future regional expansion.
 
-**5. Customer Feedback and Reviews**
+**5. Customer Feedback and Reviews: How can customer experience be optimized?**
 
-Overall ratings are positive and review participation is high. Ratings appear to be influenced by when customers leave their review — scores tend to be higher on Sundays and in the evening, and lower on Mondays and early in the morning. This creates an opportunity to nudge customers toward reviewing at times when sentiment is naturally more favorable.
+Overall ratings are positive, and review participation is high. Ratings are clearly influenced by delivery quality but not by prices. Notably, timing also matters: Scores tend to be higher on Sundays and in the evening, and lower on Mondays and early in the morning. This creates an opportunity to steer customers toward reviewing at times when their sentiment is at its peak. 
  
 ## 1. Sales Performance
 ### 1.1 Monthly Order Count, GMV, and Average Order Value
