@@ -12,7 +12,7 @@
 
 - The dataset was provided by Olist, a Brazilian e-commerce Store, via Kaggle. The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil.
   
-- The purpose of this analysis is to identify patterns in sales performance, customer behavior, delivery efficiency, and product category trends across Brazilian states.
+- The purpose of this analysis is to identify patterns in sales performance, customer behavior, delivery efficiency, and rating trends across Brazilian states.
 
 ### Data Structure:
 
