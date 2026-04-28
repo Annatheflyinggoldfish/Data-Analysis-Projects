@@ -12,7 +12,7 @@
 
 - The dataset was provided by Olist, a Brazilian e-commerce Store, via Kaggle. The dataset has information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil.
   
-- This analysis addresses a main question: **Is Olist's growth sustainable?** To answer this, five dimensions are explored: Sales performance, customer behavior, regional distribution, delivery efficiency, and customer feedback. Each dimension revealed a different aspect of the platform's growth dynamics and operational health.
+- This analysis addresses a main question: **Is Olist's growth sustainable?** To answer this, five dimensions are explored: Sales performance, customer behavior, regional distribution, delivery efficiency, and customer feedback. Each dimension reveals a different aspect of the platform's growth dynamics and operational health.
 
 ### Data Structure:
 
@@ -34,7 +34,7 @@
 
 **1. Sales Performance**
 
-Platform GMV and order volume grew steadily over the observed period, although the pace of growth has begun to slow. Seller concentration remains low, which is a healthy sign for the marketplace ecosystem. In conclusion, finding ways to re-accelerate growth will be the key priority.
+Platform GMV and order volume grew steadily over the observed period, although the pace of growth has begun to slow. Seller concentration remains low, which is a healthy sign for the marketplace ecosystem. 
 
 **2. Customer Behavior**
 
@@ -48,7 +48,7 @@ São Paulo, Rio de Janeiro, and Minas Gerais account for the majority of orders,
 
 Overall delivery performance is reasonable, partly because the platform sets estimated delivery times conservatively to manage customer expectations. However, this approach may damage customer trust due to the lack of transparency. More importantly, delivery quality in remote states fell far behind core markets, and closing this gap would be essential for future regional expansion.
 
-**5. Customer Feedback and Reviews: How can customer experience be optimized?**
+**5. Customer Feedback and Reviews**
 
 Overall ratings are positive, and review participation is high. Ratings are clearly influenced by delivery quality but not by prices. Notably, timing also matters: Scores tend to be higher on Sundays and in the evening, and lower on Mondays and early in the morning. This creates an opportunity to steer customers toward reviewing at times when their sentiment is at its peak. 
  
@@ -355,7 +355,7 @@ ORDER BY T.customer_state,T.total_revenue;
 - Delivery gap = estimated delivery time - actual delivery time
 
 ### 4.1 On Time Delivery Rate: 91.89%
-- Olist recorded an on-time delivery rate of 91.89%, which appears healthy. However, it may indicate that the estimated delivery time is conservatively set to manage customer expectations."
+- Olist recorded an on-time delivery rate of 91.89%, which appears healthy. However, it may indicate that the estimated delivery time is conservatively set to manage customer expectations.
 <details>
 <summary>View SQL</summary>
  
