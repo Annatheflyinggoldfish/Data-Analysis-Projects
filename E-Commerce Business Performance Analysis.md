@@ -505,7 +505,7 @@ SELECT * FROM T4;
 
 ### 5.3 Correlation: Product Price vs. Rating
 - The line chart reveals no clear correlation between the product price and review score. Ratings remained largely stable across all price tiers, fluctuating narrowly between 3.90 and 4.16.
-- A notable spike at the R$300–350 tier and a dip at R$350–400 suggest slight variation, though these fluctuations are likely due to the diverse product mix within each tier rather than price itself.
+- A notable spike at the 300–350 BRL tier and a dip at 350–400 BRL show slight variation, though these fluctuations are likely due to the diverse product mix within each tier rather than price itself.
 - Overall, product price appears to have minimal influence on customer satisfaction, implying that other factors(such as delivery performance and product quality) are stronger affectors.
 <details>
 <summary>View SQL</summary>
@@ -627,5 +627,6 @@ LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
 <img width="429" height="61" alt="image" src="https://github.com/user-attachments/assets/a97a6a71-0992-4aac-a65f-24d9ab18ebed" />
 
 </details>
+<img width="343" height="206" alt="image" src="https://github.com/user-attachments/assets/ab8073ff-4313-48cf-866b-f27bd383c2f4" />
 
 
