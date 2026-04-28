@@ -90,6 +90,34 @@ ORDER BY month;
 <summary>View SQL</summary>
  
 ```sql
+WITH filtered_orders AS 
+(SELECT order_id FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('cancelled', 'unavailable'))
+SELECT 
+pcnt.product_category_name_english AS product_category,
+COUNT(*) AS sales_qty,
+ROUND(SUM(ooid.price),2) AS product_gmv
+FROM olist_order_items_dataset ooid
+INNER JOIN filtered_orders fo ON ooid.order_id = fo.order_id
+INNER JOIN olist_products_dataset opd ON ooid.product_id = opd.product_id
+INNER JOIN product_category_name_translation pcnt ON opd.product_category_name = pcnt.product_category_name
+GROUP BY product_category 
+ORDER BY product_gmv DESC 
+LIMIT 10;
+```
+<img width="584" height="160" alt="image" src="https://github.com/user-attachments/assets/62a30ad0-fecd-41ac-b2bf-13afc4cc5fa6" />
+
+</details>
+
+
+### 1.3 TOP 10 Sellers
+- The top seller dominates the platform's revenue, surpassing the second-ranked seller by nearly $200k in GMV.
+<details>
+<summary>View SQL</summary>
+ 
+```aql
 WITH filtered_orders AS (
 SELECT order_id FROM olist_orders_dataset
 WHERE order_purchase_timestamp >= '2017-01-01'
@@ -104,33 +132,6 @@ INNER JOIN filtered_orders fo ON ooid.order_id = fo.order_id
 GROUP BY ooid.seller_id
 ORDER BY seller_gmv DESC
 LIMIT 10;
-```
-<img width="584" height="160" alt="image" src="https://github.com/user-attachments/assets/62a30ad0-fecd-41ac-b2bf-13afc4cc5fa6" />
-
-</details>
-
-
-### 1.3 TOP 10 Sellers
-- The top seller dominates the platform's revenue, surpassing the second-ranked seller by nearly $200k in GMV.
-<details>
-<summary>View SQL</summary>
- 
-```aql
-WITH payment AS
-(SELECT order_id,SUM(payment_value) AS order_payment
-FROM olist_order_payments_dataset GROUP BY order_id),
-top10_sellers AS
-(SELECT
-ootd.seller_id AS seller,
-SUM(p.order_payment) AS gmv
-FROM olist_order_items_dataset ootd
-JOIN payment p
-ON ootd.order_id = p.order_id
-GROUP BY ootd.seller_id
-ORDER BY gmv DESC LIMIT 10)
-SELECT seller, ROUND(gmv,2) AS seller_gmv 
-FROM top10_sellers
-ORDER BY seller_gmv DESC;
 ```
 
 <img width="475" height="159" alt="image" src="https://github.com/user-attachments/assets/7a2d59a1-f250-4827-af24-07a92e4de9d0" />
