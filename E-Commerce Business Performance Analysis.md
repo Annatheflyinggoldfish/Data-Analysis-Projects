@@ -90,21 +90,24 @@ ORDER BY month;
 <summary>View SQL</summary>
  
 ```sql
+WITH filtered_orders AS (
+SELECT order_id FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('cancelled', 'unavailable')
+)
 SELECT 
-pcnt.product_category_name_english AS product_catagory,
-COUNT(*) AS sales_qty,
-ROUND(SUM(ooid.price),2) AS product_gmv
-FROM olist_order_items_dataset ooid 
-INNER JOIN olist_products_dataset opd
-ON ooid.product_id = opd.product_id
-INNER JOIN product_category_name_translation pcnt
-ON opd.product_category_name  = pcnt.product_category_name 
-GROUP BY product_catagory ORDER BY product_gmv DESC LIMIT 10;
+ooid.seller_id AS seller,
+ROUND(SUM(ooid.price), 2) AS seller_gmv
+FROM olist_order_items_dataset ooid
+INNER JOIN filtered_orders fo ON ooid.order_id = fo.order_id
+GROUP BY ooid.seller_id
+ORDER BY seller_gmv DESC
+LIMIT 10;
 ```
-<img width="579" height="156" alt="image" src="https://github.com/user-attachments/assets/22f8e7a3-d705-4102-8aa1-90b2b7b3fac3" />
+<img width="584" height="160" alt="image" src="https://github.com/user-attachments/assets/62a30ad0-fecd-41ac-b2bf-13afc4cc5fa6" />
 
 </details>
-<img width="619" height="490" alt="image" src="https://github.com/user-attachments/assets/f69df1f6-9ed6-41bd-b184-49dc9494354e" />
 
 
 ### 1.3 TOP 10 Sellers
@@ -130,10 +133,9 @@ FROM top10_sellers
 ORDER BY seller_gmv DESC;
 ```
 
-<img width="480" height="156" alt="image" src="https://github.com/user-attachments/assets/5812e081-c072-4d46-ba27-4cdd456c96b8" />
+<img width="475" height="159" alt="image" src="https://github.com/user-attachments/assets/7a2d59a1-f250-4827-af24-07a92e4de9d0" />
 
 </details>
-<img width="619" height="284" alt="image" src="https://github.com/user-attachments/assets/f3e6d7b4-d661-4380-b5e2-d322640cc6d1" />
 
 ### 1.4 Top 10 Sellers' Contribution to Total GMV 
 - Despite the leader's dominance, the total GMV contribution of the Top 10 sellers remains under 20%, indicating a very decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
