@@ -279,9 +279,6 @@ GROUP BY price_tier;
 </details>
 <img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/ae476547-8670-4f2e-90e6-4067639a3880" />
 
-### Key Takeaway
-- 
-
 ## 3. Regional Analysis
 ### 3.1 Order Volume, GMV, and Customer Distribution By State
 - SP (São Paulo), RJ (Rio de Janeiro), and MG (Minas Gerais) dominated Olist’s market, which reflected Brazil’s economic and logistical landscape in 2018, where SP, RJ, and MG dominated purchasing power.
