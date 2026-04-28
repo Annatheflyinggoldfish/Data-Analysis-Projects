@@ -467,7 +467,7 @@ GROUP BY review_score ORDER BY review_score;
 <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/7a5f973f-93bc-45ff-b9b2-d18142c142bf" />
 
 ### 5.2 Correlation: Lead Time vs. Rating
-- The analysis of the correlation between lead time and rating is quite intuitive: The quicker the orders arrive, the higher the ratings might be.
+- The correlation between lead time and rating is quite intuitive: The quicker the orders arrive, the higher the ratings might be.
 - Alternatively, the delivery gap also showed a similar correlation: The bigger the gap between the estimated and actual delivery date, the higher the customer satisfaction. 
 <details>
 <summary>View SQL</summary>
