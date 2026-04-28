@@ -72,10 +72,11 @@ FROM olist_orders_dataset ood
 JOIN payments p ON ood.order_id = p.order_id
 WHERE ood.order_purchase_timestamp >= '2017-01-01'
 AND ood.order_purchase_timestamp < '2018-09-01'
+AND ood.order_status NOT IN ('cancelled', 'unavailable')
 GROUP BY DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m')
 ORDER BY month;
 ```
-<img width="668" height="165" alt="image" src="https://github.com/user-attachments/assets/795d8f5f-53ff-4584-af05-b256b591331a" />
+<img width="666" height="160" alt="image" src="https://github.com/user-attachments/assets/f8062173-feac-43cd-9c10-7282c73559c8" />
 
 </details>
 <img width="117" height="49" alt="image" src="https://github.com/user-attachments/assets/92db767d-70ab-481e-8791-5edcb50ab672" />
