@@ -124,7 +124,7 @@ INNER JOIN orders o ON ooid.order_id = o.order_id
 INNER JOIN olist_products_dataset opd ON ooid.product_id = opd.product_id
 INNER JOIN product_category_name_translation pcnt ON opd.product_category_name = pcnt.product_category_name
 GROUP BY product_category 
-ORDER BY product_gmv DESC 
+ORDER BY product_gmv DESC # For the 2nd graph: ORDER BY sales_qty DESC
 LIMIT 10;
 ```
 <img width="581" height="165" alt="image" src="https://github.com/user-attachments/assets/35a7cfbf-9646-4c87-850e-b83f382bd22c" />
