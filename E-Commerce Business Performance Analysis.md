@@ -356,27 +356,39 @@ ORDER BY MIN(price_tier);
 <summary>View SQL</summary>
  
 ```sql
-WITH payment AS
-(SELECT order_id,SUM(oopd.payment_value) AS order_payment
-FROM olist_order_payments_dataset oopd GROUP BY oopd.order_id)
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Payment: Removed 'not_defined'(for data integrity). Retained 'voucher' (cannot confirm if they're issued by platform or sellers).
+WITH orders AS 
+(SELECT order_id,customer_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+),
+payments AS (
+SELECT o.order_id, SUM(oopd.payment_value) AS order_value
+FROM olist_order_payments_dataset oopd
+INNER JOIN orders o ON oopd.order_id = o.order_id 
+WHERE oopd.payment_type != 'not_defined'
+GROUP BY o.order_id
+)
 SELECT 
 ocd.customer_state AS state,
-COUNT(ood.order_id) AS order_Qty,
+COUNT(o.order_id) AS order_Qty,
 COUNT(DISTINCT ocd.customer_unique_id) AS cutomer_count,
-ROUND(SUM(p.order_payment),2) AS state_gmv
+ROUND(SUM(p.order_value),2) AS state_gmv
 FROM olist_customers_dataset ocd
-JOIN olist_orders_dataset ood
-ON ocd.customer_id = ood.customer_id
-JOIN payment p
-ON ood.order_id = p.order_id
+JOIN orders o ON ocd.customer_id = o.customer_id
+JOIN payments p ON o.order_id = p.order_id
 GROUP BY state
 ORDER BY state_gmv DESC;
 ```
-<img width="665" height="155" alt="image" src="https://github.com/user-attachments/assets/f2175ea4-6bba-4365-b327-a55bac38f79f" />
+<img width="670" height="165" alt="image" src="https://github.com/user-attachments/assets/2309cae3-a3d4-483c-a178-aa494283d72f" />
 
 </details>
-<img width="157" height="48" alt="image" src="https://github.com/user-attachments/assets/7045f92a-572a-47b8-acdb-d5964bae64fb" />
-<img width="1064" height="576" alt="image" src="https://github.com/user-attachments/assets/9bda85b0-aa37-4381-99c7-2ad5cc459321" />
+
 
 ### 3.2 Product Category Revenue by State
 - The map below visualises total product revenue by state across Brazil. As Tableau was unable to recognise Brazil's state abbreviations, I defined state locations based on their latitude and longitude. This allowed map rendering, while accuracy may vary for large states.
