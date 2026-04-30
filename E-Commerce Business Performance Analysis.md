@@ -709,27 +709,38 @@ ORDER BY review_hour;
 <summary>View SQL</summary>
  
 ```sql
-WITH reviews AS 
-(SELECT order_id, review_score, review_comment_title, review_comment_message,
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+WITH orders AS
+(SELECT order_id
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+),
+reviews AS (
+SELECT order_id, review_score, review_comment_title, review_comment_message,
 ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
-FROM olist_order_reviews_dataset)
+FROM olist_order_reviews_dataset
+)
 SELECT
 SUM(CASE WHEN r.order_id IS NULL THEN 1 ELSE 0 END) AS no_review,
 SUM(CASE WHEN r.order_id IS NOT NULL 
 AND (r.review_comment_title IS NULL OR r.review_comment_title = '')
 AND (r.review_comment_message IS NULL OR r.review_comment_message = '') 
-THEN 1 ELSE 0 END) AS score_onlyt,
+THEN 1 ELSE 0 END) AS score_only,
 SUM(CASE WHEN (r.review_comment_title IS NOT NULL AND r.review_comment_title != '')
 OR (r.review_comment_message IS NOT NULL AND r.review_comment_message != '') 
 THEN 1 ELSE 0 END) AS full_review
-FROM olist_orders_dataset o
+FROM orders o
 LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
 ```
-<img width="529" height="64" alt="image" src="https://github.com/user-attachments/assets/46863da3-6b97-47f5-8529-8bc7cc7316dc" />
+<img width="525" height="65" alt="image" src="https://github.com/user-attachments/assets/0154c31b-9f9f-4620-9170-12fcb217cff0" />
 
 </details>
 
-<img width="791" height="157" alt="image" src="https://github.com/user-attachments/assets/9cb38e96-e325-417e-9b00-9c4e9fc1977a" />
+
 
 #### Average Review Scores: Written Review Orders vs. Score-Only Orders
 - Customers who left a score without a written review gave an average rating of **4.38**, notably higher than the **3.70** average for those who wrote a review. This suggests that dissatisfied customers are more likely to leave a written review, while satisfied customers tend to leave a score only: The louder the customer, the lower the score."
@@ -738,10 +749,21 @@ LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
 <summary>View SQL</summary>
  
 ```sql
-WITH reviews AS
-(SELECT order_id, review_score, review_comment_title, review_comment_message,
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+WITH orders AS
+(SELECT order_id
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+),
+reviews AS (
+SELECT order_id, review_score, review_comment_title, review_comment_message,
 ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
-FROM olist_order_reviews_dataset)
+FROM olist_order_reviews_dataset
+)
 SELECT
 ROUND(AVG(CASE WHEN r.order_id IS NOT NULL
 AND (r.review_comment_title IS NULL OR r.review_comment_title = '')
@@ -750,13 +772,10 @@ THEN r.review_score END), 2) AS score_only_avg,
 ROUND(AVG(CASE WHEN (r.review_comment_title IS NOT NULL AND r.review_comment_title != '')
 OR (r.review_comment_message IS NOT NULL AND r.review_comment_message != '')
 THEN r.review_score END), 2) AS full_review_avg
-FROM olist_orders_dataset o
+FROM orders o
 LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
 ```
-
-<img width="429" height="61" alt="image" src="https://github.com/user-attachments/assets/a97a6a71-0992-4aac-a65f-24d9ab18ebed" />
+<img width="430" height="60" alt="image" src="https://github.com/user-attachments/assets/ce40f259-e53a-447a-b63f-c99046b16dd2" />
 
 </details>
-<img width="343" height="206" alt="image" src="https://github.com/user-attachments/assets/ab8073ff-4313-48cf-866b-f27bd383c2f4" />
-
 
