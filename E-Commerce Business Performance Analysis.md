@@ -104,8 +104,8 @@ ORDER BY o.months;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Aug 2018
-# Status: Excluded 'created', 'canceled', 'unavailable'.
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 # Sales Quantity: Based on number of items sold instead of order count, as one order may have multiple same products.
 # Product GMV: Based on product price instead of total payment(price+shipping fee).
 WITH orders AS (
@@ -139,8 +139,8 @@ LIMIT 10;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Aug 2018
-# Status: Excluded 'created', 'canceled', 'unavailable'.
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 # Seller GMV: Based on product price instead of total payment(price+shipping fee).
 WITH orders AS (
 SELECT order_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
@@ -170,8 +170,8 @@ LIMIT 10;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Aug 2018
-# Status: Excluded 'created', 'canceled', 'unavailable'.
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 # Seller GMV: Based on product price instead of total payment(price+shipping fee).
 WITH orders AS (
 SELECT order_id
@@ -210,8 +210,8 @@ SELECT 'top10 seller' AS category,SUM(seller_gmv) AS top10_gmv FROM top10_seller
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Aug 2018
-# Status: Excluded 'created', 'canceled', 'unavailable'.
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 # Seller GMV: Based on product price instead of total payment(price+shipping fee).
 WITH orders AS (
 SELECT order_id, DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
@@ -253,8 +253,8 @@ ORDER BY months, rn;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Aug 2018
-# Status: Excluded 'created', 'canceled', 'unavailable'.
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH customer_orders AS (
 SELECT ocd.customer_unique_id,
 COUNT(DISTINCT ood.order_id) AS order_count
@@ -280,21 +280,30 @@ FROM customer_orders;
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS
-(SELECT ocd.customer_id,ocd.customer_unique_id,ood.order_purchase_timestamp
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+WITH orders AS (
+SELECT ocd.customer_unique_id,ood.order_purchase_timestamp
 FROM olist_customers_dataset ocd
-INNER JOIN olist_orders_dataset ood
-ON ocd.customer_id = ood.customer_id
-ORDER BY ood.order_purchase_timestamp),
-T2 AS 
-(SELECT order_purchase_timestamp,
+INNER JOIN olist_orders_dataset ood ON ocd.customer_id = ood.customer_id
+WHERE ood.order_purchase_timestamp >= '2017-01-01'
+AND ood.order_purchase_timestamp < '2018-09-01'
+AND ood.order_status NOT IN ('created', 'canceled', 'unavailable')
+),
+intervals AS (
+SELECT customer_unique_id,
 DATEDIFF(
 order_purchase_timestamp,
-LAG(order_purchase_timestamp,1) OVER (PARTITION BY customer_unique_id ORDER BY order_purchase_timestamp)) AS prev_order
-FROM T)
-SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM T2;
+LAG(order_purchase_timestamp) OVER (PARTITION BY customer_unique_id ORDER BY order_purchase_timestamp)) AS order_interval
+FROM orders
+)
+SELECT ROUND(AVG(order_interval)) AS avg_interval
+FROM intervals
+WHERE order_interval IS NOT NULL;
 ```
-<img width="300" height="60" alt="image" src="https://github.com/user-attachments/assets/0cc776fe-2100-408a-ae21-c04bf3935ab1" />
+<img width="225" height="61" alt="image" src="https://github.com/user-attachments/assets/87918ee5-a6c8-451d-8096-cb8405691315" />
+
 </details>
 
 ### 2.3 Average Order Value Distribution
@@ -306,24 +315,38 @@ SELECT ROUND(AVG(prev_order)) AS avg_inter_purchase_time FROM T2;
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS 
-(SELECT order_id,SUM(payment_value) AS order_value
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Payment: Removed 'not_defined'(for data integrity). Retained 'voucher' (cannot confirm if they're issued by platform or sellers).
+WITH orders AS 
+(SELECT order_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+),
+payments AS (
+SELECT o.order_id, SUM(oopd.payment_value) AS order_value
 FROM olist_order_payments_dataset oopd
-GROUP BY order_id
-ORDER BY order_value)
+INNER JOIN orders o ON oopd.order_id = o.order_id 
+WHERE oopd.payment_type != 'not_defined'
+GROUP BY o.order_id
+)
 SELECT 
 CASE
 WHEN order_value >= 500 THEN '500+'
 ELSE CONCAT(FLOOR(order_value/50)*50, '-', FLOOR(order_value/50)*50+50)
 END AS price_tier,
 COUNT(*) AS order_count 
-FROM T
-GROUP BY price_tier;
+FROM payments
+GROUP BY price_tier
+ORDER BY MIN(price_tier);
 ```
-<img width="365" height="160" alt="image" src="https://github.com/user-attachments/assets/3e66617f-11db-4013-9c93-7e18aaaa87e5" />
+<img width="369" height="160" alt="image" src="https://github.com/user-attachments/assets/92f3a6bf-457b-40b3-85c8-72b8b31cf38c" />
 
 </details>
-<img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/ae476547-8670-4f2e-90e6-4067639a3880" />
+
 
 ## 3. Regional Analysis
 ### 3.1 Order Volume, GMV, and Customer Distribution By State
