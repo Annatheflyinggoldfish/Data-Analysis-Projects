@@ -61,24 +61,35 @@ Overall ratings are positive, and review participation is high. Ratings are clea
 <summary>View SQL</summary>
 
 ```sql
-WITH filtered_orders AS 
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Payment: Removed 'not_defined'(for data integrity). Retained 'voucher' (cannot confirm if they're issued by platform or sellers).
+WITH orders AS 
 (SELECT order_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
 FROM olist_orders_dataset
 WHERE order_purchase_timestamp >= '2017-01-01'
 AND order_purchase_timestamp < '2018-09-01'
-AND order_status NOT IN ('cancelled', 'unavailable'))
+AND order_status NOT IN ('created','canceled', 'unavailable')
+),
+payments AS (
+SELECT order_id, SUM(payment_value) AS payment
+FROM olist_order_payments_dataset
+WHERE payment_type != 'not_defined'
+GROUP BY order_id
+)
 SELECT
-fo.months,
-COUNT(DISTINCT fo.order_id) AS order_count,
-ROUND(SUM(ooid.price),2) AS gmv,
-ROUND(SUM(ooid.price)/COUNT(DISTINCT fo.order_id),2) AS avg_order_value
-FROM filtered_orders fo
-INNER JOIN olist_order_items_dataset ooid
-ON fo.order_id = ooid.order_id
-GROUP BY months
-ORDER BY months;
+o.months,
+COUNT(DISTINCT o.order_id) AS order_count,
+ROUND(SUM(p.payment ),2) AS gmv,
+ROUND(SUM(p.payment )/COUNT(DISTINCT o.order_id),2) AS avg_order_value
+FROM orders o
+INNER JOIN payments p
+ON o.order_id = p.order_id
+GROUP BY o.months
+ORDER BY o.months;
 ```
-<img width="665" height="161" alt="image" src="https://github.com/user-attachments/assets/1454ce23-65cd-48e1-b2ef-ec5919ae1c5d" />
+<img width="675" height="156" alt="image" src="https://github.com/user-attachments/assets/a16f1f8f-c508-42c1-9532-31437c20930f" />
 
 </details>
 <img width="117" height="49" alt="image" src="https://github.com/user-attachments/assets/92db767d-70ab-481e-8791-5edcb50ab672" />
@@ -92,24 +103,31 @@ ORDER BY months;
 <summary>View SQL</summary>
  
 ```sql
-WITH filtered_orders AS 
-(SELECT order_id FROM olist_orders_dataset
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Sales Quantity: Based on number of items sold instead of order count, as one order may have multiple same products.
+# Product GMV: Based on product price instead of total payment(price+shipping fee).
+WITH orders AS (
+SELECT order_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
+FROM olist_orders_dataset
 WHERE order_purchase_timestamp >= '2017-01-01'
 AND order_purchase_timestamp < '2018-09-01'
-AND order_status NOT IN ('cancelled', 'unavailable'))
+AND order_status NOT IN ('created','canceled', 'unavailable')
+)
 SELECT 
 pcnt.product_category_name_english AS product_category,
 COUNT(*) AS sales_qty,
 ROUND(SUM(ooid.price),2) AS product_gmv
 FROM olist_order_items_dataset ooid
-INNER JOIN filtered_orders fo ON ooid.order_id = fo.order_id
+INNER JOIN orders o ON ooid.order_id = o.order_id
 INNER JOIN olist_products_dataset opd ON ooid.product_id = opd.product_id
 INNER JOIN product_category_name_translation pcnt ON opd.product_category_name = pcnt.product_category_name
 GROUP BY product_category 
 ORDER BY product_gmv DESC 
 LIMIT 10;
 ```
-<img width="584" height="160" alt="image" src="https://github.com/user-attachments/assets/62a30ad0-fecd-41ac-b2bf-13afc4cc5fa6" />
+<img width="581" height="165" alt="image" src="https://github.com/user-attachments/assets/35a7cfbf-9646-4c87-850e-b83f382bd22c" />
 
 </details>
 
@@ -119,24 +137,28 @@ LIMIT 10;
 <details>
 <summary>View SQL</summary>
  
-```aql
-WITH filtered_orders AS (
-SELECT order_id FROM olist_orders_dataset
+```sql
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Seller GMV: Based on product price instead of total payment(price+shipping fee).
+WITH orders AS (
+SELECT order_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
+FROM olist_orders_dataset
 WHERE order_purchase_timestamp >= '2017-01-01'
 AND order_purchase_timestamp < '2018-09-01'
-AND order_status NOT IN ('cancelled', 'unavailable')
+AND order_status NOT IN ('created','canceled', 'unavailable')
 )
 SELECT 
 ooid.seller_id AS seller,
 ROUND(SUM(ooid.price), 2) AS seller_gmv
 FROM olist_order_items_dataset ooid
-INNER JOIN filtered_orders fo ON ooid.order_id = fo.order_id
+INNER JOIN orders o ON ooid.order_id = o.order_id
 GROUP BY ooid.seller_id
 ORDER BY seller_gmv DESC
 LIMIT 10;
 ```
-
-<img width="475" height="159" alt="image" src="https://github.com/user-attachments/assets/7a2d59a1-f250-4827-af24-07a92e4de9d0" />
+<img width="471" height="161" alt="image" src="https://github.com/user-attachments/assets/40fba4e9-5960-430d-89e3-fad979598cef" />
 
 </details>
 
@@ -147,33 +169,37 @@ LIMIT 10;
 <summary>View SQL</summary>
  
 ```sql
-WITH payment AS
-(SELECT order_id,SUM(payment_value) AS order_payment
-FROM olist_order_payments_dataset GROUP BY order_id),
-top10_sellers AS
-(SELECT
-ootd.seller_id AS seller,
-SUM(p.order_payment) AS gmv
-FROM olist_order_items_dataset ootd
-JOIN payment p
-ON ootd.order_id = p.order_id
-GROUP BY ootd.seller_id
-ORDER BY gmv DESC LIMIT 10),
-T AS
-(SELECT 
-SUM(gmv) AS top10_seller_gmv,
-(SELECT SUM(order_payment) FROM payment)  AS total_gmv 
-FROM top10_sellers)
-SELECT 'top10 seller' AS catagory,top10_seller_gmv AS gmv FROM T
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Seller GMV: Based on product price instead of total payment(price+shipping fee).
+WITH orders AS (
+SELECT order_id
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+),
+seller_gmv AS (
+SELECT ooid.seller_id AS seller,
+SUM(ooid.price) AS seller_gmv
+FROM olist_order_items_dataset ooid
+INNER JOIN orders o ON ooid.order_id = o.order_id
+GROUP BY ooid.seller_id
+),
+top10_seller_gmv AS(
+SELECT seller,seller_gmv FROM seller_gmv sg 
+ORDER BY seller_gmv DESC LIMIT 10
+)
+SELECT 'all seller' AS category,SUM(seller_gmv) AS total_gmv FROM seller_gmv
 UNION ALL
-SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
+SELECT 'top10 seller' AS category,SUM(seller_gmv) AS top10_gmv FROM top10_seller_gmv;
 ```
 
-<img width="356" height="85" alt="image" src="https://github.com/user-attachments/assets/2850ec26-64a4-4201-8a11-082325614b16" />
+<img width="355" height="84" alt="image" src="https://github.com/user-attachments/assets/c3082dc1-1db2-481f-a569-0a308ca5ef2b" />
 
 </details>
-<img width="125" height="56" alt="image" src="https://github.com/user-attachments/assets/ef84d2f1-68d3-429c-86c8-94285c7ed4d5" />
-<img width="364" height="361" alt="image" src="https://github.com/user-attachments/assets/7832e289-2fc8-44f4-a29e-482cc7c02ca5" />
+
 
 ### 1.5 TOP 10 Best Selling Product Categories Rankings by Month
 - The heatmap indicates that most categories appear sporadically within the top 10 rankings, with no recognizable seasonal patterns showing from the map.
@@ -183,36 +209,39 @@ SELECT 'all seller' AS catagory,(total_gmv - top10_seller_gmv) AS gmv FROM T;
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS
-(SELECT order_id,product_id,SUM(price) AS price FROM olist_order_items_dataset ooid GROUP BY order_id,product_id),
-T2 AS
-(SELECT T.order_id,T.product_id,ood.customer_id,T.price,
-DATE_FORMAT(ood.order_purchase_timestamp, '%Y-%m') AS months,
-pcnt.product_category_name_english AS product_name
-FROM T
-INNER JOIN olist_products_dataset opd
-ON T.product_id = opd.product_id
-INNER JOIN product_category_name_translation pcnt
-ON opd.product_category_name = pcnt.product_category_name
-INNER JOIN olist_orders_dataset ood 
-ON T.order_id = ood.order_id),
-T3 AS
-(SELECT months,product_name,SUM(price) AS total_price FROM T2 
-WHERE months >= '2017-01'
-AND months < '2018-09'
-GROUP BY months,product_name),
-T4 AS
-(SELECT months,product_name,total_price,
-DENSE_RANK() OVER (PARTITION BY months ORDER BY total_price DESC) AS rn
-FROM T3)
-SELECT * FROM T4 WHERE rn <= 10;
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Seller GMV: Based on product price instead of total payment(price+shipping fee).
+WITH orders AS (
+SELECT order_id, DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created', 'canceled', 'unavailable')
+),
+category_monthly_gmv AS (
+SELECT o.months, 
+pcnt.product_category_name_english AS product_category,
+SUM(ooid.price) AS gmv
+FROM olist_order_items_dataset ooid
+INNER JOIN orders o ON ooid.order_id = o.order_id
+INNER JOIN olist_products_dataset opd ON ooid.product_id = opd.product_id
+INNER JOIN product_category_name_translation pcnt ON opd.product_category_name = pcnt.product_category_name
+GROUP BY months, product_category
+),
+gmv_rank AS (
+SELECT months, product_category, gmv,
+DENSE_RANK() OVER (PARTITION BY months ORDER BY gmv DESC) AS rn
+FROM category_monthly_gmv
+)
+SELECT * FROM gmv_rank WHERE rn <= 10
+ORDER BY months, rn;
 ```
-<img width="635" height="165" alt="image" src="https://github.com/user-attachments/assets/bf26c377-b7a1-48d1-80b1-0138b0685fdc" />
+<img width="615" height="160" alt="image" src="https://github.com/user-attachments/assets/cf9747d3-bb2d-429f-b5b8-04d293c953ca" />
 
 </details>
 
-<img width="131" height="49" alt="image" src="https://github.com/user-attachments/assets/ea788cec-88fc-40c8-a737-311963af193f" />
-<img width="784" height="529" alt="image" src="https://github.com/user-attachments/assets/0de6e148-3673-4872-922b-c8dc92a52742" />
 
 
 ## 2. Customer Behavior
