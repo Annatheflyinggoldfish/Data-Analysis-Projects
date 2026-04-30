@@ -245,8 +245,8 @@ ORDER BY months, rn;
 
 
 ## 2. Customer Behavior
-### 2.1 Repeat Purchase Rate: 3.12%
-- The repeat purchase rate stands at just **3.12%**, suggesting that the majority of customers make only a single purchase, and indicating this platform doesn't exhibit a healthy loyalty-driven ecosystem.
+### 2.1 Repeat Purchase Rate: 3.03%
+- The repeat purchase rate stands at just **3.03%**, suggesting that the majority of customers make only a single purchase, and indicating this platform doesn't exhibit a healthy loyalty-driven ecosystem.
 
 <details>
 <summary>View SQL</summary>
@@ -270,8 +270,8 @@ CONCAT(ROUND(COUNT(CASE WHEN order_count >= 2 THEN 1 END) / COUNT(*) * 100, 2), 
 AS repeat_purchase_rate
 FROM customer_orders;
 ```
+<img width="279" height="60" alt="image" src="https://github.com/user-attachments/assets/7ee53560-f1db-431e-8e40-0c5e130d7be0" />
 
-<img width="615" height="156" alt="image" src="https://github.com/user-attachments/assets/0ddbf012-f256-4538-a603-9098900f3c19" />
  </details>
  
 ### 2.2 Average Inter-purchase Time: 78 days
