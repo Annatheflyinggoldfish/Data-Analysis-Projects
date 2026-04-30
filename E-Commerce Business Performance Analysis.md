@@ -63,38 +63,27 @@ Overall ratings are positive, and review participation is high. Ratings are clea
 ```sql
 # Data Filtered:
 # Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
-# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
-# Payment: Removed 'not_defined'(for data integrity). Retained 'voucher' (cannot confirm if they're issued by platform or sellers).
-WITH orders AS 
-(SELECT order_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled).
+# GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
+WITH orders AS (
+SELECT order_id, DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
 FROM olist_orders_dataset
 WHERE order_purchase_timestamp >= '2017-01-01'
 AND order_purchase_timestamp < '2018-09-01'
-AND order_status NOT IN ('created','canceled', 'unavailable')
-),
-payments AS (
-SELECT order_id, SUM(payment_value) AS payment
-FROM olist_order_payments_dataset
-WHERE payment_type != 'not_defined'
-GROUP BY order_id
+AND order_status NOT IN ('created', 'canceled', 'unavailable')
 )
-SELECT
-o.months,
+SELECT o.months,
 COUNT(DISTINCT o.order_id) AS order_count,
-ROUND(SUM(p.payment ),2) AS gmv,
-ROUND(SUM(p.payment )/COUNT(DISTINCT o.order_id),2) AS avg_order_value
+ROUND(SUM(ooid.price), 2) AS gmv,
+ROUND(SUM(ooid.price) / COUNT(DISTINCT o.order_id), 2) AS avg_order_value
 FROM orders o
-INNER JOIN payments p
-ON o.order_id = p.order_id
+INNER JOIN olist_order_items_dataset ooid ON o.order_id = ooid.order_id
 GROUP BY o.months
 ORDER BY o.months;
 ```
-<img width="675" height="156" alt="image" src="https://github.com/user-attachments/assets/a16f1f8f-c508-42c1-9532-31437c20930f" />
+<img width="671" height="161" alt="image" src="https://github.com/user-attachments/assets/0c71575c-a8df-47c4-9763-828f935b2750" />
 
 </details>
-<img width="117" height="49" alt="image" src="https://github.com/user-attachments/assets/92db767d-70ab-481e-8791-5edcb50ab672" />
-<img width="726" height="436" alt="image" src="https://github.com/user-attachments/assets/96047e20-dc8e-4dcc-a963-523f65da2020" />
-
 
 ### 1.2 TOP 10 Best-selling Products
 - The Bed/Bath/Table, Health/Beauty, and Sports/Leisure categories dominated in sales volume. However, the main GMV drivers were Bed/Bath/Table, Health/Beauty, and Watches/Gifts.
@@ -106,8 +95,8 @@ ORDER BY o.months;
 # Data Filtered:
 # Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
-# Sales Quantity: Based on number of items sold instead of order count, as one order may have multiple same products.
-# Product GMV: Based on product price instead of total payment(price+shipping fee).
+# Sales Quantity: Based on the number of items sold, not the order count, as one order may have multiple identical products.
+# Product GMV: Based on product price only, excluding shipping fee.
 WITH orders AS (
 SELECT order_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
 FROM olist_orders_dataset
@@ -141,7 +130,7 @@ LIMIT 10;
 # Data Filtered:
 # Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
-# Seller GMV: Based on product price instead of total payment(price+shipping fee).
+# GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS (
 SELECT order_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
 FROM olist_orders_dataset
@@ -172,7 +161,7 @@ LIMIT 10;
 # Data Filtered:
 # Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
-# Seller GMV: Based on product price instead of total payment(price+shipping fee).
+# GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS (
 SELECT order_id
 FROM olist_orders_dataset
@@ -212,7 +201,7 @@ SELECT 'top10 seller' AS category,SUM(seller_gmv) AS top10_gmv FROM top10_seller
 # Data Filtered:
 # Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
-# Seller GMV: Based on product price instead of total payment(price+shipping fee).
+# GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS (
 SELECT order_id, DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
 FROM olist_orders_dataset
@@ -317,8 +306,8 @@ WHERE order_interval IS NOT NULL;
 ```sql
 # Data Filtered:
 # Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
-# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
-# Payment: Removed 'not_defined'(for data integrity). Retained 'voucher' (cannot confirm if they're issued by platform or sellers).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled).
+# GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS 
 (SELECT order_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
 FROM olist_orders_dataset
@@ -326,11 +315,10 @@ WHERE order_purchase_timestamp >= '2017-01-01'
 AND order_purchase_timestamp < '2018-09-01'
 AND order_status NOT IN ('created','canceled', 'unavailable')
 ),
-payments AS (
-SELECT o.order_id, SUM(oopd.payment_value) AS order_value
-FROM olist_order_payments_dataset oopd
-INNER JOIN orders o ON oopd.order_id = o.order_id 
-WHERE oopd.payment_type != 'not_defined'
+gmv AS (
+SELECT o.order_id, SUM(ooid.price) AS order_value
+FROM olist_order_items_dataset ooid 
+INNER JOIN orders o ON ooid.order_id = o.order_id 
 GROUP BY o.order_id
 )
 SELECT 
@@ -339,11 +327,11 @@ WHEN order_value >= 500 THEN '500+'
 ELSE CONCAT(FLOOR(order_value/50)*50, '-', FLOOR(order_value/50)*50+50)
 END AS price_tier,
 COUNT(*) AS order_count 
-FROM payments
+FROM gmv
 GROUP BY price_tier
-ORDER BY MIN(price_tier);
+ORDER BY MIN(order_value);
 ```
-<img width="369" height="160" alt="image" src="https://github.com/user-attachments/assets/92f3a6bf-457b-40b3-85c8-72b8b31cf38c" />
+<img width="365" height="164" alt="image" src="https://github.com/user-attachments/assets/2f25e014-a2f3-4618-95b9-50fb4a72f291" />
 
 </details>
 
@@ -359,7 +347,7 @@ ORDER BY MIN(price_tier);
 # Data Filtered:
 # Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
-# Payment: Removed 'not_defined'(for data integrity). Retained 'voucher' (cannot confirm if they're issued by platform or sellers).
+# GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS 
 (SELECT order_id,customer_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
 FROM olist_orders_dataset
@@ -367,25 +355,24 @@ WHERE order_purchase_timestamp >= '2017-01-01'
 AND order_purchase_timestamp < '2018-09-01'
 AND order_status NOT IN ('created','canceled', 'unavailable')
 ),
-payments AS (
-SELECT o.order_id, SUM(oopd.payment_value) AS order_value
-FROM olist_order_payments_dataset oopd
-INNER JOIN orders o ON oopd.order_id = o.order_id 
-WHERE oopd.payment_type != 'not_defined'
+gmv AS (
+SELECT o.order_id, SUM(ooid.price) AS order_value
+FROM olist_order_items_dataset ooid 
+INNER JOIN orders o ON ooid.order_id = o.order_id 
 GROUP BY o.order_id
 )
 SELECT 
 ocd.customer_state AS state,
 COUNT(o.order_id) AS order_Qty,
 COUNT(DISTINCT ocd.customer_unique_id) AS cutomer_count,
-ROUND(SUM(p.order_value),2) AS state_gmv
+ROUND(SUM(g.order_value),2) AS state_gmv
 FROM olist_customers_dataset ocd
 JOIN orders o ON ocd.customer_id = o.customer_id
-JOIN payments p ON o.order_id = p.order_id
+JOIN gmv g ON o.order_id = g.order_id
 GROUP BY state
 ORDER BY state_gmv DESC;
 ```
-<img width="670" height="165" alt="image" src="https://github.com/user-attachments/assets/2309cae3-a3d4-483c-a178-aa494283d72f" />
+<img width="670" height="165" alt="image" src="https://github.com/user-attachments/assets/c8a726fe-c877-43c3-9e8b-6bdca77be41c" />
 
 </details>
 
@@ -397,63 +384,76 @@ ORDER BY state_gmv DESC;
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS 
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
+WITH orders AS 
+(SELECT order_id,customer_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+),
+gmv AS 
 (SELECT ocd.customer_state,ooid.product_id,
 SUM(ooid.price) AS total_revenue
 FROM olist_order_items_dataset ooid
-JOIN olist_orders_dataset ood ON ooid.order_id = ood.order_id
-JOIN olist_customers_dataset ocd ON ood.customer_id = ocd.customer_id
+JOIN orders o ON ooid.order_id = o.order_id
+JOIN olist_customers_dataset ocd ON o.customer_id = ocd.customer_id
 GROUP BY ocd.customer_state, ooid.product_id),
-T2 AS
+location AS
 (SELECT geolocation_state,
 AVG(ogd.geolocation_lat) AS lat,
 AVG(ogd.geolocation_lng) AS lng
 FROM olist_geolocation_dataset ogd
 GROUP BY geolocation_state)
 SELECT 
-T.customer_state,T2.lat,T2.lng,
+g.customer_state,l.lat,l.lng,
 pcnt.product_category_name_english AS product_name,
-T.total_revenue
-FROM T
-JOIN olist_products_dataset opd ON T.product_id = opd.product_id
+g.total_revenue
+FROM gmv g
+JOIN olist_products_dataset opd ON g.product_id = opd.product_id
 JOIN product_category_name_translation pcnt ON opd.product_category_name = pcnt.product_category_name
-JOIN T2 ON T.customer_state  = T2.geolocation_state
-ORDER BY T.customer_state,T.total_revenue;
+JOIN location l ON g.customer_state  = l.geolocation_state
+ORDER BY g.customer_state,g.total_revenue DESC;
 ```
-<img width="835" height="160" alt="image" src="https://github.com/user-attachments/assets/f48ddc1f-814e-42ce-a7c8-5d5b1fad1015" />
+<img width="840" height="163" alt="image" src="https://github.com/user-attachments/assets/f7af55e5-61d2-428e-b39f-583bca9ad2a4" />
 
 </details>
 
-- Interactive map: [Product Category Revenue by State](https://public.tableau.com/app/profile/liping.huang5577/viz/ProductCategoryRevenuebyState/ProductCategoryRevenuebyState#1)
-<img width="1090" height="585" alt="image" src="https://github.com/user-attachments/assets/abd53b17-74c8-4e68-a24a-5b296014f78b" />
-
+- Interactive map: [Product Category Revenue by State]( )
 
 ## 4. Delivery Efficiency
 - Lead time = actual delivery time
 - Delivery gap = estimated delivery time - actual delivery time
 
-### 4.1 On Time Delivery Rate: 91.89%
+### 4.1 On Time Delivery Rate: 91.87%
 - Olist recorded an on-time delivery rate of 91.89%, which appears healthy. However, it may indicate that the estimated delivery time is conservatively set to manage customer expectations.
 <details>
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS
-(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
-FROM olist_orders_dataset
-WHERE order_delivered_customer_date IS NOT NULL
-AND order_delivered_customer_date != ''),
-T2 AS
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+WITH orders AS 
 (SELECT order_id,
-STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
-STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time,
-STR_TO_DATE(order_estimated_delivery_date,'%Y-%m-%d %H:%i:%s') AS estimated_delivery
-FROM T)
-SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*)FROM T2)*100,2),'%') AS OTD_rate 
-FROM T2 WHERE deliver_time <= estimated_delivery;
+STR_TO_DATE(NULLIF(TRIM(order_purchase_timestamp), ''), '%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(NULLIF(TRIM(order_delivered_customer_date), ''), '%Y-%m-%d %H:%i:%s') AS deliver_time,
+STR_TO_DATE(NULLIF(TRIM(order_estimated_delivery_date), ''), '%Y-%m-%d %H:%i:%s') AS estimated_delivery
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+AND order_purchase_timestamp  IS NOT NULL AND order_purchase_timestamp  != ''
+AND order_delivered_customer_date  IS NOT NULL AND order_delivered_customer_date  != ''
+AND order_estimated_delivery_date  IS NOT NULL AND order_estimated_delivery_date  != ''
+)
+SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*)FROM orders)*100,2),'%') AS OTD_rate 
+FROM orders WHERE deliver_time <= estimated_delivery;
 ```
-
-<img width="205" height="65" alt="44a51a43-3324-41d7-b2b4-6deb7410db68" src="https://github.com/user-attachments/assets/9904b799-066b-4790-a308-1f940b2a9f3a" />
+<img width="201" height="59" alt="image" src="https://github.com/user-attachments/assets/102a2959-f0c2-457f-abdd-bce5f4143e8a" />
 
 </details>
 
@@ -464,21 +464,21 @@ FROM T2 WHERE deliver_time <= estimated_delivery;
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS
-(SELECT order_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
-FROM olist_orders_dataset
-WHERE order_delivered_customer_date IS NOT NULL
-AND order_delivered_customer_date != ''),
-T2 AS
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+WITH orders AS 
 (SELECT order_id,
 STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
 STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time
-FROM T),
-T3 AS 
-(SELECT order_id,deliver_time,purchase_time,
-TIMESTAMPDIFF(HOUR,purchase_time,deliver_time)/24 AS lead_ime
-FROM T2)
-SELECT ROUND(AVG(lead_ime),1) AS avg_lead_ime FROM T3;
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+AND order_purchase_timestamp  IS NOT NULL AND order_purchase_timestamp  != ''
+AND order_delivered_customer_date IS NOT NULL AND order_delivered_customer_date  != ''
+)
+SELECT ROUND(AVG(TIMESTAMPDIFF(HOUR,purchase_time,deliver_time)/24),1) AS avg_lead_time FROM orders;
 ```
 <img width="225" height="61" alt="image" src="https://github.com/user-attachments/assets/af8b295f-dd72-4092-bde8-020577f8c7b6" />
 </details>
@@ -493,38 +493,41 @@ SELECT ROUND(AVG(lead_ime),1) AS avg_lead_ime FROM T3;
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS
-(SELECT customer_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
+
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+WITH orders AS 
+(SELECT order_id, customer_id,
+STR_TO_DATE(NULLIF(TRIM(order_purchase_timestamp), ''), '%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(NULLIF(TRIM(order_delivered_customer_date), ''), '%Y-%m-%d %H:%i:%s') AS deliver_time,
+STR_TO_DATE(NULLIF(TRIM(order_estimated_delivery_date), ''), '%Y-%m-%d %H:%i:%s') AS estimated_delivery
 FROM olist_orders_dataset
-WHERE order_delivered_customer_date IS NOT NULL
-AND order_delivered_customer_date != ''),
-T2 AS
-(SELECT customer_id,
-STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
-STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time,
-STR_TO_DATE(order_estimated_delivery_date,'%Y-%m-%d %H:%i:%s') AS estimated_delivery
-FROM T),
-T3 AS 
-(SELECT customer_id,deliver_time,purchase_time,
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+AND order_purchase_timestamp  IS NOT NULL AND order_purchase_timestamp  != ''
+AND order_delivered_customer_date  IS NOT NULL AND order_delivered_customer_date  != ''
+AND order_estimated_delivery_date  IS NOT NULL AND order_estimated_delivery_date  != ''
+),
+time AS
+(SELECT order_id, o.customer_id,
 DATEDIFF(deliver_time,purchase_time) AS lead_time,
-DATEDIFF(estimated_delivery,deliver_time) AS delivery_gap
-FROM T2),
-T4 AS
-(SELECT T3.customer_id,T3.lead_time,T3.delivery_gap,ocd.customer_state
-FROM T3 INNER JOIN olist_customers_dataset ocd
-ON T3.customer_id = ocd.customer_id)
+DATEDIFF(estimated_delivery,deliver_time) AS delivery_gap,
+ocd.customer_state
+FROM orders o INNER JOIN olist_customers_dataset ocd
+ON o.customer_id = ocd.customer_id)
 SELECT
 customer_state,
 ROUND(AVG(lead_time),2) AS avg_state_lead_time,
 ROUND(AVG(delivery_gap),2) AS avg_delivery_gap
-FROM T4 
+FROM time
 GROUP BY customer_state 
 ORDER BY avg_state_lead_time DESC;
 ```
-<img width="665" height="160" alt="image" src="https://github.com/user-attachments/assets/b5a87c20-9199-4795-b016-ea711ac68490" />
+<img width="661" height="161" alt="image" src="https://github.com/user-attachments/assets/0e704c4c-d964-4601-b71a-1208e3f86f5d" />
 
 </details>
-<img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/3284c916-b6a5-4410-b210-1e891186f51a" />
 
 
 ## 5. Customer Feedback and Reviews
@@ -534,12 +537,25 @@ ORDER BY avg_state_lead_time DESC;
 <summary>View SQL</summary>
  
 ```sql
-SELECT 
-review_score,
-COUNT(review_score) AS Rating_distribution,
-CONCAT(ROUND(COUNT(review_score)/(SELECT COUNT(*) FROM olist_order_reviews_dataset oord)*100,2),'%') AS ration
-FROM olist_order_reviews_dataset 
-GROUP BY review_score ORDER BY review_score;
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+WITH orders AS
+(SELECT order_id
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+),
+review_counts AS (
+SELECT oord.review_score, COUNT(*) AS rating_counts
+FROM olist_order_reviews_dataset oord
+INNER JOIN orders o ON o.order_id = oord.order_id
+GROUP BY oord.review_score
+)
+SELECT review_score, rating_counts
+FROM review_counts
+ORDER BY review_score;
 ```
 <img width="565" height="160" alt="image" src="https://github.com/user-attachments/assets/9e75cd29-423f-444a-8422-a0f2742c3a66" />
 
@@ -554,31 +570,35 @@ GROUP BY review_score ORDER BY review_score;
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS
-(SELECT order_id,customer_id,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+WITH orders AS
+(SELECT order_id, customer_id,
+STR_TO_DATE(NULLIF(TRIM(order_purchase_timestamp), ''), '%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(NULLIF(TRIM(order_delivered_customer_date), ''), '%Y-%m-%d %H:%i:%s') AS deliver_time,
+STR_TO_DATE(NULLIF(TRIM(order_estimated_delivery_date), ''), '%Y-%m-%d %H:%i:%s') AS estimated_delivery
 FROM olist_orders_dataset
-WHERE order_delivered_customer_date IS NOT NULL
-AND order_delivered_customer_date != ''),
-T2 AS
-(SELECT order_id,customer_id,
-STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
-STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time,
-STR_TO_DATE(order_estimated_delivery_date,'%Y-%m-%d %H:%i:%s') AS estimated_delivery
-FROM T),
-T3 AS 
-(SELECT order_id,customer_id,deliver_time,purchase_time,
-DATEDIFF(deliver_time,purchase_time) AS lead_time,
-DATEDIFF(estimated_delivery,deliver_time) AS delivery_gap
-FROM T2),
-T4 AS
-(SELECT T3.order_id,T3.customer_id,T3.lead_time,T3.delivery_gap,oord.review_score
-FROM T3 INNER JOIN olist_customers_dataset ocd
-ON T3.customer_id = ocd.customer_id
-INNER JOIN olist_order_reviews_dataset oord
-ON T3.order_id = oord.order_id)
-SELECT * FROM T4;
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+AND order_purchase_timestamp  IS NOT NULL AND order_purchase_timestamp  != ''
+AND order_delivered_customer_date  IS NOT NULL AND order_delivered_customer_date  != ''
+AND order_estimated_delivery_date  IS NOT NULL AND order_estimated_delivery_date  != ''
+),
+review_counts AS (
+SELECT o.order_id, oord.review_score
+FROM olist_order_reviews_dataset oord
+INNER JOIN orders o ON o.order_id = oord.order_id
+)
+SELECT o.order_id, o.customer_id, r.review_score,
+DATEDIFF(o.deliver_time,o.purchase_time) AS lead_time,
+DATEDIFF(o.estimated_delivery,o.deliver_time) AS delivery_gap
+FROM orders o
+INNER JOIN review_counts r ON o.order_id = r.order_id
+ORDER BY review_score;
 ```
-<img width="1084" height="160" alt="image" src="https://github.com/user-attachments/assets/c81fb834-19c0-4558-9e07-24956d57e27d" />
+
 
 </details>
 <img width="548" height="441" alt="image" src="https://github.com/user-attachments/assets/f33d1b08-b0c0-4eff-9381-c98ae5fe53e7" />
