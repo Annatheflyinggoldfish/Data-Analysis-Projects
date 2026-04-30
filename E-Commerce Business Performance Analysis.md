@@ -104,8 +104,8 @@ ORDER BY o.months;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
-# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Date: Jan 2017 – Aug 2018
+# Status: Excluded 'created', 'canceled', 'unavailable'.
 # Sales Quantity: Based on number of items sold instead of order count, as one order may have multiple same products.
 # Product GMV: Based on product price instead of total payment(price+shipping fee).
 WITH orders AS (
@@ -139,8 +139,8 @@ LIMIT 10;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
-# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Date: Jan 2017 – Aug 2018
+# Status: Excluded 'created', 'canceled', 'unavailable'.
 # Seller GMV: Based on product price instead of total payment(price+shipping fee).
 WITH orders AS (
 SELECT order_id,DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
@@ -170,8 +170,8 @@ LIMIT 10;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
-# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Date: Jan 2017 – Aug 2018
+# Status: Excluded 'created', 'canceled', 'unavailable'.
 # Seller GMV: Based on product price instead of total payment(price+shipping fee).
 WITH orders AS (
 SELECT order_id
@@ -210,8 +210,8 @@ SELECT 'top10 seller' AS category,SUM(seller_gmv) AS top10_gmv FROM top10_seller
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
-# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+# Date: Jan 2017 – Aug 2018
+# Status: Excluded 'created', 'canceled', 'unavailable'.
 # Seller GMV: Based on product price instead of total payment(price+shipping fee).
 WITH orders AS (
 SELECT order_id, DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS months
@@ -252,16 +252,26 @@ ORDER BY months, rn;
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS
-(SELECT customer_unique_id,COUNT(customer_unique_id) AS order_count
-FROM olist_customers_dataset ocd
-GROUP BY customer_unique_id )
-SELECT CONCAT(ROUND(COUNT(*)/(SELECT COUNT(DISTINCT customer_unique_id) FROM olist_customers_dataset ocd)*100,2),'%')
-AS repeat_purchase_rate 
-FROM T WHERE order_count >= 2;
+# Data Filtered:
+# Date: Jan 2017 – Aug 2018
+# Status: Excluded 'created', 'canceled', 'unavailable'.
+WITH customer_orders AS (
+SELECT ocd.customer_unique_id,
+COUNT(DISTINCT ood.order_id) AS order_count
+FROM olist_orders_dataset ood
+INNER JOIN olist_customers_dataset ocd ON ood.customer_id = ocd.customer_id
+WHERE ood.order_purchase_timestamp >= '2017-01-01'
+AND ood.order_purchase_timestamp < '2018-09-01'
+AND ood.order_status NOT IN ('created', 'canceled', 'unavailable')
+GROUP BY ocd.customer_unique_id
+)
+SELECT 
+CONCAT(ROUND(COUNT(CASE WHEN order_count >= 2 THEN 1 END) / COUNT(*) * 100, 2), '%')
+AS repeat_purchase_rate
+FROM customer_orders;
 ```
 
-<img width="280" height="60" alt="image" src="https://github.com/user-attachments/assets/326c3591-58c1-4b12-9f11-c57bdfe8bc60" />
+<img width="615" height="156" alt="image" src="https://github.com/user-attachments/assets/0ddbf012-f256-4538-a603-9098900f3c19" />
  </details>
  
 ### 2.2 Average Inter-purchase Time: 78 days
