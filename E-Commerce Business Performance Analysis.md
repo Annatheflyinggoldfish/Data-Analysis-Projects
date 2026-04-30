@@ -469,8 +469,8 @@ FROM orders WHERE deliver_time <= estimated_delivery;
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS 
 (SELECT order_id,
-STR_TO_DATE(order_purchase_timestamp,'%Y-%m-%d %H:%i:%s') AS purchase_time,
-STR_TO_DATE(order_delivered_customer_date,'%Y-%m-%d %H:%i:%s') AS deliver_time
+STR_TO_DATE(NULLIF(TRIM(order_purchase_timestamp), ''), '%Y-%m-%d %H:%i:%s') AS purchase_time,
+STR_TO_DATE(NULLIF(TRIM(order_delivered_customer_date), ''), '%Y-%m-%d %H:%i:%s') AS deliver_time,
 FROM olist_orders_dataset
 WHERE order_purchase_timestamp >= '2017-01-01'
 AND order_purchase_timestamp < '2018-09-01'
