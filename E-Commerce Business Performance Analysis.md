@@ -563,7 +563,7 @@ ORDER BY review_score;
 <img width="150" height="70" alt="image" src="https://github.com/user-attachments/assets/16c817e5-2bae-4491-bed7-2a598b81a435" />
 <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/7a5f973f-93bc-45ff-b9b2-d18142c142bf" />
 
-### 5.2 Correlation: Lead Time vs. Rating
+### 5.2 Correlation: Delivery quality vs. Rating
 - The correlation between lead time and rating is quite intuitive: The quicker the orders arrive, the higher the ratings might be.
 - Alternatively, the delivery gap also showed a similar correlation: The bigger the gap between the estimated and actual delivery date, the higher the customer satisfaction. 
 <details>
@@ -591,18 +591,17 @@ SELECT o.order_id, oord.review_score
 FROM olist_order_reviews_dataset oord
 INNER JOIN orders o ON o.order_id = oord.order_id
 )
-SELECT o.order_id, o.customer_id, r.review_score,
-DATEDIFF(o.deliver_time,o.purchase_time) AS lead_time,
-DATEDIFF(o.estimated_delivery,o.deliver_time) AS delivery_gap
+SELECT r.review_score,
+AVG(DATEDIFF(o.deliver_time,o.purchase_time)) AS avg_lead_time,
+AVG(DATEDIFF(o.estimated_delivery,o.deliver_time)) AS avg_delivery_gap
 FROM orders o
 INNER JOIN review_counts r ON o.order_id = r.order_id
+GROUP BY review_score
 ORDER BY review_score;
 ```
-
+<img width="605" height="161" alt="image" src="https://github.com/user-attachments/assets/d930f6c7-697c-47ea-b088-f77b7ff592f7" />
 
 </details>
-<img width="548" height="441" alt="image" src="https://github.com/user-attachments/assets/f33d1b08-b0c0-4eff-9381-c98ae5fe53e7" />
-
 
 ### 5.3 Correlation: Product Price vs. Rating
 - The line chart reveals no clear correlation between the product price and review score. Ratings remained largely stable across all price tiers, fluctuating narrowly between 3.90 and 4.16.
@@ -612,31 +611,43 @@ ORDER BY review_score;
 <summary>View SQL</summary>
  
 ```sql
-WITH review_table AS 
-(SELECT order_id,review_score, review_answer_timestamp,
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+WITH orders AS
+(SELECT order_id
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+),
+ratings AS (
+SELECT order_id, review_score,
 ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY review_answer_timestamp DESC) AS rn
-FROM olist_order_reviews_dataset),
-T AS
-(SELECT ooid.order_id,ooid.price,rt.review_score
-FROM olist_order_items_dataset ooid 
-INNER JOIN review_table rt
-ON ooid.order_id = rt.order_id
-WHERE rn = 1
-ORDER BY ooid.price),
-T2 AS
-(SELECT order_id,
-CASE
-WHEN price >= 500 THEN '500+'
-ELSE CONCAT(FLOOR(price/50)*50, '-', FLOOR(price/50)*50+50)
+FROM olist_order_reviews_dataset
+),
+price_ratings AS (
+SELECT
+CASE WHEN ooid.price >= 500 THEN '500+'
+ELSE CONCAT(FLOOR(ooid.price/50)*50, '-', FLOOR(ooid.price/50)*50+50)
 END AS price_tier,
-review_score
-FROM T)
-SELECT * FROM T2;
+ooid.price,
+r.review_score AS rating
+FROM olist_order_items_dataset ooid
+INNER JOIN orders o ON ooid.order_id = o.order_id
+INNER JOIN ratings r ON ooid.order_id = r.order_id
+WHERE r.rn = 1
+)
+SELECT price_tier,
+COUNT(*) AS order_count, ROUND(AVG(rating), 2) AS avg_rating
+FROM price_ratings
+GROUP BY price_tier
+ORDER BY MIN(price);
 ```
-<img width="640" height="159" alt="image" src="https://github.com/user-attachments/assets/3a9d0bb7-515c-4e9c-b293-dbd15c104a40" />
+<img width="524" height="160" alt="image" src="https://github.com/user-attachments/assets/aba3862f-d4f0-4af8-a81e-84758377856c" />
 
 </details>
-<img width="700" height="350" alt="image" src="https://github.com/user-attachments/assets/a55046d5-9bcd-43d5-8922-f51fcc9b7966" />
+
 
 ### 5.4 Rating Trends by Time of Day & Day of Week
 - The data suggests that customer sentiment is closely linked to specific time cycles:
@@ -648,29 +659,47 @@ SELECT * FROM T2;
 <summary>View SQL</summary>
  
 ```sql
-WITH T AS 
-(SELECT review_id,
-STR_TO_DATE(review_answer_timestamp,'%Y/%m/%d %H:%i') AS review_time,
-review_score
-FROM olist_order_reviews_dataset
-WHERE review_answer_timestamp IS NOT NULL
-AND review_answer_timestamp != ''),
-T2 AS
+# Data Filtered:
+# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
+WITH orders AS
+(SELECT order_id
+FROM olist_orders_dataset
+WHERE order_purchase_timestamp >= '2017-01-01'
+AND order_purchase_timestamp < '2018-09-01'
+AND order_status NOT IN ('created','canceled', 'unavailable')
+),
+reviews AS (
+SELECT oord.review_id,
+STR_TO_DATE(NULLIF(TRIM(oord.review_answer_timestamp), ''), '%Y/%m/%d %H:%i') AS review_time,
+oord.review_score
+FROM olist_order_reviews_dataset oord
+INNER JOIN orders o ON oord.order_id = o.order_id
+WHERE oord.review_answer_timestamp IS NOT NULL AND oord.review_answer_timestamp != ''
+),
+review_time AS
 (SELECT review_id,review_time,
 DAYOFWEEK(review_time) AS review_day_of_week,
 HOUR(review_time) AS review_hour,
 review_score
-FROM T)
-SELECT review_day_of_week,COUNT(*),ROUND(AVG(review_score),2) AS avg_score FROM T2 GROUP BY review_day_of_week ORDER BY review_day_of_week;
-SELECT review_hour,COUNT(*) AS review_count,ROUND(AVG(review_score),2) AS avg_score FROM T2 GROUP BY review_hour ORDER BY review_hour;
+FROM reviews)
+# For day of week
+SELECT review_day_of_week,COUNT(*) AS review_count,
+ROUND(AVG(review_score),2) AS avg_score
+FROM review_time
+GROUP BY review_day_of_week
+ORDER BY review_day_of_week;
+# For time of day
+SELECT review_hour,COUNT(*) AS review_count,
+ROUND(AVG(review_score),2) AS avg_score
+FROM review_time
+GROUP BY review_hour
+ORDER BY review_hour;
 ```
-<img width="581" height="210" alt="image" src="https://github.com/user-attachments/assets/7cd7ed98-6882-4f8b-aa3a-63d5e4ba47bd" />
-<img width="553" height="166" alt="image" src="https://github.com/user-attachments/assets/f77cc3d4-7a18-4167-baaf-4a0f916fdb31" />
+<img width="594" height="168" alt="image" src="https://github.com/user-attachments/assets/afa09404-7e31-4ac3-9e9e-67ce54d6f10e" />
+<img width="545" height="160" alt="image" src="https://github.com/user-attachments/assets/595c1a8d-f3f2-45cd-867f-eaa689c7586e" />
 
 </details>
-<img width="126" height="54" alt="image" src="https://github.com/user-attachments/assets/b42f268c-484a-41ce-b533-246bc4009aac" />
-<img width="612" height="287" alt="image" src="https://github.com/user-attachments/assets/632e698c-f392-434e-b20c-13a72cd96c8e" />
-<img width="863" height="356" alt="image" src="https://github.com/user-attachments/assets/5248bd9e-baa2-4a57-a7b9-845f2d1f62d2" />
 
 ### 5.5 Review Participation Distribution
 #### Written Review Orders， Score-Only Orders, and No Review Orders Distribution
