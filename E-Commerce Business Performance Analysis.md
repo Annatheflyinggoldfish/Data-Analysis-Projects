@@ -84,7 +84,7 @@ ORDER BY o.months;
 <img width="671" height="161" alt="image" src="https://github.com/user-attachments/assets/0c71575c-a8df-47c4-9763-828f935b2750" />
 
 </details>
-<img width="1165" height="645" alt="image" src="https://github.com/user-attachments/assets/ea6fedd4-dcee-4c98-8e99-324c12c6c73a" />
+<img width="932" height="516" alt="image" src="https://github.com/user-attachments/assets/ea6fedd4-dcee-4c98-8e99-324c12c6c73a" />
 
 
 ### 1.2 TOP 10 Best-selling Products
@@ -382,7 +382,7 @@ ORDER BY state_gmv DESC;
 <img width="670" height="165" alt="image" src="https://github.com/user-attachments/assets/c8a726fe-c877-43c3-9e8b-6bdca77be41c" />
 
 </details>
-<img width="980" height="660" alt="image" src="https://github.com/user-attachments/assets/b15e22cf-2616-4755-81db-88a5110b3921" />
+<img width="686" height="462" alt="image" src="https://github.com/user-attachments/assets/b15e22cf-2616-4755-81db-88a5110b3921" />
 
 ### 3.2 Product Category Revenue by State
 - The map below visualises total product revenue by state across Brazil. As Tableau was unable to recognise Brazil's state abbreviations, I defined state locations based on their latitude and longitude. This allowed map rendering, while accuracy may vary for large states.
@@ -537,7 +537,7 @@ ORDER BY avg_state_lead_time DESC;
 <img width="661" height="161" alt="image" src="https://github.com/user-attachments/assets/0e704c4c-d964-4601-b71a-1208e3f86f5d" />
 
 </details>
-<img width="752" height="429" alt="image" src="https://github.com/user-attachments/assets/d3415f55-9ccb-4342-8ca0-2df1ee84b915" />
+<img width="601" height="343" alt="image" src="https://github.com/user-attachments/assets/d3415f55-9ccb-4342-8ca0-2df1ee84b915" />
 
 
 ## 5. Customer Feedback and Reviews
@@ -659,7 +659,7 @@ ORDER BY MIN(price);
 <img width="524" height="160" alt="image" src="https://github.com/user-attachments/assets/aba3862f-d4f0-4af8-a81e-84758377856c" />
 
 </details>
-<img width="567" height="307" alt="image" src="https://github.com/user-attachments/assets/cf189971-4bc7-4c5f-bff6-500c9563a689" />
+<img width="453" height="245" alt="image" src="https://github.com/user-attachments/assets/cf189971-4bc7-4c5f-bff6-500c9563a689" />
 
 ### 5.4 Rating Trends by Time of Day & Day of Week
 - The data suggests that customer sentiment is closely linked to specific time cycles:
@@ -712,8 +712,8 @@ ORDER BY review_hour;
 <img width="545" height="160" alt="image" src="https://github.com/user-attachments/assets/595c1a8d-f3f2-45cd-867f-eaa689c7586e" />
 
 </details>
-<img width="690" height="336" alt="image" src="https://github.com/user-attachments/assets/81784311-58ce-4303-b1d3-506deb88de31" />
-<img width="874" height="481" alt="image" src="https://github.com/user-attachments/assets/178837a3-0c18-429c-b8d4-b96f54954b1d" />
+<img width="686" height="331" alt="image" src="https://github.com/user-attachments/assets/bac1b32d-b35e-46a0-987a-53fe70a3dc9c" />
+<img width="875" height="420" alt="image" src="https://github.com/user-attachments/assets/591f1f7d-81e6-4bfe-841a-e9c8a6e563ea" />
 
 ### 5.5 Review Participation Distribution
 #### Written Review Orders， Score-Only Orders, and No Review Orders Distribution
