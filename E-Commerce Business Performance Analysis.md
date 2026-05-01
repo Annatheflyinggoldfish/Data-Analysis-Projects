@@ -84,7 +84,8 @@ ORDER BY o.months;
 <img width="671" height="161" alt="image" src="https://github.com/user-attachments/assets/0c71575c-a8df-47c4-9763-828f935b2750" />
 
 </details>
-<img width="681" height="436" alt="image" src="https://github.com/user-attachments/assets/c89add87-42c9-4e00-8c0d-2907a8dbc3be" />
+<img width="1165" height="645" alt="image" src="https://github.com/user-attachments/assets/ea6fedd4-dcee-4c98-8e99-324c12c6c73a" />
+
 
 ### 1.2 TOP 10 Best-selling Products
 - The Bed/Bath/Table, Health/Beauty, and Sports/Leisure categories dominated in sales volume. However, the main GMV drivers were Bed/Bath/Table, Health/Beauty, and Watches/Gifts.
@@ -339,8 +340,7 @@ ORDER BY MIN(order_value);
 <img width="365" height="164" alt="image" src="https://github.com/user-attachments/assets/2f25e014-a2f3-4618-95b9-50fb4a72f291" />
 
 </details>
-<img width="115" height="82" alt="image" src="https://github.com/user-attachments/assets/1f12d76a-2511-422b-a4b9-4396591b8e38" />
-<img width="861" height="455" alt="image" src="https://github.com/user-attachments/assets/26c338fb-4c41-4d3e-9e34-fb57661c5200" />
+<img width="559" height="297" alt="image" src="https://github.com/user-attachments/assets/dd48dd53-41bd-4eac-bbef-e3d745d1d6e2" />
 
 
 ## 3. Regional Analysis
@@ -382,7 +382,7 @@ ORDER BY state_gmv DESC;
 <img width="670" height="165" alt="image" src="https://github.com/user-attachments/assets/c8a726fe-c877-43c3-9e8b-6bdca77be41c" />
 
 </details>
-
+<img width="980" height="660" alt="image" src="https://github.com/user-attachments/assets/b15e22cf-2616-4755-81db-88a5110b3921" />
 
 ### 3.2 Product Category Revenue by State
 - The map below visualises total product revenue by state across Brazil. As Tableau was unable to recognise Brazil's state abbreviations, I defined state locations based on their latitude and longitude. This allowed map rendering, while accuracy may vary for large states.
@@ -429,7 +429,9 @@ ORDER BY g.customer_state,g.total_revenue DESC;
 
 </details>
 
-- Interactive map: [Product Category Revenue by State]( )
+**Interactive Map:** [Product Category Revenue by State](https://public.tableau.com/app/profile/liping.huang5577/viz/Olist2_0/ProductCategoryRevenuebyState)
+
+<img width="777" height="454" alt="image" src="https://github.com/user-attachments/assets/12cd8582-7eab-401c-a0a1-7b7985a8b7eb" />
 
 ## 4. Delivery Efficiency
 - Lead time = actual delivery time
@@ -535,6 +537,7 @@ ORDER BY avg_state_lead_time DESC;
 <img width="661" height="161" alt="image" src="https://github.com/user-attachments/assets/0e704c4c-d964-4601-b71a-1208e3f86f5d" />
 
 </details>
+<img width="752" height="429" alt="image" src="https://github.com/user-attachments/assets/d3415f55-9ccb-4342-8ca0-2df1ee84b915" />
 
 
 ## 5. Customer Feedback and Reviews
@@ -567,6 +570,8 @@ ORDER BY review_score;
 <img width="396" height="156" alt="image" src="https://github.com/user-attachments/assets/6c03c746-d72f-467c-9867-f1794497b584" />
 
 </details>
+<img width="151" height="40" alt="image" src="https://github.com/user-attachments/assets/ff74c855-c80d-4261-bcbb-8cce575c65fc" />
+<img width="368" height="344" alt="image" src="https://github.com/user-attachments/assets/e60a6cfa-5270-4a4a-a860-8c641d690676" />
 
 
 ### 5.2 Correlation: Delivery quality vs. Rating
@@ -608,6 +613,7 @@ ORDER BY review_score;
 <img width="605" height="161" alt="image" src="https://github.com/user-attachments/assets/d930f6c7-697c-47ea-b088-f77b7ff592f7" />
 
 </details>
+<img width="496" height="387" alt="image" src="https://github.com/user-attachments/assets/f76cb593-7f59-4a8f-9113-d04f635c9deb" />
 
 ### 5.3 Correlation: Product Price vs. Rating
 - The line chart reveals no clear correlation between the product price and review score. Ratings remained largely stable across all price tiers, fluctuating narrowly between 3.90 and 4.16.
@@ -653,7 +659,7 @@ ORDER BY MIN(price);
 <img width="524" height="160" alt="image" src="https://github.com/user-attachments/assets/aba3862f-d4f0-4af8-a81e-84758377856c" />
 
 </details>
-
+<img width="567" height="307" alt="image" src="https://github.com/user-attachments/assets/cf189971-4bc7-4c5f-bff6-500c9563a689" />
 
 ### 5.4 Rating Trends by Time of Day & Day of Week
 - The data suggests that customer sentiment is closely linked to specific time cycles:
@@ -706,6 +712,8 @@ ORDER BY review_hour;
 <img width="545" height="160" alt="image" src="https://github.com/user-attachments/assets/595c1a8d-f3f2-45cd-867f-eaa689c7586e" />
 
 </details>
+<img width="690" height="336" alt="image" src="https://github.com/user-attachments/assets/81784311-58ce-4303-b1d3-506deb88de31" />
+<img width="874" height="481" alt="image" src="https://github.com/user-attachments/assets/178837a3-0c18-429c-b8d4-b96f54954b1d" />
 
 ### 5.5 Review Participation Distribution
 #### Written Review Orders， Score-Only Orders, and No Review Orders Distribution
@@ -745,7 +753,7 @@ LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
 <img width="525" height="65" alt="image" src="https://github.com/user-attachments/assets/0154c31b-9f9f-4620-9170-12fcb217cff0" />
 
 </details>
-
+<img width="380" height="212" alt="image" src="https://github.com/user-attachments/assets/993fc2be-ab71-437f-abd7-b73de40123e1" />
 
 
 #### Average Review Scores: Written Review Orders vs. Score-Only Orders
@@ -784,4 +792,6 @@ LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
 <img width="430" height="60" alt="image" src="https://github.com/user-attachments/assets/ce40f259-e53a-447a-b63f-c99046b16dd2" />
 
 </details>
+<img width="460" height="172" alt="image" src="https://github.com/user-attachments/assets/f2d9a205-7078-4e0f-9486-ab74914501d7" />
+
 
