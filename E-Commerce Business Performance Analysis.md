@@ -84,6 +84,7 @@ ORDER BY o.months;
 <img width="671" height="161" alt="image" src="https://github.com/user-attachments/assets/0c71575c-a8df-47c4-9763-828f935b2750" />
 
 </details>
+<img width="681" height="436" alt="image" src="https://github.com/user-attachments/assets/c89add87-42c9-4e00-8c0d-2907a8dbc3be" />
 
 ### 1.2 TOP 10 Best-selling Products
 - The Bed/Bath/Table, Health/Beauty, and Sports/Leisure categories dominated in sales volume. However, the main GMV drivers were Bed/Bath/Table, Health/Beauty, and Watches/Gifts.
@@ -119,6 +120,7 @@ LIMIT 10;
 <img width="581" height="165" alt="image" src="https://github.com/user-attachments/assets/35a7cfbf-9646-4c87-850e-b83f382bd22c" />
 
 </details>
+<img width="777" height="541" alt="image" src="https://github.com/user-attachments/assets/6af57340-04ca-487a-8696-1b3262e33885" />
 
 
 ### 1.3 TOP 10 Sellers
@@ -150,6 +152,7 @@ LIMIT 10;
 <img width="471" height="161" alt="image" src="https://github.com/user-attachments/assets/40fba4e9-5960-430d-89e3-fad979598cef" />
 
 </details>
+<img width="570" height="262" alt="image" src="https://github.com/user-attachments/assets/acb4909d-c0be-44cd-9baf-3c6f85f4e36f" />
 
 ### 1.4 Top 10 Sellers' Contribution to Total GMV 
 - Despite the leader's dominance, the total GMV contribution of the Top 10 sellers remains under 20%, indicating a very decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
@@ -188,6 +191,8 @@ SELECT 'top10 seller' AS category,SUM(seller_gmv) AS top10_gmv FROM top10_seller
 <img width="355" height="84" alt="image" src="https://github.com/user-attachments/assets/c3082dc1-1db2-481f-a569-0a308ca5ef2b" />
 
 </details>
+<img width="147" height="58" alt="image" src="https://github.com/user-attachments/assets/f7ae8018-2bf6-4daf-ab5e-dfddee1b1406" />
+<img width="252" height="256" alt="image" src="https://github.com/user-attachments/assets/4a312a41-2e6d-41ad-8a19-dd92ee24637e" />
 
 
 ### 1.5 TOP 10 Best Selling Product Categories Rankings by Month
@@ -230,8 +235,8 @@ ORDER BY months, rn;
 <img width="615" height="160" alt="image" src="https://github.com/user-attachments/assets/cf9747d3-bb2d-429f-b5b8-04d293c953ca" />
 
 </details>
-
-
+<img width="148" height="64" alt="image" src="https://github.com/user-attachments/assets/0e71df7a-b3b4-42aa-b0c8-8d9d44a03831" />
+<img width="815" height="507" alt="image" src="https://github.com/user-attachments/assets/9b92b0e7-ff0e-491f-9415-ad5311a755ec" />
 
 ## 2. Customer Behavior
 ### 2.1 Repeat Purchase Rate: 3.03%
@@ -334,6 +339,8 @@ ORDER BY MIN(order_value);
 <img width="365" height="164" alt="image" src="https://github.com/user-attachments/assets/2f25e014-a2f3-4618-95b9-50fb4a72f291" />
 
 </details>
+<img width="115" height="82" alt="image" src="https://github.com/user-attachments/assets/1f12d76a-2511-422b-a4b9-4396591b8e38" />
+<img width="861" height="455" alt="image" src="https://github.com/user-attachments/assets/26c338fb-4c41-4d3e-9e34-fb57661c5200" />
 
 
 ## 3. Regional Analysis
@@ -557,11 +564,10 @@ SELECT review_score, rating_counts
 FROM review_counts
 ORDER BY review_score;
 ```
-<img width="565" height="160" alt="image" src="https://github.com/user-attachments/assets/9e75cd29-423f-444a-8422-a0f2742c3a66" />
+<img width="396" height="156" alt="image" src="https://github.com/user-attachments/assets/6c03c746-d72f-467c-9867-f1794497b584" />
 
 </details>
-<img width="150" height="70" alt="image" src="https://github.com/user-attachments/assets/16c817e5-2bae-4491-bed7-2a598b81a435" />
-<img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/7a5f973f-93bc-45ff-b9b2-d18142c142bf" />
+
 
 ### 5.2 Correlation: Delivery quality vs. Rating
 - The correlation between lead time and rating is quite intuitive: The quicker the orders arrive, the higher the ratings might be.
