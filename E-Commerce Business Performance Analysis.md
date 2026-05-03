@@ -88,7 +88,7 @@ ORDER BY o.months;
 
 
 ### 1.2 TOP 10 Best-selling Products
-- The Bed/Bath/Table, Health/Beauty, and Sports/Leisure categories dominated in sales volume. However, the main GMV drivers were Bed/Bath/Table, Health/Beauty, and Watches/Gifts.
+- The Bed/Bath/Table, Health/Beauty, and Sports/Leisure categories dominated in sales volume. However, the main GMV drivers were Health/Beauty, Watches/Gifts, and Bed/Bath/Table.
 - This pattern is logically consistent: consumers tend to purchase everyday necessities frequently, while allocating higher budgets for gifts.
 <details>
 <summary>View SQL</summary>
@@ -125,7 +125,7 @@ LIMIT 10;
 
 
 ### 1.3 TOP 10 Sellers
-- The top seller dominates the platform's revenue, surpassing the second-ranked seller by nearly $200k in GMV.
+- The top 10 sellers show a relatively even distribution: The GMV gap between the leading seller(229K BRL) and the 10th-ranked seller(135K BRL) is less than 2x.
 <details>
 <summary>View SQL</summary>
  
@@ -156,7 +156,7 @@ LIMIT 10;
 <img width="570" height="262" alt="image" src="https://github.com/user-attachments/assets/acb4909d-c0be-44cd-9baf-3c6f85f4e36f" />
 
 ### 1.4 Top 10 Sellers' Contribution to Total GMV 
-- Despite the leader's dominance, the total GMV contribution of the Top 10 sellers remains under 20%, indicating a very decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
+- The total GMV contribution of the Top 10 sellers remains under 12%, indicating a very decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
 
 <details>
 <summary>View SQL</summary>
