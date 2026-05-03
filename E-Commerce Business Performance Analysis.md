@@ -711,10 +711,10 @@ ORDER BY review_hour;
 <img width="545" height="160" alt="image" src="https://github.com/user-attachments/assets/595c1a8d-f3f2-45cd-867f-eaa689c7586e" />
 
 </details>
-<img width="686" height="331" alt="image" src="https://github.com/user-attachments/assets/bac1b32d-b35e-46a0-987a-53fe70a3dc9c" />
 
-- Note: Day of week follows MySQL's DAYOFWEEK() logic, where 1 = Sunday, and 7 = Saturday.
-  
+ **Note: Day of week follows MySQL's DAYOFWEEK() logic, where 1 = Sunday, and 7 = Saturday.**
+
+<img width="686" height="331" alt="image" src="https://github.com/user-attachments/assets/bac1b32d-b35e-46a0-987a-53fe70a3dc9c" />
 <img width="875" height="420" alt="image" src="https://github.com/user-attachments/assets/591f1f7d-81e6-4bfe-841a-e9c8a6e563ea" />
 
 ### 5.5 Review Participation Distribution
