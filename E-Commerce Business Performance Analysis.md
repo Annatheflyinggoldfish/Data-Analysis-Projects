@@ -55,7 +55,7 @@ Overall ratings are positive, and review participation is high. Ratings are clea
 ## 1. Sales Performance
 ### 1.1 Monthly Order Count, GMV, and Average Order Value
 - GMV and order count tracked closely throughout the observed period, both growing steadily from January 2017 and peaking in November, likely driven by Black Friday promotions. The decline in December reflects a post-Black Friday cooldown.
-- Average Order Value (AOV) remained largely flat throughout, fluctuating between 145 and 175 BRL with no clear trend. This indicates that GMV growth was driven largely by order volume expansion rather than increased spending per order. 
+- Average Order Value (AOV) remained largely flat throughout, fluctuating between 124 and 153 BRL with no clear trend. This indicates that GMV growth was driven largely by order volume expansion rather than increased spending per order. 
 
 <details>
 <summary>View SQL</summary>
