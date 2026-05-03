@@ -197,8 +197,7 @@ SELECT 'top10 seller' AS category,SUM(seller_gmv) AS top10_gmv FROM top10_seller
 
 
 ### 1.5 TOP 10 Best Selling Product Categories Rankings by Month
-- The heatmap indicates that most categories appear sporadically within the top 10 rankings, with no recognizable seasonal patterns showing from the map.
-- The dominance of Bed/Bath/Table, Health/Beauty, and Sports/Leisure, and Watches/Gifts, is consistent with findings in section 1.2.
+- The heatmap reveals a two-tier structure: Bed/Bath/Table, Health/Beauty, Sports/Leisure, Watches/Gifts, and Furniture/Décor maintain consistent top 10 positions throughout the period, while the remaining categories appear sporadically with no recognizable seasonal patterns.
   
 <details>
 <summary>View SQL</summary>
@@ -302,8 +301,8 @@ WHERE order_interval IS NOT NULL;
 </details>
 
 ### 2.3 Average Order Value Distribution
-- Orders in the 50–100 BRL price range dominate in sales volume, with the majority of orders falling below 200 BRL.
-- For orders exceeding 100 BRL, a clear inverse relationship is observed between order value and volume: The higher the price, the fewer the orders.
+- Orders in the 0–100 BRL price range dominate in sales volume, with the majority of orders falling below 200 BRL.
+- A clear inverse relationship is observed between order value and volume: The higher the price, the fewer the orders.
 - This distribution indicates that Olist's customer base is primarily price-sensitive and driven by low-value transactions.
 
 <details>
@@ -493,7 +492,7 @@ SELECT ROUND(AVG(TIMESTAMPDIFF(HOUR,purchase_time,deliver_time)/24),1) AS avg_le
 </details>
 
 ### 4.3 Average Lead Time & Delivery Gap By State
-- The gap between estimated and actual delivery time was positive among all states, indicating that the estimated delivery time(EDT) is conservatively set to mitigate the risk of delayed delivery. It's a pragmatic approach to adapt the logistical environment in 2018, but it means the 91.89% on-time rate is largely due to inflation, which may reduce transparency for customers when evaluating delivery expectations.
+- The gap between estimated and actual delivery time was positive among all states, indicating that the estimated delivery time(EDT) is conservatively set to mitigate the risk of delayed delivery. It's a pragmatic approach to adapt the logistical environment in 2018, but it means the 91.87% on-time rate is largely due to inflation, which may reduce transparency for customers when evaluating delivery expectations.
 - When it comes to lead time, the dispersed data points indicate a highly fragmented logistical landscape, suggesting this country's logistical infrastructure varies considerably.
 - In addition, the northern states of RO, AC, AM, AP, and RR showed disproportionately large delivery gaps, suggesting these regions have structural logistical uncertainty.
 - Ultimately, Olist's delivery reliability was heavily dictated by national geography.
@@ -542,7 +541,7 @@ ORDER BY avg_state_lead_time DESC;
 
 ## 5. Customer Feedback and Reviews
 ### 5.1 Rating Distribution
-- The review scores showed a classic J-shaped distribution, where customers are more likely to leave feedback at the extremes of their experience. But notably, the customer satisfaction rate on the platform is relatively healthy, with 5-star and 4-star ratings representing 77% of the feedback, considerably larger than 1-star (11.51%), 2-star (3.18%), and 3-star (8.24%).
+- The review scores showed a classic J-shaped distribution, where customers are more likely to leave feedback at the extremes of their experience. But notably, the customer satisfaction rate on the platform is relatively healthy, with 5-star and 4-star ratings representing 77% of the feedback, considerably larger than 1-star (10.72%), 2-star (3.13%), and 3-star (8.26%).
 <details>
 <summary>View SQL</summary>
  
