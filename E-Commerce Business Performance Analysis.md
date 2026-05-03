@@ -438,7 +438,7 @@ ORDER BY g.customer_state,g.total_revenue DESC;
 - Delivery gap = estimated delivery time - actual delivery time
 
 ### 4.1 On Time Delivery Rate: 91.87%
-- Olist recorded an on-time delivery rate of 91.89%, which appears healthy. However, it may indicate that the estimated delivery time is conservatively set to manage customer expectations.
+- Olist recorded an on-time delivery rate of 91.87%, which appears healthy. However, it may indicate that the estimated delivery time is conservatively set to manage customer expectations.
 <details>
 <summary>View SQL</summary>
  
@@ -479,7 +479,7 @@ FROM orders WHERE deliver_time <= estimated_delivery;
 WITH orders AS 
 (SELECT order_id,
 STR_TO_DATE(NULLIF(TRIM(order_purchase_timestamp), ''), '%Y-%m-%d %H:%i:%s') AS purchase_time,
-STR_TO_DATE(NULLIF(TRIM(order_delivered_customer_date), ''), '%Y-%m-%d %H:%i:%s') AS deliver_time,
+STR_TO_DATE(NULLIF(TRIM(order_delivered_customer_date), ''), '%Y-%m-%d %H:%i:%s') AS deliver_time
 FROM olist_orders_dataset
 WHERE order_purchase_timestamp >= '2017-01-01'
 AND order_purchase_timestamp < '2018-09-01'
