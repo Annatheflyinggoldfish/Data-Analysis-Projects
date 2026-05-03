@@ -662,9 +662,9 @@ ORDER BY MIN(price);
 
 ### 5.4 Rating Trends by Time of Day & Day of Week
 - The data suggests that customer sentiment is closely linked to specific time cycles:
-- Weekly Trend: The average ratings reach the lowest point on Monday (~4.04), potentially reflecting a "Monday Blues" effect, then the ratings steadily improve throughout the week, peaking on Thursday (~4.11), which is counter-intuitive, as it’s higher than Friday and Saturday.
-- Daily Trend: Early morning (4–7 AM) shows the lowest ratings (3.67 – 3.78), with the lowest dip occurring at 5 am (~3.7). Starting from here, ratings climb consistently as the day progresses, peaking late at night (23:00) before dropping again.
-- These patterns reveal that ratings are not just a measure of service and product quality, but are also influenced by the timing of the review submission. Customers are most generous when relaxing late at night and most critical during early morning or the start of the work week.
+- Weekly Trend: Ratings show minimal variation across the week, ranging narrowly from ~4.07 on Sunday to ~4.14 on Saturday, suggesting day-of-week has little effect on customer sentiment.
+- Daily Trend: Ratings are highest late at night (0AM: ~4.26) and drop sharply through the early morning, bottoming out at 5AM (~3.76). From there, scores recover gradually throughout the day, climbing back toward ~4.28 by 11PM.
+- These patterns suggest that ratings are not purely a reflection of service or product quality, but are also shaped by when customers choose to submit their review — with late-night reviewers consistently more generous than early-morning ones.
 
 <details>
 <summary>View SQL</summary>
@@ -712,11 +712,12 @@ ORDER BY review_hour;
 
 </details>
 <img width="686" height="331" alt="image" src="https://github.com/user-attachments/assets/bac1b32d-b35e-46a0-987a-53fe70a3dc9c" />
+- Note: Day of week follows MySQL's DAYOFWEEK() convention, where 1 = Sunday and 7 = Saturday.
 <img width="875" height="420" alt="image" src="https://github.com/user-attachments/assets/591f1f7d-81e6-4bfe-841a-e9c8a6e563ea" />
 
 ### 5.5 Review Participation Distribution
 #### Written Review Orders， Score-Only Orders, and No Review Orders Distribution
-- Of all orders, 42.95% received a written review (either a comment title, message, or both), while 56.52% of the orders only received a rating score and no written comment. A small fraction of 768 orders (0.77%) have no review record at all.
+- Of all orders, 42.35% received a written review (either a comment title, message, or both), while 56.91% of the orders only received a rating score and no written comment. A small fraction of 768 orders (0.74%) have no review record at all.
 
 <details>
 <summary>View SQL</summary>
@@ -756,7 +757,7 @@ LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
 
 
 #### Average Review Scores: Written Review Orders vs. Score-Only Orders
-- Customers who left a score without a written review gave an average rating of **4.38**, notably higher than the **3.70** average for those who wrote a review. This suggests that dissatisfied customers are more likely to leave a written review, while satisfied customers tend to leave a score only: The louder the customer, the lower the score."
+- Customers who left a score without a written review gave an average rating of **4.39**, notably higher than the **3.75** average for those who wrote a review. This suggests that dissatisfied customers are more likely to leave a written review, while satisfied customers tend to leave a score only: The louder the customer, the lower the score."
   
 <details>
 <summary>View SQL</summary>
