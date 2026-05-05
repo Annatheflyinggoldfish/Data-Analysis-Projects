@@ -90,6 +90,7 @@ ORDER BY o.months;
 
 ### 1.2 TOP 10 Best-selling Products
 - The Bed/Bath/Table, Health/Beauty, and Sports/Leisure categories dominated in sales volume. However, the main GMV drivers were Health/Beauty, Watches/Gifts, and Bed/Bath/Table.
+-  Watches/Gifts generated disproportionately high GMV compared  to its sales volume, suggesting higher average item prices.
 - This pattern is logically consistent: consumers tend to purchase everyday necessities frequently, while allocating higher budgets for gifts.
 <details>
 <summary>View SQL</summary>
@@ -157,7 +158,7 @@ LIMIT 10;
 <img width="570" height="262" alt="image" src="https://github.com/user-attachments/assets/1804b98f-d1f0-44b6-8b54-23534eff09d2" />
 
 ### 1.4 Top 10 Sellers' Contribution to Total GMV 
-- The total GMV contribution of the Top 10 sellers remains under 12%, indicating a very decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
+- The total GMV contribution of the Top 10 sellers remains under 12%, indicating a relatively decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
 
 <details>
 <summary>View SQL</summary>
@@ -304,7 +305,7 @@ WHERE order_interval IS NOT NULL;
 ### 2.3 Average Order Value Distribution
 - Orders in the 0–100 BRL price range dominate in sales volume, with the majority of orders falling below 200 BRL.
 - A clear inverse relationship is observed between order value and volume: The higher the price, the fewer the orders.
-- This distribution indicates that Olist's customer base is primarily price-sensitive and driven by low-value transactions.
+- This distribution indicates that Olist’s transaction mix is heavily concentrated in lower-value orders.
 
 <details>
 <summary>View SQL</summary>
@@ -345,8 +346,8 @@ ORDER BY MIN(order_value);
 
 ## 3. Regional Analysis
 ### 3.1 Order Volume, GMV, and Customer Distribution By State
-- SP (São Paulo), RJ (Rio de Janeiro), and MG (Minas Gerais) dominated Olist’s market, which reflected Brazil’s economic and logistical landscape in 2018, where SP, RJ, and MG dominated purchasing power.
-- While the Brazilian e-commerce sector showed consistent growth before and after 2018, the country's e-commerce didn't experience its major boom until 2020. Thus, Olist’s 2018 concentration in the 'Golden Triangle' (SP-RJ-MG) is a logical outcome of that era's market limitations.
+- SP (São Paulo), RJ (Rio de Janeiro), and MG (Minas Gerais) dominated Olist’s market, which reflected Brazil’s economic and logistical landscape during 2017-2018, where SP, RJ, and MG dominated purchasing power.
+- While the Brazilian e-commerce sector showed consistent growth during the observed period, the country's e-commerce didn't experience its major boom until 2020. Thus, Olist’s 2018 concentration in the 'Golden Triangle' (SP-RJ-MG) is a logical outcome of that era's market limitations.
 <details>
 <summary>View SQL</summary>
  
@@ -438,7 +439,7 @@ ORDER BY g.customer_state,g.total_revenue DESC;
 - Delivery gap = estimated delivery time - actual delivery time
 
 ### 4.1 On Time Delivery Rate: 91.87%
-- Olist recorded an on-time delivery rate of 91.87%, which appears healthy. However, it may indicate that the estimated delivery time is conservatively set to manage customer expectations.
+- Olist recorded an on-time delivery rate of 91.87%, which appears healthy. However, it indicates that the estimated delivery time may be conservatively set to manage customer expectations.
 <details>
 <summary>View SQL</summary>
  
