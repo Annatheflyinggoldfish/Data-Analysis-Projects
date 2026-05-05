@@ -154,7 +154,7 @@ LIMIT 10;
 <img width="471" height="161" alt="image" src="https://github.com/user-attachments/assets/40fba4e9-5960-430d-89e3-fad979598cef" />
 
 </details>
-<img width="570" height="262" alt="image" src="https://github.com/user-attachments/assets/acb4909d-c0be-44cd-9baf-3c6f85f4e36f" />
+<img width="570" height="262" alt="image" src="https://github.com/user-attachments/assets/1804b98f-d1f0-44b6-8b54-23534eff09d2" />
 
 ### 1.4 Top 10 Sellers' Contribution to Total GMV 
 - The total GMV contribution of the Top 10 sellers remains under 12%, indicating a very decentralized and healthy ecosystem where the platform is not overly dependent on a small group of sellers.
