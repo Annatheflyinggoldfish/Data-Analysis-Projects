@@ -237,6 +237,9 @@ ORDER BY months, rn;
 <img width="615" height="160" alt="image" src="https://github.com/user-attachments/assets/cf9747d3-bb2d-429f-b5b8-04d293c953ca" />
 
 </details>
+
+**Interactive Map:** [TOP 10 Best Selling Product Categories Rankings by Month](https://public.tableau.com/app/profile/liping.huang5577/viz/Olist2_0/ProductCategoryRevenuebyState)
+
 <img width="148" height="64" alt="image" src="https://github.com/user-attachments/assets/0e71df7a-b3b4-42aa-b0c8-8d9d44a03831" />
 <img width="815" height="507" alt="image" src="https://github.com/user-attachments/assets/9b92b0e7-ff0e-491f-9415-ad5311a755ec" />
 
