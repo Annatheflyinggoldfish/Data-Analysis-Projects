@@ -580,7 +580,7 @@ ORDER BY review_score;
 
 ### 5.2 Delivery Quality by Rating Score
 - The relationship between lead time and rating appears intuitive: The quicker the orders arrive, the higher the ratings might be.
-- A similar pattern can be observed for the delivery gap: The bigger the gap between the estimated and actual delivery date, the higher the customer satisfaction might be. 
+- A similar pattern can be observed for the delivery gap: Customers tend to give higher ratings when orders arrive earlier than expected.
 <details>
 <summary>View SQL</summary>
  
