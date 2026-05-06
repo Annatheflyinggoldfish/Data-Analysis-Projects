@@ -63,7 +63,7 @@ Overall ratings are positive, and review participation is high. Ratings appear t
 
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled).
 # GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS (
@@ -97,7 +97,7 @@ ORDER BY o.months;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 # Sales Quantity: Based on the number of items sold, not the order count, as one order may have multiple identical products.
 # Product GMV: Based on product price only, excluding shipping fee.
@@ -133,7 +133,7 @@ LIMIT 10;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 # GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS (
@@ -165,7 +165,7 @@ LIMIT 10;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 # GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS (
@@ -206,7 +206,7 @@ SELECT 'top10 seller' AS category,SUM(seller_gmv) AS top10_gmv FROM top10_seller
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 # GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS (
@@ -252,7 +252,7 @@ ORDER BY months, rn;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH customer_orders AS (
 SELECT ocd.customer_unique_id,
@@ -280,7 +280,7 @@ FROM customer_orders;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS (
 SELECT ocd.customer_unique_id,ood.order_purchase_timestamp
@@ -315,7 +315,7 @@ WHERE order_interval IS NOT NULL;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled).
 # GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS 
@@ -356,7 +356,7 @@ ORDER BY MIN(order_value);
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 # GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS 
@@ -396,7 +396,7 @@ ORDER BY state_gmv DESC;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 # GMV: Product price only. Excludes shipping fee, vouchers, and other payment charges.
 WITH orders AS 
@@ -448,7 +448,7 @@ ORDER BY g.customer_state,g.total_revenue DESC;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS 
 (SELECT order_id,
@@ -478,7 +478,7 @@ FROM orders WHERE deliver_time <= estimated_delivery;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS 
 (SELECT order_id,
@@ -497,7 +497,7 @@ SELECT ROUND(AVG(TIMESTAMPDIFF(HOUR,purchase_time,deliver_time)/24),1) AS avg_le
 </details>
 
 ### 4.3 Average Lead Time & Delivery Gap By State
-- The gap between estimated and actual delivery time was positive among all states, indicating that the estimated delivery time(EDT) is conservatively set to mitigate the risk of delayed delivery. It's a pragmatic approach to adapt the logistical environment in 2018, but it means the 91.87% on-time rate is largely due to inflation, which may reduce transparency for customers when evaluating delivery expectations.
+- The gap between estimated and actual delivery time was positive among all states, indicating that the estimated delivery time(EDT) is conservatively set to mitigate the risk of delayed delivery. It's a pragmatic approach to adapt the logistical environment in 2018. Still, it means the 91.87% on-time rate is largely due to inflation, which may reduce transparency for customers when evaluating delivery expectations.
 - When it comes to lead time, the dispersed data points indicate a highly fragmented logistical landscape, suggesting this country's logistical infrastructure varies considerably.
 - In addition, the northern states of RO, AC, AM, AP, and RR showed disproportionately large delivery gaps, suggesting these regions have structural logistical uncertainty.
 - Ultimately, Olist's delivery reliability was heavily dictated by national geography.
@@ -508,7 +508,7 @@ SELECT ROUND(AVG(TIMESTAMPDIFF(HOUR,purchase_time,deliver_time)/24),1) AS avg_le
 ```sql
 
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS 
 (SELECT order_id, customer_id,
@@ -546,13 +546,13 @@ ORDER BY avg_state_lead_time DESC;
 
 ## 5. Customer Feedback and Reviews
 ### 5.1 Rating Distribution
-- The review scores showed a classic J-shaped distribution, where customers are more likely to leave feedback at the extremes of their experience. But notably, the customer satisfaction rate on the platform is relatively healthy, with 5-star and 4-star ratings representing 77% of the feedback, considerably larger than 1-star (10.72%), 2-star (3.13%), and 3-star (8.26%).
+- The review scores showed a classic J-shaped distribution, where customers are more likely to leave feedback at the extremes of their experience. But notably, the customer satisfaction rate on the platform is relatively healthy, with 5-star and 4-star ratings representing 77.89% of the feedback, considerably larger than 1-star (10.72%), 2-star (3.13%), and 3-star (8.26%).
 <details>
 <summary>View SQL</summary>
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS
 (SELECT order_id
@@ -579,14 +579,14 @@ ORDER BY review_score;
 
 
 ### 5.2 Delivery Quality by Rating Score
-- The relationship between lead time and rating appears intuitive: The quicker the orders arrive, the higher the ratings might be.
+- The relationship between lead time and rating appears intuitive: The quicker the orders arrive, the higher the ratings tend to be.
 - A similar pattern can be observed for the delivery gap: Customers tend to give higher ratings when orders arrive earlier than expected.
 <details>
 <summary>View SQL</summary>
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS
 (SELECT order_id, customer_id,
@@ -628,7 +628,7 @@ ORDER BY review_score;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS
 (SELECT order_id
@@ -676,7 +676,7 @@ ORDER BY MIN(price);
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS
 (SELECT order_id
@@ -731,7 +731,7 @@ ORDER BY review_hour;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS
 (SELECT order_id
@@ -771,7 +771,7 @@ LEFT JOIN reviews r ON o.order_id = r.order_id AND r.rn = 1;
  
 ```sql
 # Data Filtered:
-# Date: Jan 2017 – Sep 2018 (removed outliers with insufficient data volume).
+# Date: Jan 2017 – Aug 2018 (removed outliers with insufficient data volume).
 # Status: Excluded 'created', 'canceled', and 'unavailable' (payments unconfirmed/unfulfilled ).
 WITH orders AS
 (SELECT order_id
