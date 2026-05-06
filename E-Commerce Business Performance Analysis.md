@@ -48,9 +48,9 @@ São Paulo, Rio de Janeiro, and Minas Gerais account for the majority of orders,
 
 Overall delivery performance is reasonable, partly because the platform sets estimated delivery times conservatively to manage customer expectations. However, this approach may damage customer trust due to the lack of transparency. More importantly, delivery quality in remote states fell far behind core markets, and closing this gap would be essential for future regional expansion.
 
-**5. Customer Feedback and Reviews**
+**5. Customer Feedback and Review**
 
-Overall ratings are positive, and review participation is high. Ratings are clearly influenced by delivery quality but not by prices. Notably, timing also matters: Day-of-week has minimal effect on ratings, but time of day matters considerably — scores peak late at night and drop sharply in the early morning. This creates an opportunity to steer customers toward reviewing at times when their sentiment is at its peak.
+Overall ratings are positive, and review participation is high. Ratings appear to be influenced by delivery quality but not by prices. Notably, timing also matters: Day-of-week has minimal effect on ratings, but time of day matters considerably — scores peak late at night and drop sharply in the early morning. This creates an opportunity to steer customers toward reviewing at times when their sentiment is at its peak.
  
 ## 1. Sales Performance
 ### 1.1 Monthly Order Count, GMV, and Average Order Value
@@ -90,8 +90,8 @@ ORDER BY o.months;
 
 ### 1.2 TOP 10 Best-selling Products
 - The Bed/Bath/Table, Health/Beauty, and Sports/Leisure categories dominated in sales volume. However, the main GMV drivers were Health/Beauty, Watches/Gifts, and Bed/Bath/Table.
--  Watches/Gifts generated disproportionately high GMV compared  to its sales volume, suggesting higher average item prices.
-- This pattern is logically consistent: consumers tend to purchase everyday necessities frequently, while allocating higher budgets for gifts.
+-  Watches/Gifts generated disproportionately high GMV compared  to their sales volume, suggesting higher average item prices.
+- This pattern may suggest that consumers tend to purchase everyday necessities frequently, while allocating higher budgets for gifts.
 <details>
 <summary>View SQL</summary>
  
@@ -238,7 +238,7 @@ ORDER BY months, rn;
 
 </details>
 
-**Interactive Map:** [TOP 10 Best Selling Product Categories Rankings by Month](https://public.tableau.com/views/Olist2_0/Sheet6#4)
+**Interactive Heatmap:** [TOP 10 Best Selling Product Categories Rankings by Month](https://public.tableau.com/views/Olist2_0/Sheet6#4)
 
 <img width="148" height="64" alt="image" src="https://github.com/user-attachments/assets/0e71df7a-b3b4-42aa-b0c8-8d9d44a03831" />
 <img width="815" height="507" alt="image" src="https://github.com/user-attachments/assets/9b92b0e7-ff0e-491f-9415-ad5311a755ec" />
@@ -578,8 +578,8 @@ ORDER BY review_score;
 <img width="368" height="344" alt="image" src="https://github.com/user-attachments/assets/e60a6cfa-5270-4a4a-a860-8c641d690676" />
 
 
-### 5.2 Correlation: Delivery quality vs. Rating
-- The correlation between lead time and rating is quite intuitive: The quicker the orders arrive, the higher the ratings might be.
+### 5.2 Delivery Quality by Rating Score
+- The relationship between lead time and rating is quite intuitive: The quicker the orders arrive, the higher the ratings might be.
 - Alternatively, the delivery gap also showed a similar correlation: The bigger the gap between the estimated and actual delivery date, the higher the customer satisfaction. 
 <details>
 <summary>View SQL</summary>
