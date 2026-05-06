@@ -602,7 +602,8 @@ AND order_delivered_customer_date  IS NOT NULL AND order_delivered_customer_date
 AND order_estimated_delivery_date  IS NOT NULL AND order_estimated_delivery_date  != ''
 ),
 review_counts AS (
-SELECT o.order_id, oord.review_score
+SELECT o.order_id, oord.review_score,
+ROW_NUMBER() OVER (PARTITION BY o.order_id ORDER BY oord.review_answer_timestamp DESC) AS rn
 FROM olist_order_reviews_dataset oord
 INNER JOIN orders o ON o.order_id = oord.order_id
 )
@@ -611,6 +612,7 @@ AVG(DATEDIFF(o.deliver_time,o.purchase_time)) AS avg_lead_time,
 AVG(DATEDIFF(o.estimated_delivery,o.deliver_time)) AS avg_delivery_gap
 FROM orders o
 INNER JOIN review_counts r ON o.order_id = r.order_id
+WHERE r.rn >= 1
 GROUP BY review_score
 ORDER BY review_score;
 ```
