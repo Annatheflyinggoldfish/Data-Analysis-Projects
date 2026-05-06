@@ -50,7 +50,7 @@ Overall delivery performance is reasonable, partly because the platform sets est
 
 **5. Customer Feedback and Review**
 
-Overall ratings are positive, and review participation is high. Ratings appear to be influenced by delivery quality but not by prices. Notably, timing also matters: Day-of-week has minimal effect on ratings, but time of day matters considerably — scores peak late at night and drop sharply in the early morning. This creates an opportunity to steer customers toward reviewing at times when their sentiment is at its peak.
+Overall ratings are positive, and review participation is high. Ratings appear to be influenced by delivery quality but not by prices. Notably, timing also matters: Day-of-week has minimal effect on ratings, but time of day matters considerably - scores peak late at night and drop sharply in the early morning. This creates an opportunity to steer customers toward reviewing at times when their sentiment is at its peak.
  
 ## 1. Sales Performance
 ### 1.1 Monthly Order Count, GMV, and Average Order Value
