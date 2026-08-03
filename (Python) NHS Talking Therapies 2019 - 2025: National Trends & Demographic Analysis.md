@@ -71,14 +71,14 @@ print(f"Accessing Services --> Finished Course Treatment: {conversion_df['Lost a
 <summary>View code: representation ratio calculation</summary>
 
 ```python
-# representation ratio calculation
+# gender share of total referrals, aggregated by year
 df_gender['Percentage of the Year'] = (
     df_gender['Count_ReferralsReceived']
     / df_gender.groupby('Year')['Count_ReferralsReceived'].transform('sum')
     * 100)
 
-# Aggregating Data for Plotting
-gen_plot1 = df_gender[['Year','VariableA','Percentage of the Year']].groupby('VariableA')['Percentage of the Year'].mean().round(2) 
+# aggregating data for plotting
+gen_plot1 = df_gender[['Year','VariableA','Percentage of the Year']].groupby('VariableA')['Percentage of the Year'].mean().round(2)
 ```
 
 </details>
@@ -92,10 +92,18 @@ gen_plot1 = df_gender[['Year','VariableA','Percentage of the Year']].groupby('Va
 
 ```python
 # representation ratio calculation
-# used across the gender, ethnicity, and IMD analyses
-df['representation_ratio'] = (
-    df['group_pct_of_users'] / df['group_pct_of_population']
-)
+eth_merged["Representation Ratio"] = (
+    eth_merged["Percentage of the Year"] / eth_merged["england_pct"] * 100
+).round(2)
+
+# flag mismatch
+missing = set(eth_plot1_1_labeled['Ethnicity']) - set(eth_merged['Ethnicity'])
+if missing:
+    print(f"Unmatched categories dropped from merge: {missing}")
+
+# testing whether representation ratio correlates with recovery rate
+pearson_r, pearson_p = stats.pearsonr(plot_deep_dive['Representation Ratio'], plot_deep_dive['Recovery Rate'])
+spearman_r, spearman_p = stats.spearmanr(plot_deep_dive['Representation Ratio'], plot_deep_dive['Recovery Rate'])
 ```
 
 </details>
