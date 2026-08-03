@@ -108,7 +108,7 @@ spearman_r, spearman_p = stats.spearmanr(plot_deep_dive['Representation Ratio'],
 
 </details>
 
-<img width="903" height="489" alt="image" src="https://github.com/user-attachments/assets/bdc8fb89-3a05-447e-a364-fbba2e89832d" />
+<img width="996" height="524" alt="image" src="https://github.com/user-attachments/assets/8af4b6c9-cef8-4e01-9b11-9b4ac1944aad" />
 
 ### **IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
 
@@ -118,7 +118,7 @@ spearman_r, spearman_p = stats.spearmanr(plot_deep_dive['Representation Ratio'],
 ```python
 # % of referrals ended before treatment began
 # denominator is "ended referrals" (not total referrals received)
-df_dep['% Ended Before Treatment'] = (
+df_dep['% Ended Before Treatment Began'] = (
     df_dep['Count Ended Before Treatment'] / df_dep['Count Ended Referrals'] * 100
     ).round(2)
 
