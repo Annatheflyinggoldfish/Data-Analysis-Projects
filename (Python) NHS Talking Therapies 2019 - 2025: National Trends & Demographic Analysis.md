@@ -72,10 +72,13 @@ print(f"Accessing Services --> Finished Course Treatment: {conversion_df['Lost a
 
 ```python
 # representation ratio calculation
-# used across the gender, ethnicity, and IMD analyses
-df['representation_ratio'] = (
-    df['group_pct_of_users'] / df['group_pct_of_population']
-)
+df_gender['Percentage of the Year'] = (
+    df_gender['Count_ReferralsReceived']
+    / df_gender.groupby('Year')['Count_ReferralsReceived'].transform('sum')
+    * 100)
+
+# Aggregating Data for Plotting
+gen_plot1 = df_gender[['Year','VariableA','Percentage of the Year']].groupby('VariableA')['Percentage of the Year'].mean().round(2) 
 ```
 
 </details>
