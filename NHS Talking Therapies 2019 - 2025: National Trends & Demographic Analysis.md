@@ -44,26 +44,35 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 
 ## Sample Outputs
 
+**Service Demand & Treatment Funnel Overview** — referral, access, and recovery volumes over time.
+![Funnel overview](assets/funnel_overview.png)
 
+**Gender Breakdown Dashboard** — service use by gender relative to population share.
+![Gender dashboard](assets/gender_dashboard.png)
 
-```
-![National referral trend](assets/national_trend.png)
-![ICB representation ratio map](assets/icb_map.png)
-```
+**Ethnicity: Representation Ratio vs. Recovery Rate** — comparing access representation against treatment outcomes across ethnic groups.
+![Ethnicity RR vs recovery](assets/ethnicity_rr_recovery.png)
 
----
-
-## Key Code Sample
-
-*(Pick 1–2 short, representative snippets that show your analytical thinking — e.g. the representation ratio calculation. This lets a technical reviewer judge code quality even if they don't open the notebook.)*
+<details>
+<summary>View code: representation ratio calculation</summary>
 
 ```python
-# Example: representation ratio calculation
-# (replace with your actual snippet)
+# representation ratio calculation
+# used across the gender, ethnicity, and IMD analyses
 df['representation_ratio'] = (
-    df['service_users_pct'] / df['working_age_population_pct']
+    df['group_pct_of_users'] / df['group_pct_of_population']
 )
 ```
+
+</details>
+
+**IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
+![IMD dashboard](assets/imd_dashboard.png)
+
+**Geographic Representation Map** — access disparities across England's 42 Integrated Care Boards.
+![ICB representation map](assets/icb_map.png)
+
+*For interactive versions of these charts and the full analysis, see the Colab notebooks above.*
 
 ---
 
