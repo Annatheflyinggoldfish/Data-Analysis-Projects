@@ -112,7 +112,6 @@ spearman_r, spearman_p = stats.spearmanr(plot_deep_dive['Representation Ratio'],
 
 ### **IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
 
-```python
 <details>
 <summary>View code: % of referrals ended before treatment began & referral share by IMD</summary>
 
@@ -131,9 +130,6 @@ df_dep['Percentage of the Year'] = (
 ```
 
 </details>
-```
-
-</details>
 
 <img width="1080" height="544" alt="image" src="https://github.com/user-attachments/assets/5d87250c-26d7-4d8e-ac29-4fdead489741" />
 
@@ -141,14 +137,24 @@ df_dep['Percentage of the Year'] = (
 ### **Geographic Representation Map** — access disparities across England's 42 Integrated Care Boards.
 
 <details>
-<summary>View code: representation ratio calculation</summary>
+<summary>View code: matching ICB names across NHS and ONS datasets</summary>
 
 ```python
-# representation ratio calculation
-# used across the gender, ethnicity, and IMD analyses
-df['representation_ratio'] = (
-    df['group_pct_of_users'] / df['group_pct_of_population']
-)
+# using prefix to match names as NHS and ONS use inconsistent ICB naming systems
+def match_name(name_clean, pop_names):
+    for pn in pop_names:
+        if pn.startswith(name_clean):
+            return pn
+    return None
+
+pop_names_list = pop_merged['name_upper'].tolist()
+
+geo_plot1['name_clean'] = geo_plot1['OrgName_clean'].str.replace(r'\.\.\.$', '', regex=True).str.rstrip('.')
+geo_plot1['matched_name'] = geo_plot1['name_clean'].apply(lambda x: match_name(x, pop_names_list))
+
+# flag any ICBs that failed to match
+unmatched = geo_plot1[geo_plot1['ICB_population'].isna()]
+print(f"ICBs with no population match: {len(unmatched)}")
 ```
 
 </details>
