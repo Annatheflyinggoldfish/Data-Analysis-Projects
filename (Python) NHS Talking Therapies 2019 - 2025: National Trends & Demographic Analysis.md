@@ -46,7 +46,7 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 ### **Service Demand & Treatment Funnel Overview** - referral, access, and recovery volumes over time.
 
 <details>
-<summary>View code: Service Funnel Conversion Rates</summary>
+<summary>View key code: Service Funnel Conversion Rates</summary>
 
 ```python
 # Service Funnel Conversion Rates
@@ -68,7 +68,7 @@ print(f"Accessing Services --> Finished Course Treatment: {conversion_df['Lost a
 ### **Gender Breakdown Dashboard** — service use by gender relative to population share.
 
 <details>
-<summary>View code: referral volume by year</summary>
+<summary>View key code: referral volume by year</summary>
 
 ```python
 # gender share of total referrals, aggregated by year
@@ -88,7 +88,7 @@ gen_plot1 = df_gender[['Year','VariableA','Percentage of the Year']].groupby('Va
 ### **Ethnicity: Representation Ratio vs. Recovery Rate** — comparing access representation against treatment outcomes across ethnic groups.
 
 <details>
-<summary>View code: representation ratio calculation</summary>
+<summary>View key code: representation ratio calculation</summary>
 
 ```python
 # representation ratio calculation
@@ -113,7 +113,7 @@ spearman_r, spearman_p = stats.spearmanr(plot_deep_dive['Representation Ratio'],
 ### **IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
 
 <details>
-<summary>View code: % of referrals ended before treatment began & referral share by IMD</summary>
+<summary>View key code: % of referrals ended before treatment began & referral share by IMD</summary>
 
 ```python
 # % of referrals ended before treatment began
@@ -137,7 +137,7 @@ df_dep['Percentage of the Year'] = (
 ### **Geographic Representation Map** — access disparities across England's 42 Integrated Care Boards.
 
 <details>
-<summary>View code: matching ICB names across NHS and ONS datasets</summary>
+<summary>View key code: matching ICB names across NHS and ONS datasets</summary>
 
 ```python
 # using prefix to match names as NHS and ONS use inconsistent ICB naming systems
