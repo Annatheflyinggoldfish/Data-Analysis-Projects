@@ -13,8 +13,8 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 | Notebook | Focus | Key Techniques |
 |---|---|---|
 | [`01_data_cleaning.ipynb`](https://colab.research.google.com/drive/1LvEKX0ORIJt1LcAqN6YgoPYoXnbyyZmA#scrollTo=K2j33NjYn6zp) | Cleaning and structuring raw NHS Digital datasets | Data validation, handling missing values, schema standardisation |
-| [`02_national_trends_eda.ipynb`]([notebooks/02_national_trends_eda.ipynb](https://colab.research.google.com/drive/1SMcayvIqioYXsH-vVryktwTvnqZMyR15#scrollTo=xfiZX5PrSdRW)) | National-level trend exploration | Time series analysis, referral/recovery rate trends |
-| [`03_demographic_geographic_eda.ipynb`]([notebooks/03_demographic_geographic_eda.ipynb](https://colab.research.google.com/drive/1Ga34-NX5Gnakc6pC7JuKS13H8tPdXDp1#scrollTo=JuCtqZKmiOIV)) | Demographic and geographic breakdown | Chi-square tests, correlation analysis, representation ratios, geospatial mapping |
+| [`02_national_trends_eda.ipynb`](https://colab.research.google.com/drive/1SMcayvIqioYXsH-vVryktwTvnqZMyR15#scrollTo=hNVyojD7UT10) | National-level trend exploration | Time series analysis, referral/recovery rate trends |
+| [`03_demographic_geographic_eda.ipynb`](https://colab.research.google.com/drive/1Ga34-NX5Gnakc6pC7JuKS13H8tPdXDp1#scrollTo=61WdBP8VV9Uf) | Demographic and geographic breakdown | Chi-square tests, correlation analysis, representation ratios, geospatial mapping |
 
 ---
 
