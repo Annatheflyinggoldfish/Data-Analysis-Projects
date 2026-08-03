@@ -68,10 +68,10 @@ print(f"Accessing Services --> Finished Course Treatment: {conversion_df['Lost a
 ### **Gender Breakdown Dashboard** — service use by gender relative to population share.
 
 <details>
-<summary>View code: representation ratio calculation</summary>
+<summary>View code: referral volume by year</summary>
 
 ```python
-# gender share of total referrals, aggregated by year
+# referral volume by year
 df_gender['Percentage of the Year'] = (
     df_gender['Count_ReferralsReceived']
     / df_gender.groupby('Year')['Count_ReferralsReceived'].transform('sum')
@@ -108,7 +108,7 @@ spearman_r, spearman_p = stats.spearmanr(plot_deep_dive['Representation Ratio'],
 
 </details>
 
-<img width="1076" height="548" alt="image" src="https://github.com/user-attachments/assets/285a091c-4f60-4f29-8282-e948f1f93736" />
+<img width="1255" height="680" alt="image" src="https://github.com/user-attachments/assets/bdc8fb89-3a05-447e-a364-fbba2e89832d" />
 
 ### **IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
 
