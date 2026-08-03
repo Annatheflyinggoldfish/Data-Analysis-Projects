@@ -1,8 +1,6 @@
-# NHS Talking Therapies: National Trends & Demographic Access Analysis
+# NHS Talking Therapies 2019 - 2025: National Trends & Demographic Analysis
 
 **A data analysis project examining service utilisation, demographic representation, and geographic equity in NHS Talking Therapies (IAPT) services across England.**
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR-USERNAME/YOUR-REPO/blob/main/notebooks/01_data_cleaning.ipynb)
 
 ---
 
