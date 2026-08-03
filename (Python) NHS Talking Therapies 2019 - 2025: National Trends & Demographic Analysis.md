@@ -71,7 +71,7 @@ print(f"Accessing Services --> Finished Course Treatment: {conversion_df['Lost a
 <summary>View code: referral volume by year</summary>
 
 ```python
-# referral volume by year
+# gender share of total referrals, aggregated by year
 df_gender['Percentage of the Year'] = (
     df_gender['Count_ReferralsReceived']
     / df_gender.groupby('Year')['Count_ReferralsReceived'].transform('sum')
@@ -108,19 +108,29 @@ spearman_r, spearman_p = stats.spearmanr(plot_deep_dive['Representation Ratio'],
 
 </details>
 
-<img width="1255" height="680" alt="image" src="https://github.com/user-attachments/assets/bdc8fb89-3a05-447e-a364-fbba2e89832d" />
+<img width="1004" height="544" alt="image" src="https://github.com/user-attachments/assets/bdc8fb89-3a05-447e-a364-fbba2e89832d" />
 
 ### **IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
 
+```python
 <details>
-<summary>View code: representation ratio calculation</summary>
+<summary>View code: % of referrals ended before treatment began & referral share by IMD</summary>
 
 ```python
-# representation ratio calculation
-# used across the gender, ethnicity, and IMD analyses
-df['representation_ratio'] = (
-    df['group_pct_of_users'] / df['group_pct_of_population']
-)
+# % of referrals ended before treatment began
+# denominator is "ended referrals" (not total referrals received)
+df_dep['% Ended Before Treatment'] = (
+    df_dep['Count Ended Before Treatment'] / df_dep['Count Ended Referrals'] * 100
+    ).round(2)
+
+# referral share of total, aggregated by year
+df_dep['Percentage of the Year'] = (
+    df_dep['Total Referrals Received']
+    / df_dep.groupby('Year')['Total Referrals Received'].transform('sum')
+    * 100)
+```
+
+</details>
 ```
 
 </details>
