@@ -44,14 +44,11 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 
 ## Sample Outputs
 
-**Service Demand & Treatment Funnel Overview** — referral, access, and recovery volumes over time.
-![Funnel overview](assets/funnel_overview.png)
+**Note:** For **interactive versions** of these charts and the full analysis, see the Colab notebooks above.
 
-**Gender Breakdown Dashboard** — service use by gender relative to population share.
-![Gender dashboard](assets/gender_dashboard.png)
+---
 
-**Ethnicity: Representation Ratio vs. Recovery Rate** — comparing access representation against treatment outcomes across ethnic groups.
-![Ethnicity RR vs recovery](assets/ethnicity_rr_recovery.png)
+### **Service Demand & Treatment Funnel Overview** - referral, access, and recovery volumes over time.
 
 <details>
 <summary>View code: representation ratio calculation</summary>
@@ -66,13 +63,76 @@ df['representation_ratio'] = (
 
 </details>
 
-**IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
-![IMD dashboard](assets/imd_dashboard.png)
+<img width="1235" height="580" alt="image" src="https://github.com/user-attachments/assets/828df897-e58c-4b1a-a4a8-988925a8d3af" />
 
-**Geographic Representation Map** — access disparities across England's 42 Integrated Care Boards.
-![ICB representation map](assets/icb_map.png)
+### **Gender Breakdown Dashboard** — service use by gender relative to population share.
 
-*For interactive versions of these charts and the full analysis, see the Colab notebooks above.*
+<details>
+<summary>View code: representation ratio calculation</summary>
+
+```python
+# representation ratio calculation
+# used across the gender, ethnicity, and IMD analyses
+df['representation_ratio'] = (
+    df['group_pct_of_users'] / df['group_pct_of_population']
+)
+```
+
+</details>
+
+<img width="1203" height="691" alt="image" src="https://github.com/user-attachments/assets/54af85d6-62e1-4cb2-b7c3-de731a78a6b9" />
+
+### **Ethnicity: Representation Ratio vs. Recovery Rate** — comparing access representation against treatment outcomes across ethnic groups.
+
+<details>
+<summary>View code: representation ratio calculation</summary>
+
+```python
+# representation ratio calculation
+# used across the gender, ethnicity, and IMD analyses
+df['representation_ratio'] = (
+    df['group_pct_of_users'] / df['group_pct_of_population']
+)
+```
+
+</details>
+
+<img width="1121" height="619" alt="image" src="https://github.com/user-attachments/assets/b42fa3f8-e515-44d0-883d-b26383bc2d7d" />
+
+### **IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
+
+<details>
+<summary>View code: representation ratio calculation</summary>
+
+```python
+# representation ratio calculation
+# used across the gender, ethnicity, and IMD analyses
+df['representation_ratio'] = (
+    df['group_pct_of_users'] / df['group_pct_of_population']
+)
+```
+
+</details>
+
+<img width="1350" height="689" alt="image" src="https://github.com/user-attachments/assets/5d87250c-26d7-4d8e-ac29-4fdead489741" />
+
+
+### **Geographic Representation Map** — access disparities across England's 42 Integrated Care Boards.
+
+<details>
+<summary>View code: representation ratio calculation</summary>
+
+```python
+# representation ratio calculation
+# used across the gender, ethnicity, and IMD analyses
+df['representation_ratio'] = (
+    df['group_pct_of_users'] / df['group_pct_of_population']
+)
+```
+
+</details>
+
+<img width="876" height="569" alt="image" src="https://github.com/user-attachments/assets/b83a0671-6f0e-48f4-aacc-32ed58f2cce3" />
 
 ---
 
