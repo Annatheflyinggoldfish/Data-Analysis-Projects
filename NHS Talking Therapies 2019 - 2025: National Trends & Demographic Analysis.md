@@ -86,4 +86,4 @@ All datasets were drawn from publicly available sources. All data are aggregated
 
 This project was built as part of my transition into data analysis, with a particular interest in public sector and health data. I'm currently seeking junior data analyst roles in the NHS, NGO, and public sector space.
 
-**Contact**: [huanglp582@gmail.com] · [LinkedIn](www.linkedin.com/in/huangliping)
+**Contact**: [huanglp582@gmail.com] · [LinkedIn](www.linkedin.com/in/huangliping]
