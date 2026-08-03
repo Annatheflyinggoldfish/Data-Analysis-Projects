@@ -62,7 +62,14 @@ df['representation_ratio'] = (
 
 ## Data Source
 
-Data drawn from publicly available [NHS Digital Talking Therapies statistics](https://digital.nhs.uk/) and [ONS population estimates](https://www.ons.gov.uk/). No patient-level or identifiable data is used; all figures are aggregate, publicly published statistics.
+All datasets were drawn from publicly available sources. All data are aggregated, publicly published statistics; no patient-level or identifiable data is used.
+
+* **NHS Talking Therapies data:** [NHS Digital, Psychological Therapies Annual Reports 2019/20–2024/25](https://digital.nhs.uk/data-and-information/publications/statistical/nhs-talking-therapies-for-anxiety-and-depression-annual-reports)
+
+  *This is the cleaned, merged version of six annual [NHS Digital datasets](https://github.com/Annatheflyinggoldfish/Data-Analysis-Projects/blob/main/2019-2025%20NHS%20Therapy%20Analytics%20-%20Datasets/NHS_Talking_Therapies_Cleaned_All_Years.csv). See `01 NHS Talking Therapies - Cleaning.ipynb` for the full cleaning process.*
+* **ICB geographic boundaries:** [Integrated Care Boards (April 2023) Boundaries EN BSC](https://geoportal.statistics.gov.uk/datasets/ons::integrated-care-boards-april-2023-boundaries-en-bsc/about)
+* **Ethnicity reference data:** [Ethnic group, England and Wales - Office for National Statistics](https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021#ethnic-groups-in-england-and-wales)
+* **ONS population by ICB:** [ONS, Mid-2022 revised (Nov 2025) to Mid-2024: Integrated Care Boards (2024 geography edition)](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/clinicalcommissioninggroupmidyearpopulationestimates/mid2022revisednov2025tomid2024integratedcareboards2024geography)
 
 ---
 
