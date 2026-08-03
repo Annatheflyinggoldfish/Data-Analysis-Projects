@@ -21,9 +21,9 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 ## Key Questions Explored
 
 - How have referral volumes, access rates, and recovery rates changed over time nationally?
-- Are certain demographic groups (gender, ethnicity) over- or under-represented among service users relative to the general population?
-- Does deprivation (IMD) correlate with access to or outcomes from treatment?
-- Are there meaningful geographic disparities in service access across England's 42 Integrated Care Boards (ICBs)?
+- Are certain demographic groups (gender, ethnicity) over/under represented compared to the general population?
+- Does deprivation (IMD) correlate with variation in service access and/or outcomes?
+- Are there meaningful geographic disparities in service access/outcome across England's 42 Integrated Care Boards (ICBs)?
 
 ---
 
@@ -37,7 +37,7 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 
 ## Sample Outputs
 
-*(Add 2–3 screenshots here of your strongest charts — e.g. the geographic representation map, the demographic breakdown chart, and one national trend line. Screenshots let a reviewer see the work without opening the notebook.)*
+
 
 ```
 ![National referral trend](assets/national_trend.png)
@@ -68,7 +68,7 @@ Data drawn from publicly available [NHS Digital Talking Therapies statistics](ht
 
 ## Tools Used
 
-`Python` · `pandas` · `NumPy` · `SciPy` (chi-square, correlation) · `Plotly` · `GeoPandas` (or specify your geospatial library)
+`Python` · `pandas` · `NumPy` · `SciPy` (chi-square, correlation) · `Plotly` 
 
 ---
 
