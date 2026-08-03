@@ -49,16 +49,21 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 <summary>View code: representation ratio calculation</summary>
 
 ```python
-# representation ratio calculation
-# used across the gender, ethnicity, and IMD analyses
-df['representation_ratio'] = (
-    df['group_pct_of_users'] / df['group_pct_of_population']
-)
+# Service Funnel Conversion Rates
+conversion_df = pd.DataFrame({
+    'Year': df_treatment['Year'],
+    'Referral to Accessing (%)': df_treatment['Accessing Services'] / df_treatment['Referrals Received'] * 100,
+    'Lost at Accessing (%)': 100 - df_treatment['Accessing Services'] / df_treatment['Referrals Received'] * 100,
+    'Lost at Finishing (%)': (df_treatment['Accessing Services'] - df_treatment['Finished Course Treatment']) / df_treatment['Referrals Received'] * 100
+}).set_index('Year')
+
+print(f"Referrals Received --> Accessing Services: {conversion_df['Lost at Accessing (%)'].mean().round(1)}% loss.")
+print(f"Accessing Services --> Finished Course Treatment: {conversion_df['Lost at Finishing (%)'].mean().round(1)}% loss.")
 ```
 
 </details>
 
-<img width="988" height="464" alt="image" src="https://github.com/user-attachments/assets/828df897-e58c-4b1a-a4a8-988925a8d3af" />
+<img width="988" height="448" alt="image" src="https://github.com/user-attachments/assets/3b217cd0-10a1-496f-adcf-7ac992c6803f" />
 
 ### **Gender Breakdown Dashboard** — service use by gender relative to population share.
 
