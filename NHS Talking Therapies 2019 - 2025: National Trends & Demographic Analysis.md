@@ -1,12 +1,12 @@
 # NHS Talking Therapies 2019 - 2025: National Trends & Demographic Analysis
 
-**A data analysis project examining service utilisation, demographic representation, and geographic equity in NHS Talking Therapies (IAPT) services across England.**
+**A data analysis project examining service demand, treatment outcomes, demographic representation, and geographic equity in NHS Talking Therapies (IAPT) services across England.**
 
 ---
 
 ## Overview
 
-NHS Talking Therapies (formerly IAPT) is England's flagship programme for treating anxiety and depression through evidence-based psychological therapies. This project investigates whether access to this service is equitable across different population groups and geographic areas, using publicly available NHS Digital data.
+NHS Talking Therapies (formerly IAPT) is England's flagship programme for treating anxiety and depression through evidence-based psychological therapies. This project analyses whether the service access and treatment outcomes are equitable across different population groups and geographic areas, using publicly available NHS Digital data.
 
 The analysis is structured as three linked notebooks, moving from raw data to a national-level statistical picture:
 
