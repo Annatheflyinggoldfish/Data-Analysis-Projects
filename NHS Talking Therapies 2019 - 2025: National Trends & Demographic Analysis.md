@@ -18,6 +18,15 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 
 ---
 
+## Tools Used
+
+`Python` · `pandas` · `NumPy` · `SciPy` (chi-square, correlation) · `Plotly` 
+
+---
+
+
+---
+
 ## Key Questions Explored
 
 - How have referral volumes, access rates, and recovery rates changed over time nationally?
@@ -73,30 +82,8 @@ All datasets were drawn from publicly available sources. All data are aggregated
 
 ---
 
-## Tools Used
-
-`Python` · `pandas` · `NumPy` · `SciPy` (chi-square, correlation) · `Plotly` 
-
----
-
-## Repository Structure
-
-```
-├── README.md
-├── notebooks/
-│   ├── 01_data_cleaning.ipynb
-│   ├── 02_national_trends_eda.ipynb
-│   └── 03_demographic_geographic_eda.ipynb
-├── data/
-│   └── (raw/processed data or a note on data sourcing, if not included)
-└── assets/
-    └── (screenshots referenced above)
-```
-
----
-
 ## About This Project
 
 This project was built as part of my transition into data analysis, with a particular interest in public sector and health data. I'm currently seeking junior data analyst roles in the NHS, NGO, and public sector space.
 
-**Contact**: [your email] · [your LinkedIn]
+**Contact**: [huanglp582@gmail.com] · [LinkedIn](www.linkedin.com/in/huangliping)
