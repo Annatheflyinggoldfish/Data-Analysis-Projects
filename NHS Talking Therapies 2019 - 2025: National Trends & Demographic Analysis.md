@@ -12,9 +12,9 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 
 | Notebook | Focus | Key Techniques |
 |---|---|---|
-| [`01_data_cleaning.ipynb`](notebooks/01_data_cleaning.ipynb) | Cleaning and structuring raw NHS Digital datasets | Data validation, handling missing values, schema standardisation |
-| [`02_national_trends_eda.ipynb`](notebooks/02_national_trends_eda.ipynb) | National-level trend exploration | Time series analysis, referral/recovery rate trends |
-| [`03_demographic_geographic_eda.ipynb`](notebooks/03_demographic_geographic_eda.ipynb) | Demographic and geographic breakdown | Chi-square tests, correlation analysis, representation ratios, geospatial mapping |
+| [`01_data_cleaning.ipynb`](https://colab.research.google.com/drive/1LvEKX0ORIJt1LcAqN6YgoPYoXnbyyZmA#scrollTo=K2j33NjYn6zp) | Cleaning and structuring raw NHS Digital datasets | Data validation, handling missing values, schema standardisation |
+| [`02_national_trends_eda.ipynb`]([notebooks/02_national_trends_eda.ipynb](https://colab.research.google.com/drive/1SMcayvIqioYXsH-vVryktwTvnqZMyR15#scrollTo=xfiZX5PrSdRW)) | National-level trend exploration | Time series analysis, referral/recovery rate trends |
+| [`03_demographic_geographic_eda.ipynb`]([notebooks/03_demographic_geographic_eda.ipynb](https://colab.research.google.com/drive/1Ga34-NX5Gnakc6pC7JuKS13H8tPdXDp1#scrollTo=JuCtqZKmiOIV)) | Demographic and geographic breakdown | Chi-square tests, correlation analysis, representation ratios, geospatial mapping |
 
 ---
 
@@ -35,8 +35,9 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 
 ## Methodology Highlights
 
+- **Data standardisation with SQL**: Used DuckDB SQL queries to standardise column naming and structure across six years of data before merging into a single dataset.
 - **Geospatial matching pipeline**: Matched 42 ICBs to ONS population estimates using prefix-based matching to handle inconsistent naming conventions across datasets.
-- **Representation ratios**: Constructed using working-age, England-only population denominators to ensure demographic comparisons were methodologically sound rather than misleading.
+- **Representation ratios**: Constructed using working-age, England-only population denominators to compare demographic and geographic population shares among service users against the general population — ensuring comparisons were methodologically sound rather than misleading.
 - **Statistical testing**: Applied chi-square tests and correlation analysis, with explicit attention to the distinction between statistical significance and practical/real-world significance — findings are only flagged as noteworthy where both are present.
 
 ---
