@@ -108,7 +108,7 @@ spearman_r, spearman_p = stats.spearmanr(plot_deep_dive['Representation Ratio'],
 
 </details>
 
-<img width="1004" height="544" alt="image" src="https://github.com/user-attachments/assets/bdc8fb89-3a05-447e-a364-fbba2e89832d" />
+<img width="853" height="462" alt="image" src="https://github.com/user-attachments/assets/bdc8fb89-3a05-447e-a364-fbba2e89832d" />
 
 ### **IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
 
