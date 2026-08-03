@@ -63,7 +63,7 @@ df['representation_ratio'] = (
 
 </details>
 
-<img width="1235" height="580" alt="image" src="https://github.com/user-attachments/assets/828df897-e58c-4b1a-a4a8-988925a8d3af" />
+<img width="988" height="464" alt="image" src="https://github.com/user-attachments/assets/828df897-e58c-4b1a-a4a8-988925a8d3af" />
 
 ### **Gender Breakdown Dashboard** — service use by gender relative to population share.
 
@@ -80,7 +80,7 @@ df['representation_ratio'] = (
 
 </details>
 
-<img width="1203" height="691" alt="image" src="https://github.com/user-attachments/assets/54af85d6-62e1-4cb2-b7c3-de731a78a6b9" />
+<img width="962" height="552" alt="image" src="https://github.com/user-attachments/assets/54af85d6-62e1-4cb2-b7c3-de731a78a6b9" />
 
 ### **Ethnicity: Representation Ratio vs. Recovery Rate** — comparing access representation against treatment outcomes across ethnic groups.
 
@@ -97,7 +97,7 @@ df['representation_ratio'] = (
 
 </details>
 
-<img width="1121" height="619" alt="image" src="https://github.com/user-attachments/assets/b42fa3f8-e515-44d0-883d-b26383bc2d7d" />
+<img width="896" height="476" alt="image" src="https://github.com/user-attachments/assets/b42fa3f8-e515-44d0-883d-b26383bc2d7d" />
 
 ### **IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
 
@@ -114,7 +114,7 @@ df['representation_ratio'] = (
 
 </details>
 
-<img width="1350" height="689" alt="image" src="https://github.com/user-attachments/assets/5d87250c-26d7-4d8e-ac29-4fdead489741" />
+<img width="1080" height="544" alt="image" src="https://github.com/user-attachments/assets/5d87250c-26d7-4d8e-ac29-4fdead489741" />
 
 
 ### **Geographic Representation Map** — access disparities across England's 42 Integrated Care Boards.
@@ -132,7 +132,7 @@ df['representation_ratio'] = (
 
 </details>
 
-<img width="876" height="569" alt="image" src="https://github.com/user-attachments/assets/b83a0671-6f0e-48f4-aacc-32ed58f2cce3" />
+<img width="700" height="455" alt="image" src="https://github.com/user-attachments/assets/b83a0671-6f0e-48f4-aacc-32ed58f2cce3" />
 
 ---
 
