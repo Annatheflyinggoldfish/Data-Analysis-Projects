@@ -46,7 +46,7 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 ### **Service Demand & Treatment Funnel Overview** - referral, access, and recovery volumes over time.
 
 <details>
-<summary>View code: representation ratio calculation</summary>
+<summary>View code: Service Funnel Conversion Rates</summary>
 
 ```python
 # Service Funnel Conversion Rates
