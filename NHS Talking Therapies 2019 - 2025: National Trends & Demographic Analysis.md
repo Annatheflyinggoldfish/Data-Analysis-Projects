@@ -18,21 +18,18 @@ The analysis is structured as three linked notebooks, moving from raw data to a 
 
 ---
 
-## Tools Used
-
-`Python` · `pandas` · `NumPy` · `SciPy` (chi-square, correlation) · `Plotly` 
-
----
-
-
----
-
 ## Key Questions Explored
 
 - How have referral volumes, access rates, and recovery rates changed over time nationally?
 - Are certain demographic groups (gender, ethnicity) over/under represented compared to the general population?
 - Does deprivation (IMD) correlate with variation in service access and/or outcomes?
 - Are there meaningful geographic disparities in service access/outcome across England's 42 Integrated Care Boards (ICBs)?
+
+---
+
+## Tools Used
+
+**Python · pandas · NumPy · SciPy (chi-square, correlation) · Plotly**
 
 ---
 
