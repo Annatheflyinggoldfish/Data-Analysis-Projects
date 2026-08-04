@@ -33,17 +33,17 @@ The analysis is structured as three linked notebooks:
 - **Data standardisation with SQL**: Used DuckDB SQL queries to standardise column naming and structure across six years of data before merging into a single dataset.
 - **Geographic Data merging**: Matched 42 ICBs to ONS population estimates using prefix-based matching to handle inconsistent naming conventions across datasets.
 - **Representation ratios**: Constructed using working-age, England-only population denominators to compare demographic and geographic population shares among service users against the general population — ensuring comparisons were methodologically sound rather than misleading.
-- **Statistical testing**: Applied chi-square tests and correlation analysis, with explicit attention to the distinction between statistical significance and practical/real-world significance — findings are only flagged as noteworthy where both are present.
+- **Statistical testing**: Applied chi-square tests and correlation analysis, distinguishing between statistical significance and practical/real-world significance.
 
 ---
 
 ## Sample Outputs
 
-**Note:** For **interactive versions** of these charts and the full analysis, see the Colab notebooks above.
+**Note:** These outputs serve as previews; please refer to the notebooks above for **full interactive charts and complete analysis**.
 
 ---
 
-### **Service Demand & Treatment Funnel Overview** - referral, access, and recovery volumes over time.
+### **Service Demand & Treatment Funnel Overview**
 
 <details>
 <summary>View key code: Service Funnel Conversion Rates</summary>
@@ -65,7 +65,7 @@ print(f"Accessing Services --> Finished Course Treatment: {conversion_df['Lost a
 
 <img width="988" height="448" alt="image" src="https://github.com/user-attachments/assets/3b217cd0-10a1-496f-adcf-7ac992c6803f" />
 
-### **Gender Breakdown Dashboard** — service use by gender relative to population share.
+### **Gender Breakdown Dashboard** 
 
 <details>
 <summary>View key code: referral volume by year</summary>
@@ -85,7 +85,7 @@ gen_plot1 = df_gender[['Year','VariableA','Percentage of the Year']].groupby('Va
 
 <img width="962" height="552" alt="image" src="https://github.com/user-attachments/assets/54af85d6-62e1-4cb2-b7c3-de731a78a6b9" />
 
-### **Ethnicity: Representation Ratio vs. Recovery Rate** — comparing access representation against treatment outcomes across ethnic groups.
+### **Ethnicity: Representation Ratio vs. Recovery Rate** 
 
 <details>
 <summary>View key code: representation ratio calculation</summary>
@@ -110,7 +110,7 @@ spearman_r, spearman_p = stats.spearmanr(plot_deep_dive['Representation Ratio'],
 
 <img width="996" height="524" alt="image" src="https://github.com/user-attachments/assets/8af4b6c9-cef8-4e01-9b11-9b4ac1944aad" />
 
-### **IMD (Index of Multiple Deprivation) Dashboard** — service access and outcomes by deprivation decile.
+### **IMD (Index of Multiple Deprivation) Dashboard** —
 
 <details>
 <summary>View key code: % of referrals ended before treatment began & referral share by IMD</summary>
@@ -134,7 +134,7 @@ df_dep['Percentage of the Year'] = (
 <img width="1080" height="544" alt="image" src="https://github.com/user-attachments/assets/5d87250c-26d7-4d8e-ac29-4fdead489741" />
 
 
-### **Geographic Representation Map** — access disparities across England's 42 Integrated Care Boards.
+### **Geographic Representation Map**
 
 <details>
 <summary>View key code: matching ICB names across NHS and ONS datasets</summary>
