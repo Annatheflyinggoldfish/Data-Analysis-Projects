@@ -13,17 +13,17 @@ NHS Talking Therapies (formerly IAPT) is England's flagship programme for treati
 
 **Key Questions Explored:**
 
-- How have referral volumes, access rates, and recovery rates changed over time nationally?
+- How have service demand, appointments efficiency, and treatment outcome changed over time nationally?
 - Are certain demographic groups (gender, ethnicity) over/under represented compared to the general population?
 - Does deprivation (IMD) correlate with variation in service access and/or outcomes?
 - Are there meaningful geographic disparities in service access/outcome across England's 42 Integrated Care Boards (ICBs)?
 
-The analysis is structured as three linked notebooks, moving from raw data to a national-level statistical picture:
+The analysis is structured as three linked notebooks:
 
-| Notebook | Focus | Key Techniques |
+| Notebook | Focus | 
 |---|---|---|
-| [`01_data_cleaning.ipynb`](https://colab.research.google.com/drive/1LvEKX0ORIJt1LcAqN6YgoPYoXnbyyZmA#scrollTo=K2j33NjYn6zp) | Cleaning and structuring raw NHS Digital datasets | Data validation, handling missing values, schema standardisation |
-| [`02_national_trends_eda.ipynb`](https://colab.research.google.com/drive/1SMcayvIqioYXsH-vVryktwTvnqZMyR15#scrollTo=hNVyojD7UT10) | National-level trend exploration | Time series analysis, referral/recovery rate trends |
+| [`01_data_cleaning.ipynb`](https://colab.research.google.com/drive/1LvEKX0ORIJt1LcAqN6YgoPYoXnbyyZmA#scrollTo=K2j33NjYn6zp) | Cleaning and structuring raw NHS Digital datasets | Data cleaning: handling missing values, schema standardisation |
+| [`02_national_trends_eda.ipynb`](https://colab.research.google.com/drive/1SMcayvIqioYXsH-vVryktwTvnqZMyR15#scrollTo=hNVyojD7UT10) | National-level trend exploration | Time series analysis: service demand, appointments efficiency, and treatment outcome |
 | [`03_demographic_geographic_eda.ipynb`](https://colab.research.google.com/drive/1Ga34-NX5Gnakc6pC7JuKS13H8tPdXDp1#scrollTo=61WdBP8VV9Uf) | Demographic and geographic breakdown | Chi-square tests, correlation analysis, representation ratios, geospatial mapping |
 
 ---
