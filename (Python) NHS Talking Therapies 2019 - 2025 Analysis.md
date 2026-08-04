@@ -37,9 +37,9 @@ The analysis is structured as three linked notebooks (Welcome to download and ru
 
 ---
 
-## Sample Outputs
+## Sample Outputs (Previews)
 
-**Note:** These outputs serve as previews; please refer to the notebooks above for **full interactive charts and complete analysis**.
+**Note: Please refer to the notebooks above for full interactive charts and complete analysis**.
 
 ---
 
@@ -178,6 +178,8 @@ All datasets were drawn from publicly available sources. All data are aggregated
 
 ## About This Project
 
-This project was built as part of my transition into data analysis, with a particular interest in public sector and health data. I'm currently seeking junior data analyst roles in the NHS, NGO, and public sector space.
+This project was built as part of my transition into data analysis, with a particular interest in public sector and health data.
+
+I'm currently seeking junior data analyst roles, particularly within the NHS, the public sector, and non-profit organisations.
 
 **Contact**: huanglp582@gmail.com · [LinkedIn](https://www.linkedin.com/in/huangliping)
