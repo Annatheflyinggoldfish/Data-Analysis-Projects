@@ -20,18 +20,18 @@ NHS Talking Therapies (formerly IAPT) is England's flagship programme for treati
 
 The analysis is structured as three linked notebooks:
 
-| Notebook | Focus | 
+| Notebook | Focus | Key Techniques |
 |---|---|---|
-| [`01_data_cleaning.ipynb`](https://colab.research.google.com/drive/1LvEKX0ORIJt1LcAqN6YgoPYoXnbyyZmA#scrollTo=K2j33NjYn6zp) | Cleaning and structuring raw NHS Digital datasets | Data cleaning: handling missing values, schema standardisation |
-| [`02_national_trends_eda.ipynb`](https://colab.research.google.com/drive/1SMcayvIqioYXsH-vVryktwTvnqZMyR15#scrollTo=hNVyojD7UT10) | National-level trend exploration | Time series analysis: service demand, appointments efficiency, and treatment outcome |
-| [`03_demographic_geographic_eda.ipynb`](https://colab.research.google.com/drive/1Ga34-NX5Gnakc6pC7JuKS13H8tPdXDp1#scrollTo=61WdBP8VV9Uf) | Demographic and geographic breakdown | Chi-square tests, correlation analysis, representation ratios, geospatial mapping |
+| [01_data_cleaning.ipynb](https://colab.research.google.com/drive/1LvEKX0ORIJt1LcAqN6YgoPYoXnbyyZmA#scrollTo=K2j33NjYn6zp) | Cleaning and structuring raw NHS Digital datasets | Data cleaning: handling missing values, schema standardisation |
+| [02_national_trends_eda.ipynb](https://colab.research.google.com/drive/1SMcayvIqioYXsH-vVryktwTvnqZMyR15#scrollTo=hNVyojD7UT10) | National-level trend exploration | Time series analysis: service demand, appointments efficiency, and treatment outcome |
+| [03_demographic_geographic_eda.ipynb](https://colab.research.google.com/drive/1Ga34-NX5Gnakc6pC7JuKS13H8tPdXDp1#scrollTo=61WdBP8VV9Uf) | Demographic and geographic breakdown | Chi-square tests, correlation analysis, representation ratios, geographic data merging |
 
 ---
 
 ## Methodology Highlights
 
 - **Data standardisation with SQL**: Used DuckDB SQL queries to standardise column naming and structure across six years of data before merging into a single dataset.
-- **Geospatial matching pipeline**: Matched 42 ICBs to ONS population estimates using prefix-based matching to handle inconsistent naming conventions across datasets.
+- **Geographic Data merging**: Matched 42 ICBs to ONS population estimates using prefix-based matching to handle inconsistent naming conventions across datasets.
 - **Representation ratios**: Constructed using working-age, England-only population denominators to compare demographic and geographic population shares among service users against the general population — ensuring comparisons were methodologically sound rather than misleading.
 - **Statistical testing**: Applied chi-square tests and correlation analysis, with explicit attention to the distinction between statistical significance and practical/real-world significance — findings are only flagged as noteworthy where both are present.
 
