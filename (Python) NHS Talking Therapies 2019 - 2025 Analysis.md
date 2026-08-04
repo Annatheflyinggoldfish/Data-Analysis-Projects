@@ -22,9 +22,9 @@ NHS Talking Therapies (formerly IAPT) is England's flagship programme for treati
 
 | Notebook | Focus | Key Techniques |
 |---|---|---|
-| [01_data_cleaning.ipynb](https://colab.research.google.com/drive/1LvEKX0ORIJt1LcAqN6YgoPYoXnbyyZmA#scrollTo=K2j33NjYn6zp) | Cleaning and structuring raw NHS Digital datasets | Data cleaning: handling missing values, schema standardisation |
-| [02_national_trends_eda.ipynb](https://colab.research.google.com/drive/1SMcayvIqioYXsH-vVryktwTvnqZMyR15#scrollTo=hNVyojD7UT10) | National-level trend exploration | Time series analysis: service demand, appointments efficiency, and treatment outcome |
-| [03_demographic_geographic_eda.ipynb](https://colab.research.google.com/drive/1Ga34-NX5Gnakc6pC7JuKS13H8tPdXDp1#scrollTo=61WdBP8VV9Uf) | Demographic and geographic breakdown | Chi-square tests, correlation analysis, representation ratios, geographic data merging |
+| [01 NHS Talking Therapies - Cleaning.ipynb](https://colab.research.google.com/drive/1LvEKX0ORIJt1LcAqN6YgoPYoXnbyyZmA#scrollTo=K2j33NjYn6zp) | Cleaning and structuring raw NHS Digital datasets | Data cleaning: handling missing values, schema standardisation |
+| [02 NHS Talking Therapies - EDA part 1.ipynb](https://colab.research.google.com/drive/1SMcayvIqioYXsH-vVryktwTvnqZMyR15#scrollTo=hNVyojD7UT10) | National-level trend exploration | Time series analysis: service demand, appointments efficiency, and treatment outcome |
+| [03 NHS Talking Therapies - EDA part 2.ipynb](https://colab.research.google.com/drive/1Ga34-NX5Gnakc6pC7JuKS13H8tPdXDp1#scrollTo=61WdBP8VV9Uf) | Demographic and geographic breakdown | Chi-square tests, correlation analysis, representation ratios, geographic data merging |
 
 ---
 
