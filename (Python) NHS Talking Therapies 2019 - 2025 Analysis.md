@@ -18,7 +18,7 @@ NHS Talking Therapies (formerly IAPT) is England's flagship programme for treati
 - Does deprivation (IMD) correlate with variation in service access and/or outcomes?
 - Are there meaningful geographic disparities in service access/outcome across England's 42 Integrated Care Boards (ICBs)?
 
-The analysis is structured as three linked notebooks (Welcome to download and run locally):
+**The analysis is structured as three linked notebooks (Welcome to download and run locally):**
 
 | Notebook | Focus | Key Techniques |
 |---|---|---|
