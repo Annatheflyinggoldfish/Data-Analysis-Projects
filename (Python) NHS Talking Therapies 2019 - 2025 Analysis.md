@@ -32,7 +32,7 @@ NHS Talking Therapies (formerly IAPT) is England's flagship programme for treati
 
 - **Data standardisation with SQL**: Used DuckDB SQL queries to standardise column naming and structure across six years of data before merging into a single dataset.
 - **Geographic Data merging**: Matched 42 ICBs to ONS population estimates using prefix-based matching to handle inconsistent naming conventions across datasets.
-- **Representation ratios**: Constructed using working-age, England-only population denominators to compare demographic and geographic population shares among service users against the general population — ensuring comparisons were methodologically sound rather than misleading.
+- **Representation ratios**: Built using England-only population denominators (2021 Census for ethnicity from ONS). Age-structure mismatch (the service mainly targets ages 16+) is flagged as a known limitation.
 - **Statistical testing**: Applied chi-square tests and correlation analysis, distinguishing between statistical significance and practical/real-world significance.
 
 ---
@@ -171,7 +171,7 @@ All datasets were drawn from publicly available sources. All data are aggregated
 
   *This is the cleaned, merged version of six annual [NHS Digital datasets](https://github.com/Annatheflyinggoldfish/Data-Analysis-Projects/blob/main/2019-2025%20NHS%20Therapy%20Analytics%20-%20Datasets/NHS_Talking_Therapies_Cleaned_All_Years.csv). See [`01_data_cleaning.ipynb`](https://colab.research.google.com/drive/1LvEKX0ORIJt1LcAqN6YgoPYoXnbyyZmA#scrollTo=K2j33NjYn6zp) for the full cleaning process.*
 * **ICB geographic boundaries:** [Integrated Care Boards (April 2023) Boundaries EN BSC](https://geoportal.statistics.gov.uk/datasets/ons::integrated-care-boards-april-2023-boundaries-en-bsc/about)
-* **Ethnicity reference data:** [Ethnic group, England and Wales - Office for National Statistics](https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021#ethnic-groups-in-england-and-wales)
+* **Ethnicity reference data:** [Ethnic group, Census 2021 (TS021) - Office for National Statistics](https://www.ons.gov.uk/datasets/TS021/editions/2021/versions/3)
 * **ONS population by ICB:** [ONS, Mid-2022 revised (Nov 2025) to Mid-2024: Integrated Care Boards (2024 geography edition)](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/clinicalcommissioninggroupmidyearpopulationestimates/mid2022revisednov2025tomid2024integratedcareboards2024geography)
 
 ---
